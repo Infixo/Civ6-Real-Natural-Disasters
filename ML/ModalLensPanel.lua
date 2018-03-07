@@ -11,19 +11,15 @@ include( "InstanceManager" );
 --------------------------------------------------------------
 
 -- InfixoRND debug output routine
-function dprint(sStr,p1,p2,p3,p4,p5,p6)
+function dprint(sStr,p1,p2,p3)
 	if true then return; end  -- comment out for debug
 	local sOutStr = sStr;
 	if p1 ~= nil then sOutStr = sOutStr.." [1] "..tostring(p1); end
 	if p2 ~= nil then sOutStr = sOutStr.." [2] "..tostring(p2); end
 	if p3 ~= nil then sOutStr = sOutStr.." [3] "..tostring(p3); end
-	if p4 ~= nil then sOutStr = sOutStr.." [4] "..tostring(p4); end
-	if p5 ~= nil then sOutStr = sOutStr.." [5] "..tostring(p5); end
-	if p6 ~= nil then sOutStr = sOutStr.." [6] "..tostring(p6); end
 	print(sOutStr);
 end
 
-local RND = ExposedMembers.RND;  -- InfixoRND
 
 local m_KeyStackIM:table = InstanceManager:new( "KeyEntry", "KeyColorImage", Controls.KeyStack );
 local m_ContinentColorList:table = {};
@@ -60,26 +56,27 @@ end
 -- InfixoRND: EVENT
 function ShowDisasterEventLensKey()
 	m_KeyStackIM: ResetInstances();
-	AddKeyEntry("LOC_TOOLTIP_DISASTER_RISK_EARTHQUAKE", UI.GetColorValue(RND.Disaster_Earthquake.ColorNow));
-	AddKeyEntry("LOC_TOOLTIP_DISASTER_RISK_FLOOD", 		UI.GetColorValue(RND.Disaster_Flood.ColorNow));
-	AddKeyEntry("LOC_TOOLTIP_DISASTER_RISK_METEOR", 	UI.GetColorValue(RND.Disaster_Meteor.ColorNow));
-	AddKeyEntry("LOC_TOOLTIP_DISASTER_RISK_TORNADO", 	UI.GetColorValue(RND.Disaster_Tornado.ColorNow));
-	AddKeyEntry("LOC_TOOLTIP_DISASTER_RISK_TSUNAMI", 	UI.GetColorValue(RND.Disaster_Tsunami.ColorNow));
-	AddKeyEntry("LOC_TOOLTIP_DISASTER_RISK_VOLCANO", 	UI.GetColorValue(RND.Disaster_Volcano.ColorNow));
-	AddKeyEntry("LOC_TOOLTIP_DISASTER_RISK_WILDFIRE", 	UI.GetColorValue(RND.Disaster_Wildfire.ColorNow));
+	for disaster in GameInfo.RNDDisasters() do
+		AddKeyEntry(disaster.Name, UI.GetColorValue(disaster.ColorNow));
+	end
 	Controls.KeyPanel:SetHide(false);
 	Controls.KeyScrollPanel:CalculateSize();
+end
+
+-- helper
+function AddKeyEntryForDisasterRisk(sDisaster:string)
+	local pDisaster = GameInfo.RNDDisasters[sDisaster];
+	if pDisaster == nil then print("ERROR AddKeyEntryForDisasterRisk(): unknown disaster", sDisaster); return; end
+	--dprint("Disaster color is (dis,col)", sDisaster, pDisaster.ColorRisk);
+	AddKeyEntry(pDisaster.Name, UI.GetColorValue(pDisaster.ColorRisk));
 end
 
 --============================================================================
 -- InfixoRND: ET - Earthquake, Tornado
 function ShowDisasterRiskETLensKey()
 	m_KeyStackIM: ResetInstances();
-	--AddKeyEntry("LOC_TOOLTIP_DISASTER_EVENT", UI.GetColorValue("COLOR_DISASTER_EVENT"));
-	--dprint("Earthquake color is", RND.Disaster_Earthquake.ColorRisk);
-	AddKeyEntry("LOC_TOOLTIP_DISASTER_RISK_EARTHQUAKE", UI.GetColorValue(RND.Disaster_Earthquake.ColorRisk));
-	--dprint("Tornado color is", RND.Disaster_Tornado.ColorRisk);
-	AddKeyEntry("LOC_TOOLTIP_DISASTER_RISK_TORNADO", UI.GetColorValue(RND.Disaster_Tornado.ColorRisk));
+	AddKeyEntryForDisasterRisk("DISASTER_EARTHQUAKE");
+	AddKeyEntryForDisasterRisk("DISASTER_TORNADO");
 	Controls.KeyPanel:SetHide(false);
 	Controls.KeyScrollPanel:CalculateSize();
 end
@@ -88,26 +85,18 @@ end
 -- InfixoRND: FT - Flood, Tsunami
 function ShowDisasterRiskFTLensKey()
 	m_KeyStackIM: ResetInstances();
-	--AddKeyEntry("LOC_TOOLTIP_DISASTER_EVENT", UI.GetColorValue("COLOR_DISASTER_EVENT"));
-	--dprint("Flood color is", RND.Disaster_Flood.ColorRisk);
-	AddKeyEntry("LOC_TOOLTIP_DISASTER_RISK_FLOOD", UI.GetColorValue(RND.Disaster_Flood.ColorRisk));
-	--dprint("Tsunami color is", RND.Disaster_Tsunami.ColorRisk);
-	AddKeyEntry("LOC_TOOLTIP_DISASTER_RISK_TSUNAMI", UI.GetColorValue(RND.Disaster_Tsunami.ColorRisk));
+	AddKeyEntryForDisasterRisk("DISASTER_FLOOD");
+	AddKeyEntryForDisasterRisk("DISASTER_TSUNAMI");
 	Controls.KeyPanel:SetHide(false);
 	Controls.KeyScrollPanel:CalculateSize();
 end
 
 --============================================================================
--- InfixoRND: VW - Volcano, Wildfire,
+-- InfixoRND: VW - Volcano, Wildfire
 function ShowDisasterRiskVWLensKey()
 	m_KeyStackIM: ResetInstances();
-	--AddKeyEntry("LOC_TOOLTIP_DISASTER_EVENT", UI.GetColorValue("COLOR_DISASTER_EVENT"));
-	--dprint("Wildfire color is", RND.Disaster_Wildfire.ColorRisk);
-	AddKeyEntry("LOC_TOOLTIP_DISASTER_RISK_WILDFIRE", UI.GetColorValue(RND.Disaster_Wildfire.ColorRisk));
-	--dprint("Volcano color is", RND.Disaster_Volcano.ColorRisk);
-	AddKeyEntry("LOC_TOOLTIP_DISASTER_RISK_VOLCANO", UI.GetColorValue(RND.Disaster_Volcano.ColorRisk));
-	--dprint("Meteor color is", RND.Disaster_Meteor.ColorRisk);
-	--AddKeyEntry("LOC_TOOLTIP_DISASTER_RISK_METEOR", UI.GetColorValue(RND.Disaster_Meteor.ColorRisk));
+	AddKeyEntryForDisasterRisk("DISASTER_WILDFIRE");
+	AddKeyEntryForDisasterRisk("DISASTER_VOLCANO");
 	Controls.KeyPanel:SetHide(false);
 	Controls.KeyScrollPanel:CalculateSize();
 end
@@ -565,7 +554,7 @@ end
 -- ===========================================================================
 -- Called from 
 function OnModdedLensOn(modID)
-	dprint("Current modded lens on " .. modID);
+	--dprint("Current modded lens on " .. modID);
 	m_CurrentModdedLensOn = modID;
 end
 
@@ -586,11 +575,6 @@ end
 -- ===========================================================================
 function InitializeModalLensPanel()
 	print("Initializing ModalLensPanel")
-	
-	-- InfixoRND
-	if not ExposedMembers.RND then ExposedMembers.RND = {} end;
-	if not ExposedMembers.RNDInit then ExposedMembers.RNDInit = {} end;
-	RND = ExposedMembers.RND;
 	
 	if (Game.GetLocalPlayer() == -1) then
 		return;

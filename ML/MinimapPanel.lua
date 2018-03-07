@@ -14,6 +14,8 @@ include( "SupportFunctions" );
 -- All changes marked with InfixoRND
 --------------------------------------------------------------
 
+local RND = ExposedMembers.RND;  -- InfixoRND
+
 -- InfixoRND debug output routine
 function dprint(sStr,p1,p2,p3,p4,p5,p6)
 	if true then return; end  -- comment out for debug
@@ -26,8 +28,6 @@ function dprint(sStr,p1,p2,p3,p4,p5,p6)
 	if p6 ~= nil then sOutStr = sOutStr.." [6] "..tostring(p6); end
 	print(sOutStr);
 end
-
-local RND = ExposedMembers.RND;  -- InfixoRND
 
 
 -- ===========================================================================
@@ -611,7 +611,7 @@ end
 -- ===========================================================================
 
 function ToggleAnyModdedLens(pControlButton:table, eLensToToggle:number)
-	dprint("FUNCAL ToggleAnyModdedLens(eLensToToggle)", eLensToToggle)
+	--dprint("FUNCAL ToggleAnyModdedLens(eLensToToggle)", eLensToToggle)
 	
 	if pControlButton:IsChecked() then
 		SetActiveModdedLens(eLensToToggle);
@@ -908,21 +908,22 @@ end
 function SetDisasterAnyHexes(pDisaster:table, bShowAttackRange:boolean)
 	--dprint("Showing hexes for (dis) with (col)", pDisaster.Name, pDisaster.ColorRisk);
 	local ePlayer = Game.GetLocalPlayer();
-	if table.count(pDisaster.StartPlots) > 0 then
-		--dprint("...showing (n) hexes", table.count(pDisaster.StartPlots));
-		--local eColor = UI.GetColorValue(pDisaster.ColorRisk);
-		local tOnlyRevealedTiles = GetOnlyRevealedTiles(pDisaster.StartPlots, ePlayer);
+	local tStartPlotsWithPrevention:table = pDisaster:GetStartPlotsWithPrevention();
+	if #tStartPlotsWithPrevention > 0 then
+		--dprint("...showing (n) hexes", #tStartPlotsWithPrevention);
+		local tOnlyRevealedTiles:table = GetOnlyRevealedTiles(tStartPlotsWithPrevention, ePlayer);
+		local sColorRisk:string = GameInfo.RNDDisasters[pDisaster.Type].ColorRisk;  -- we can get rid of Color data in Disaster objects
 		UILens.SetLayerHexesColoredArea(
 			LensLayers.HEX_COLORING_APPEAL_LEVEL,
 			ePlayer,
 			tOnlyRevealedTiles,
-			UI.GetColorValue(pDisaster.ColorRisk));
+			UI.GetColorValue(sColorRisk));
 		if bShowAttackRange then
 			UILens.ClearLayerHexes(LensLayers.ATTACK_RANGE);
 			UILens.SetLayerHexesArea(LensLayers.ATTACK_RANGE, ePlayer, tOnlyRevealedTiles);
 		end
-	else
-		dprint("...nothing to show");
+	--else
+		--dprint("...nothing to show");
 	end
 	if table.count(pDisaster.HistoricStartingPlots) > 0 then
 		--dprint("...showing (n) historic start hexes", table.count(pDisaster.HistoricStartingPlots));
@@ -930,8 +931,8 @@ function SetDisasterAnyHexes(pDisaster:table, bShowAttackRange:boolean)
 		--UILens.SetLayerHexesArea(LensLayers.ATTACK_RANGE, ePlayer, GetOnlyRevealedTiles(pDisaster.HistoricStartingPlots, ePlayer));
 		--UILens.ClearLayerHexes(LensLayers.HEX_COLORING_GREAT_PEOPLE);
 		UILens.SetLayerHexesArea(LensLayers.HEX_COLORING_GREAT_PEOPLE, ePlayer, GetOnlyRevealedTiles(pDisaster.HistoricStartingPlots, ePlayer));
-	else
-		dprint("...nothing to show for historic hexes");
+	--else
+		--dprint("...nothing to show for historic hexes");
 	end
 end
 
@@ -945,12 +946,11 @@ function SetTheDisasterHexes()
 		--local eColorNow = UI.GetColorValue(RND.tTheDisaster.DisasterType.ColorNow);
 		local tRevealedPlots = GetOnlyRevealedTiles(RND.tTheDisaster.Plots, ePlayer);
 		UILens.SetLayerHexesColoredArea(LensLayers.HEX_COLORING_APPEAL_LEVEL, ePlayer, tRevealedPlots,
-											UI.GetColorValue(RND.tTheDisaster.DisasterType.ColorNow));
-											--UI.GetColorValue("COLOR_DISASTER_EVENT"));
+											UI.GetColorValue( GameInfo.RNDDisasters[ RND.tTheDisaster.DisasterType.Type ].ColorNow ));
 		UILens.ClearLayerHexes(LensLayers.HEX_COLORING_GREAT_PEOPLE);
 		UILens.SetLayerHexesArea(LensLayers.HEX_COLORING_GREAT_PEOPLE, ePlayer, tRevealedPlots);
-	else
-		dprint("...nothing to show");
+	--else
+		--dprint("...nothing to show");
 	end
 	-- check if we can show StartingPlot with special distinction
 	if PlayersVisibility[ePlayer]:IsRevealed(RND.tTheDisaster.StartingPlot) then
@@ -961,15 +961,13 @@ function SetTheDisasterHexes()
 	UILens.ClearLayerHexes(LensLayers.ATTACK_RANGE);
 	for _, disaster in pairs(RND.tDisasterTypes) do
 		local tRevealedPlots = GetOnlyRevealedTiles(disaster.HistoricStartingPlots, ePlayer);
-		UILens.SetLayerHexesColoredArea(LensLayers.HEX_COLORING_APPEAL_LEVEL, ePlayer, tRevealedPlots, UI.GetColorValue(disaster.ColorNow));
+		UILens.SetLayerHexesColoredArea(LensLayers.HEX_COLORING_APPEAL_LEVEL, ePlayer, tRevealedPlots, UI.GetColorValue( GameInfo.RNDDisasters[disaster.Type].ColorNow ));
 		UILens.SetLayerHexesArea(LensLayers.ATTACK_RANGE, ePlayer, tRevealedPlots);
 	end
 end
 
 function SetDisasterEventHexes()
 	--dprint("FUNCAL SetDisasterETHexes()");
-	--SetDisasterAnyHexes(RND.Disaster_Earthquake, true);
-	--SetDisasterAnyHexes(RND.Disaster_Tornado, false);
 	SetTheDisasterHexes();
 	LuaEvents.RNDInfoPopup_OpenWindow();	
 end
@@ -977,29 +975,22 @@ end
 function SetDisasterETHexes()
 	--dprint("FUNCAL SetDisasterETHexes()");
 	UILens.ClearLayerHexes(LensLayers.HEX_COLORING_GREAT_PEOPLE);  -- historic
-	SetDisasterAnyHexes(RND.Disaster_Earthquake, true);
-	SetDisasterAnyHexes(RND.Disaster_Tornado, false);
-	--SetTheDisasterHexes();
-	--LuaEvents.RNDInfoPopup_OpenWindow();	
+	SetDisasterAnyHexes(RND.tDisasterTypes.Disaster_Earthquake, true);
+	SetDisasterAnyHexes(RND.tDisasterTypes.Disaster_Tornado, false);
 end
 
 function SetDisasterFTHexes()
 	---dprint("FUNCAL SetDisasterFTHexes()");
 	UILens.ClearLayerHexes(LensLayers.HEX_COLORING_GREAT_PEOPLE);  -- historic
-	SetDisasterAnyHexes(RND.Disaster_Flood, true);
-	SetDisasterAnyHexes(RND.Disaster_Tsunami, false);
-	--SetTheDisasterHexes();
-	--LuaEvents.RNDInfoPopup_OpenWindow();	
+	SetDisasterAnyHexes(RND.tDisasterTypes.Disaster_Flood, true);
+	SetDisasterAnyHexes(RND.tDisasterTypes.Disaster_Tsunami, false);
 end
 
 function SetDisasterVWHexes()
 	--dprint("FUNCAL SetDisasterVWHexes()");
 	UILens.ClearLayerHexes(LensLayers.HEX_COLORING_GREAT_PEOPLE);  -- historic
-	SetDisasterAnyHexes(RND.Disaster_Volcano, false);
-	SetDisasterAnyHexes(RND.Disaster_Wildfire, true);
-	--SetDisasterAnyHexes(RND.Disaster_Meteor);
-	--SetTheDisasterHexes();
-	--LuaEvents.RNDInfoPopup_OpenWindow();	
+	SetDisasterAnyHexes(RND.tDisasterTypes.Disaster_Volcano, false);
+	SetDisasterAnyHexes(RND.tDisasterTypes.Disaster_Wildfire, true);
 end
 
 
@@ -1876,7 +1867,7 @@ function plotCanHaveImprovement(playerID, plotIndex)
             local featureInfo = GameInfo.Features[validFeatureInfo.FeatureType]
             if featureInfo ~= nil and pPlot:GetFeatureType() == featureInfo.Index then
               if playerCanHave(playerID, featureInfo) and playerCanHave(playerID, validFeatureInfo) then
-                print("(feature) Plot " .. pPlot:GetIndex() .. " can have " .. improvementInfo.ImprovementType)
+                --print("(feature) Plot " .. pPlot:GetIndex() .. " can have " .. improvementInfo.ImprovementType)
                 improvementValid = true;
                 break;
               end
@@ -1892,7 +1883,7 @@ function plotCanHaveImprovement(playerID, plotIndex)
               local terrainInfo = GameInfo.Terrains[validTerrainInfo.TerrainType]
               if terrainInfo ~= nil and pPlot:GetTerrainType() == terrainInfo.Index then
                 if playerCanHave(playerID, terrainInfo) and playerCanHave(playerID, validTerrainInfo)  then
-                  print("(terrain) Plot " .. pPlot:GetIndex() .. " can have " .. improvementInfo.ImprovementType)
+                  --print("(terrain) Plot " .. pPlot:GetIndex() .. " can have " .. improvementInfo.ImprovementType)
                   improvementValid = true;
                   break;
                 end
@@ -1909,7 +1900,7 @@ function plotCanHaveImprovement(playerID, plotIndex)
               local resourceInfo = GameInfo.Resources[validResourceInfo.ResourceType]
               if resourceInfo ~= nil and pPlot:GetResourceType() == resourceInfo.Index then
                 if playerCanHave(playerID, resourceInfo) and playerCanHave(playerID, validResourceInfo)  then
-                  print("(resource) Plot " .. pPlot:GetIndex() .. " can have " .. improvementInfo.ImprovementType)
+                  --print("(resource) Plot " .. pPlot:GetIndex() .. " can have " .. improvementInfo.ImprovementType)
                   improvementValid = true;
                   break;
                 end
@@ -1920,7 +1911,7 @@ function plotCanHaveImprovement(playerID, plotIndex)
 
         -- Special check for coastal requirement
         if improvementInfo.Coast and (not pPlot:IsCoastalLand()) then
-          print(plotIndex .. " plot is not coastal")
+          --print(plotIndex .. " plot is not coastal")
           improvementValid = false;
         end
 
@@ -2662,7 +2653,6 @@ function Initialize()
 
 	-- InfixoRND
 	if not ExposedMembers.RND then ExposedMembers.RND = {} end;
-	if not ExposedMembers.RNDInit then ExposedMembers.RNDInit = {} end;
 	RND = ExposedMembers.RND;
 
   m_MiniMap_xmloffsety = Controls.MiniMap:GetOffsetY();

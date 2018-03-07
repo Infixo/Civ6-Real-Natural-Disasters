@@ -27,8 +27,6 @@ print("Loading PlotIterators.lua from Real Natural Disasters");
 --    end
 --
 
---local RND = ExposedMembers.RND;  -- functions from other modules will NOT be used here
-
 -------------------------------------------------------------------------------------------
 -- Hex Coordinate (thx astog)
 -- https://forums.civfanatics.com/threads/using-whowards-border-and-plot-iterators-in-civ-6.607334/
@@ -178,7 +176,7 @@ end
 
 
 function PlotAreaSweepIterator(pPlot, r, sector, anticlock, inwards, centre)
-  print(string.format("PlotAreaSweepIterator((%i, %i), r=%i, s=%i, d=%s, w=%s, c=%s)", pPlot:GetX(), pPlot:GetY(), r, (sector or SECTOR_NORTH), (anticlock and "rev" or "fwd"), (inwards and "in" or "out"), (centre and "yes" or "no")))
+  --print(string.format("PlotAreaSweepIterator((%i, %i), r=%i, s=%i, d=%s, w=%s, c=%s)", pPlot:GetX(), pPlot:GetY(), r, (sector or SECTOR_NORTH), (anticlock and "rev" or "fwd"), (inwards and "in" or "out"), (centre and "yes" or "no")))
   -- This coroutine walks each radial in sequence
   local next = coroutine.create(function ()
     if (centre and not inwards) then
@@ -228,15 +226,13 @@ end
 ----------------------------------------------
 
 function Initialize()
+
+	-- exposing functions and variables
 	if not ExposedMembers.RND then ExposedMembers.RND = {} end;
-	if not ExposedMembers.RNDInit then ExposedMembers.RNDInit = {} end;
-	--RND = ExposedMembers.RND;  -- functions from other modules will NOT be used here
-		
-	-- Plot Iterators
 	ExposedMembers.RND.PlotRingIterator 		= PlotRingIterator;
 	ExposedMembers.RND.PlotAreaSpiralIterator 	= PlotAreaSpiralIterator;
 	ExposedMembers.RND.PlotAreaSweepIterator 	= PlotAreaSweepIterator;
-	ExposedMembers.RNDInit["PlotIterators"] 	= true;
+
 end
 Initialize();
 

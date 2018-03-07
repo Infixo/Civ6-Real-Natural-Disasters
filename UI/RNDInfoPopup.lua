@@ -14,6 +14,7 @@ local RND = ExposedMembers.RND;
 
 -- debug output routine
 function dprint(sStr,p1,p2,p3,p4,p5,p6)
+	if true then return; end
 	local sOutStr = sStr;
 	if p1 ~= nil then sOutStr = sOutStr.." [1] "..tostring(p1); end
 	if p2 ~= nil then sOutStr = sOutStr.." [2] "..tostring(p2); end
@@ -83,14 +84,15 @@ end
 
 local iShownTurn:number = 0;
 local iShownStartingPlot:number = 0;
+local iShownEffects:number = 0;
 
 function ShowTheDisaster()
-	--dprint("FUNCAL ShowTheDisaster()");
+	dprint("FUNCAL ShowTheDisaster()");
 	local tTheDisaster = RND.tTheDisaster;
 	local tDisaster = tTheDisaster.DisasterType;
 	
 	-- check if maybe we're already showing the right one
-	if tTheDisaster.Turn == iShownTurn and tTheDisaster.StartingPlot == iShownStartingPlot then return; end
+	if tTheDisaster.Turn == iShownTurn and tTheDisaster.StartingPlot == iShownStartingPlot and #tTheDisaster.Effects == iShownEffects then return; end
 
 	-- check for our own units and plots
 	local sLocalOwner:string;
@@ -99,14 +101,12 @@ function ShowTheDisaster()
 	else sLocalOwner = nil; end
 	
 	-- Update header text and Icon
-	local sHeaderLabel = tDisaster.Name; -- Locale.ToUpper( Locale.Lookup( "" ));
+	local sHeaderLabel = Locale.ToUpper(Locale.Lookup(tDisaster.Name));
 	--dprint("  sHeaderLabel", sHeaderLabel);
 	Controls.HeaderLabel:SetText(sHeaderLabel);
 	Controls.DisasterReportLabel:SetHide(false);
-
-	-- Update Icon  test: will use ICON_ATLAS_CIVILIZATIONS, CivSymbols80.dds
-	dprint("  icon", tDisaster.Icon, IconManager:FindIconAtlas(tDisaster.Icon,80))
-	local textureOffsetX, textureOffsetY, textureSheet = IconManager:FindIconAtlas(tDisaster.Icon,80);
+	--dprint("  icon", tDisaster.Icon, IconManager:FindIconAtlas( GameInfo.RNDDisasters[tDisaster.Type].Icon, 80 ))
+	local textureOffsetX, textureOffsetY, textureSheet = IconManager:FindIconAtlas( GameInfo.RNDDisasters[tDisaster.Type].Icon, 80 );
 	if (textureOffsetX ~= nil) then
 		Controls.DisasterIcon:SetTexture( textureOffsetX, textureOffsetY, textureSheet );
 	end
@@ -167,8 +167,8 @@ function ShowTheDisaster()
 				sOwnerCity = Locale.Lookup(pCity:GetName());
 				--dprint("  plot owned by (civ,city)", sOwnerCiv, sOwnerCity);
 				if eOwner == eLocalPlayer then
-					sLine = sLine.."[COLOR_Green]"..sOwnerCiv.."[ENDCOLOR] ";
-					sLine = sLine.."([COLOR_Green]"..sOwnerCity.."[ENDCOLOR])";  -- the name of our cities is always different than Civ name (not a Minor)
+					sLine = sLine.."[COLOR_Blue]"..sOwnerCiv.."[ENDCOLOR] ";
+					sLine = sLine.."([COLOR_Blue]"..sOwnerCity.."[ENDCOLOR])";  -- the name of our cities is always different than Civ name (not a Minor)
 				elseif Players[eLocalPlayer]:GetDiplomacy():HasMet(eOwner) then
 					sLine = sLine..sOwnerCiv;
 					if sOwnerCiv ~= sOwnerCity then sLine = sLine.." ("..sOwnerCity..")"; end
@@ -191,16 +191,20 @@ function ShowTheDisaster()
 	
 	-- show the loooong string or short notice only
 	if table.count(tOutputStrings) == 0 then 
-		--Controls.DisasterDamageDesc:SetText("[ICON_CheckSuccess] Fortunately the "..sHeaderLabel.." has [COLOR_Green]NOT[ENDCOLOR] caused any significant damage in the area.");
 		Controls.DisasterDamageDesc:SetText(Locale.Lookup("LOC_RNDINFO_SUMMARY_NO_DAMAGE", sHeaderLabel));
 	else
 		Controls.DisasterDamageDesc:SetText(table.concat(tOutputStrings, "[NEWLINE]"));
 		Controls.DisasterDamageScroll:CalculateSize();
 	end
-    UI.PlaySound(tDisaster.Sound);
+	
+	-- sounds are not so loud any more, but also they will be played only if disaster is actually visible
+    if tTheDisaster:IsDisasterVisible() then UI.PlaySound(tDisaster.Sound);	end
+	
 	iShownTurn = tTheDisaster.Turn;
 	iShownStartingPlot = tTheDisaster.StartingPlot;
+	iShownEffects = #tTheDisaster.Effects;
 end
+
 
 -- ===========================================================================
 -- WINDOW CONTROLS FUNCTIONS
@@ -210,9 +214,8 @@ function OpenWindow()
 	dprint("FUNCAL OpenWindow() player", Game.GetLocalPlayer());
 	if Players[Game.GetLocalPlayer()] == nil then return; end
 	if Game.GetCurrentGameTurn() == GameConfiguration.GetStartTurn() then ShowTheParameters();
-	else ShowTheDisaster(); end  -- main function
+	else ShowTheDisaster();	end  -- main function
 	ContextPtr:SetHide(false);
-	--LuaEvents.HelloWorld_OpenHelloWorld();  -- callback to main script
 	--UI.PlaySound("UI_Screen_Open");
 end
 
@@ -223,7 +226,6 @@ function CloseWindow()
 	ContextPtr:SetHide(true);
 	--ContextPtr:ClearUpdate();  -- ???
 	UI.PlaySound("UI_Screen_Close");
-	--LuaEvents.HelloWorld_CloseHelloWorld();  -- callback to main script
 end
 
 -- ===========================================================================
@@ -235,14 +237,12 @@ function OnClose()
 	--]]
 	ContextPtr:SetHide(true);
 	UI.PlaySound("UI_Screen_Close");
-	--LuaEvents.HelloWorld_CloseHelloWorld();  -- might later call back main script to e.g. show ToolTips again?
 end
 
 -- ===========================================================================
 function OnInit( isHotload:boolean )
 	-- not used now, might be in the future
 end
-
 
 -- ===========================================================================
 function OnInputHandler( input )
@@ -255,6 +255,10 @@ function OnInputHandler( input )
 		end
 	end
 	return false;
+end
+
+function OnLocalPlayerTurnBegin()
+	dprint("FUNCAL OnLocalPlayerTurnBegin()");
 end
 
 -- ===========================================================================
@@ -271,7 +275,6 @@ end
 
 function Initialize()
 	if not ExposedMembers.RND then ExposedMembers.RND = {} end;
-	if not ExposedMembers.RNDInit then ExposedMembers.RNDInit = {} end;
 	RND = ExposedMembers.RND;
 	
 	-- initialize window
@@ -283,6 +286,7 @@ function Initialize()
 	Controls.ContinueButton:RegisterCallback( eLClick, OnClose );
 
 	-- game events
+	--Events.LocalPlayerTurnBegin.Add( OnLocalPlayerTurnBegin );
 	Events.LocalPlayerTurnEnd.Add( OnLocalPlayerTurnEnd );  -- close window if HotSeat
 	
 	-- inter-module events

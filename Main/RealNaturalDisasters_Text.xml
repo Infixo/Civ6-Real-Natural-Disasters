@@ -1,12 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- RealNaturalDisasters_Text -->
-<!-- Author: Grzegorz -->
-<!-- DateCreated: 3/28/2017 9:14:09 PM -->
+<!-- Real Natural Disasters - Text	-->
+<!-- Author: Infixo 				-->
+<!-- Created: March 28th, 2017 		-->
+<!-- Version 2: April 20th, 2017 	-->
+
 <GameData>
 
-  <BaseGameText>
+<BaseGameText>
+
+	<!-- Disasters -->
+	
+  	<Row Tag="LOC_DISASTER_EARTHQUAKE_NAME">
+  		<Text>Earthquake</Text>
+  	</Row>
+  	<Row Tag="LOC_DISASTER_EARTHQUAKE_DESCRIPTION">
+  		<Text>Earthquake</Text>
+  	</Row>
+  	<Row Tag="LOC_DISASTER_FLOOD_NAME">
+  		<Text>Flood</Text>
+  	</Row>
+  	<Row Tag="LOC_DISASTER_FLOOD_DESCRIPTION">
+  		<Text>Flood</Text>
+  	</Row>
+  	<Row Tag="LOC_DISASTER_METEOR_NAME">
+  		<Text>Meteor</Text>
+  	</Row>
+  	<Row Tag="LOC_DISASTER_METEOR_DESCRIPTION">
+  		<Text>Meteor</Text>
+  	</Row>
+  	<Row Tag="LOC_DISASTER_TORNADO_NAME">
+  		<Text>Tornado</Text>
+  	</Row>
+  	<Row Tag="LOC_DISASTER_TORNADO_DESCRIPTION">
+  		<Text>Tornado</Text>
+  	</Row>
+  	<Row Tag="LOC_DISASTER_TSUNAMI_NAME">
+  		<Text>Tsunami</Text>
+  	</Row>
+  	<Row Tag="LOC_DISASTER_TSUNAMI_DESCRIPTION">
+  		<Text>Tsunami</Text>
+  	</Row>
+  	<Row Tag="LOC_DISASTER_VOLCANO_NAME">
+  		<Text>Volcano</Text>
+  	</Row>
+  	<Row Tag="LOC_DISASTER_VOLCANO_DESCRIPTION">
+  		<Text>Volcano</Text>
+  	</Row>
+  	<Row Tag="LOC_DISASTER_WILDFIRE_NAME">
+  		<Text>Wildfire</Text>
+  	</Row>
+  	<Row Tag="LOC_DISASTER_WILDFIRE_DESCRIPTION">
+  		<Text>Wildfire</Text>
+  	</Row>
+
   
 	<!-- Reports -->
+	
 	<Row Tag="LOC_RNDINFO_GENERAL_INFO">
 		<Text>In year [ICON_Turn] {1_DisasterYear} the [COLOR_Red]{2_DisasterName}[ENDCOLOR] of magnitude [COLOR_Red]{3_Magnitude}[ENDCOLOR] that started at coordinates ({4_CoorX},{5_CoorY}) devastated [COLOR_Red]{6_Size}[ENDCOLOR] tiles.</Text>
 	</Row>
@@ -29,31 +78,31 @@
 		<Text>was hit with {1_Magnitude} strength</Text>
 	</Row>
 	<Row Tag="LOC_RNDINFO_NAME_SURVIVED">
-		<Text>{1_Name} [ICON_CheckSuccess] survived</Text>
+		<Text>{1_Name} [ICON_CheckSuccess] survived  [COLOR_Green]/{2_Prev}[ENDCOLOR]</Text>
 	</Row>
 	<Row Tag="LOC_RNDINFO_NAME_PILLAGED">
-		<Text>{1_Name} [ICON_Pillaged] pillaged</Text>
+		<Text>{1_Name} [ICON_Pillaged] damaged  [COLOR_Green]/{2_Prev}[ENDCOLOR]</Text>
 	</Row>
 	<Row Tag="LOC_RNDINFO_NAME_DAMAGED_HP">
-		<Text>{1_Name} [ICON_Pillaged] damaged for {2_TotDmg} HP</Text>
+		<Text>{1_Name} [ICON_Pillaged] damaged for {2_TotDmg} HP  [COLOR_Green]/{3_Prev}[ENDCOLOR]</Text>
 	</Row>
 	<Row Tag="LOC_RNDINFO_NAME_DESTROYED">
-		<Text>{1_Name} [ICON_CheckFail] destroyed</Text>
+		<Text>{1_Name} [ICON_CheckFail] destroyed  [COLOR_Green]/{2_Prev}[ENDCOLOR]</Text>
 	</Row>
 	<Row Tag="LOC_RNDINFO_NAME_KILLED">
-		<Text>{1_Name} ({2_Owner}) [ICON_CheckFail] killed</Text>
+		<Text>{1_Name} ({2_Owner}) [ICON_CheckFail] killed  [COLOR_Green]/{3_Prev}[ENDCOLOR]</Text>
 	</Row>
 	<Row Tag="LOC_RNDINFO_NAME_WOUNDED">
-		<Text>{1_Name} ({2_Owner}) [ICON_Pillaged] wounded for {3_Magnitude} HP</Text>
+		<Text>{1_Name} ({2_Owner}) [ICON_Pillaged] wounded for {3_Magnitude} HP  [COLOR_Green]/{4_Prev}[ENDCOLOR]</Text>
 	</Row>
 	<Row Tag="LOC_RNDINFO_NAME_DIED_WOUNDS">
-		<Text>{1_Name} ({2_Owner}) [ICON_CheckFail] died because of the wounds</Text>
+		<Text>{1_Name} ({2_Owner}) [ICON_CheckFail] died because of the wounds  [COLOR_Green]/{3_Prev}[ENDCOLOR]</Text>
 	</Row>
 	<Row Tag="LOC_RNDINFO_CITY_SURVIVED">
-		<Text>{1_Name} [ICON_CheckSuccess] survived with no population lost</Text>
+		<Text>{1_Name} [ICON_CheckSuccess] survived with no population lost  [COLOR_Green]/{2_Prev}[ENDCOLOR]</Text>
 	</Row>
 	<Row Tag="LOC_RNDINFO_CITY_LOST_POP">
-		<Text>{1_Name} [ICON_Pillaged] lost [COLOR_Red]{2_PopLost}[ENDCOLOR] of its population</Text>
+		<Text>{1_Name} [ICON_Pillaged] lost [COLOR_Red]{2_PopLost}[ENDCOLOR] of its population  [COLOR_Green]/{3_Prev}[ENDCOLOR]</Text>
 	</Row>
 	<Row Tag="LOC_RNDINFO_UNKNOWN_CITY">
 		<Text>Unknown City</Text>
@@ -61,16 +110,25 @@
 	<Row Tag="LOC_RNDINFO_UNKNOWN_CIV">
 		<Text>Unmet Civ</Text>
 	</Row>
+	<Row Tag="LOC_RNDINFO_RESOURCE_PERMANENT">
+		<Text>New resource [COLOR_LightBlue]{1_Resource}[ENDCOLOR]</Text>
+	</Row>
+	<Row Tag="LOC_RNDINFO_RESOURCE_TEMPORARY">
+		<Text>Resource [COLOR_LightBlue]{1_Resource}[ENDCOLOR] available for [COLOR_LightBlue]{2_Turns}[ENDCOLOR] turns</Text>
+	</Row>
 	
 
     <!-- Recent Disaster Lens -->
+	
   	<Row Tag="LOC_HUD_DISASTER_LENS">
   		<Text>Recent Disaster</Text>
   	</Row>
   	<Row Tag="LOC_HUD_DISASTER_LENS_TOOLTIP">
   		<Text>Shows an area and type of the recent Disaster</Text>
   	</Row>
+	
     <!-- Disaster Risk Lens -->
+	
   	<Row Tag="LOC_HUD_DISASTER_ET_LENS">
   		<Text>Earthquake Tornado</Text>
   	</Row>
@@ -89,7 +147,9 @@
   	<Row Tag="LOC_HUD_DISASTER_VW_LENS_TOOLTIP">
   		<Text>Volcano and Wildfire risk areas</Text>
   	</Row>
+	
     <!-- Disaster Types -->
+	
   	<Row Tag="LOC_TOOLTIP_DISASTER_EVENT">
   		<Text>Current Event</Text>
   	</Row>
@@ -114,7 +174,9 @@
   	<Row Tag="LOC_TOOLTIP_DISASTER_RISK_WILDFIRE">
   		<Text>Wildfire</Text>
   	</Row>
+	
 	<!-- Initial report about Disasters -->
+	
 	<Row Tag="LOC_RNDINFO_LINE_MOD_NAME">
 		<Text>Real Natural Disasters</Text>
 	</Row>
@@ -134,6 +196,88 @@
 		<Text>Total expected Disasters: [COLOR_Red]{1_TotDis}[ENDCOLOR]</Text>
 	</Row>
 	
-  </BaseGameText>
+	<!-- Resources -->
+	
+	<Row Tag="LOC_RESOURCE_DISASTER_SMALL_NAME">
+		<Text>Site of a Small Disaster</Text>
+	</Row>
+	<Row Tag="LOC_RESOURCE_DISASTER_LARGE_NAME">
+		<Text>Site of a Large Disaster</Text>
+	</Row>
+	<Row Tag="LOC_RESOURCE_EPICENTRUM_NAME">
+		<Text>Earthquake Epicenter</Text>
+	</Row>
+	<Row Tag="LOC_RESOURCE_FLOODED_LAND_NAME">
+		<Text>Flooded Land</Text>
+	</Row>
+	<Row Tag="LOC_RESOURCE_METEOR_CRATER_NAME">
+		<Text>Meteor Crater</Text>
+	</Row>
+	<Row Tag="LOC_RESOURCE_METEOR_SHARDS_NAME">
+		<Text>Meteor Shards</Text>
+	</Row>
+	<Row Tag="LOC_RESOURCE_VOLCANO_CRATER_NAME">
+		<Text>Volcano Crater</Text>
+	</Row>
+	<Row Tag="LOC_RESOURCE_VOLCANIC_ASH_NAME">
+		<Text>Volcanic Ash</Text>
+	</Row>
+	<Row Tag="LOC_RESOURCE_BURNED_GROUND_NAME">
+		<Text>Burned Ground with no Freshwater</Text>
+	</Row>
+	<Row Tag="LOC_RESOURCE_BURNED_WATER_NAME">
+		<Text>Burned Ground with Freshwater</Text>
+	</Row>
+	
+	<!-- Buildings -->
+	
+	<Row Tag="LOC_BUILDING_EARLY_WARNING_NAME">
+		<Text>Disaster Research Center</Text>
+	</Row>
+	<Row Tag="LOC_BUILDING_EARLY_WARNING_DESCRIPTION">
+		<Text>Disaster Research Center</Text>
+	</Row>
+	<Row Tag="LOC_BUILDING_FIRE_STATION_NAME">
+		<Text>Fire Station</Text>
+	</Row>
+	<Row Tag="LOC_BUILDING_FIRE_STATION_DESCRIPTION">
+		<Text>Fire Station</Text>
+	</Row>
+	<Row Tag="LOC_BUILDING_EMERGENCY_SHELTER_NAME">
+		<Text>Emergency Shelter</Text>
+	</Row>
+	<Row Tag="LOC_BUILDING_EMERGENCY_SHELTER_DESCRIPTION">
+		<Text>Emergency Shelter</Text>
+	</Row>
+	<Row Tag="LOC_BUILDING_BREAKWATERS_NAME">
+		<Text>Breakwaters</Text>
+	</Row>
+	<Row Tag="LOC_BUILDING_BREAKWATERS_DESCRIPTION">
+		<Text>Breakwaters</Text>
+	</Row>
+	<Row Tag="LOC_BUILDING_RIVER_DAM_NAME">
+		<Text>River Dam</Text>
+	</Row>
+	<Row Tag="LOC_BUILDING_RIVER_DAM_DESCRIPTION">
+		<Text>River Dam</Text>
+	</Row>
+	<Row Tag="LOC_BUILDING_INSURANCE_COMPANY_NAME">
+		<Text>Insurance Inc.</Text>
+	</Row>
+	<Row Tag="LOC_BUILDING_INSURANCE_COMPANY_DESCRIPTION">
+		<Text>Insurance Inc.</Text>
+	</Row>
+	<Row Tag="LOC_PROJECT_DISASTER_RESISTANCE_NAME">
+		<Text>Disaster Resistant Structures</Text>
+	</Row>
+	<Row Tag="LOC_PROJECT_DISASTER_RESISTANCE_SHORT_NAME">
+		<Text>Disaster Resistant Structures</Text>
+	</Row>
+	<Row Tag="LOC_PROJECT_DISASTER_RESISTANCE_DESCRIPTION">
+		<Text>Disaster Resistant Structures</Text>
+	</Row>
+	
+	
+</BaseGameText>
 
 </GameData>
