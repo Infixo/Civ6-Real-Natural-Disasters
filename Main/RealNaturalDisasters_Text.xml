@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- RealNaturalDisasters_Text -->
+<!-- Author: Grzegorz -->
+<!-- DateCreated: 3/28/2017 9:14:09 PM -->
+<GameData>
+
+  <BaseGameText>
+  
+	<!-- Reports -->
+	<Row Tag="LOC_RNDINFO_GENERAL_INFO">
+		<Text>In year [ICON_Turn] {1_DisasterYear} the [COLOR_Red]{2_DisasterName}[ENDCOLOR] of magnitude [COLOR_Red]{3_Magnitude}[ENDCOLOR] that started at coordinates ({4_CoorX},{5_CoorY}) devastated [COLOR_Red]{6_Size}[ENDCOLOR] tiles.</Text>
+	</Row>
+	<Row Tag="LOC_RNDINFO_SUMMARY_NO_DAMAGE">
+		<Text>[ICON_CheckSuccess] Fortunately the {1_DisasterName} has [COLOR_Green]NOT[ENDCOLOR] caused any significant damage in the area.</Text>
+	</Row>
+	<Row Tag="LOC_RNDINFO_PLOT_WATER_AT">
+		<Text>Water at ({1_CoorX},{2_CoorY})</Text>
+	</Row>
+	<Row Tag="LOC_RNDINFO_PLOT_LAND_AT">
+		<Text>Land at ({1_CoorX},{2_CoorY})</Text>
+	</Row>
+	<Row Tag="LOC_RNDINFO_PLOT_OWNED_BY">
+		<Text>owned by</Text>
+	</Row>
+	<Row Tag="LOC_RNDINFO_PLOT_WITHOUT_OWNER">
+		<Text>without owner</Text>
+	</Row>
+	<Row Tag="LOC_RNDINFO_PLOT_WAS_HIT">
+		<Text>was hit with {1_Magnitude} strength</Text>
+	</Row>
+    <!-- Recent Disaster Lens -->
+  	<Row Tag="LOC_HUD_DISASTER_LENS">
+  		<Text>Recent Disaster</Text>
+  	</Row>
+  	<Row Tag="LOC_HUD_DISASTER_LENS_TOOLTIP">
+  		<Text>Shows an area and type of the recent Disaster</Text>
+  	</Row>
+    <!-- Disaster Risk Lens -->
+  	<Row Tag="LOC_HUD_DISASTER_ET_LENS">
+  		<Text>Earthquake Tornado</Text>
+  	</Row>
+  	<Row Tag="LOC_HUD_DISASTER_FT_LENS">
+  		<Text>Flood Tsunami</Text>
+  	</Row>
+  	<Row Tag="LOC_HUD_DISASTER_VW_LENS">
+  		<Text>Volcano Wildfire</Text>
+  	</Row>
+  	<Row Tag="LOC_HUD_DISASTER_ET_LENS_TOOLTIP">
+  		<Text>Earthquake and Tornado risk areas</Text>
+  	</Row>
+  	<Row Tag="LOC_HUD_DISASTER_FT_LENS_TOOLTIP">
+  		<Text>Flood and Tsunami risk areas</Text>
+  	</Row>
+  	<Row Tag="LOC_HUD_DISASTER_VW_LENS_TOOLTIP">
+  		<Text>Volcano and Wildfire risk areas</Text>
+  	</Row>
+    <!-- Disaster Types -->
+  	<Row Tag="LOC_TOOLTIP_DISASTER_EVENT">
+  		<Text>Current Event</Text>
+  	</Row>
+  	<Row Tag="LOC_TOOLTIP_DISASTER_RISK_EARTHQUAKE">
+  		<Text>Earthquake</Text>
+  	</Row>
+  	<Row Tag="LOC_TOOLTIP_DISASTER_RISK_FLOOD">
+  		<Text>Flood</Text>
+  	</Row>
+  	<Row Tag="LOC_TOOLTIP_DISASTER_RISK_METEOR">
+  		<Text>Meteor</Text>
+  	</Row>
+  	<Row Tag="LOC_TOOLTIP_DISASTER_RISK_TORNADO">
+  		<Text>Tornado</Text>
+  	</Row>
+  	<Row Tag="LOC_TOOLTIP_DISASTER_RISK_TSUNAMI">
+  		<Text>Tsunami</Text>
+  	</Row>
+  	<Row Tag="LOC_TOOLTIP_DISASTER_RISK_VOLCANO">
+  		<Text>Volcano</Text>
+  	</Row>
+  	<Row Tag="LOC_TOOLTIP_DISASTER_RISK_WILDFIRE">
+  		<Text>Wildfire</Text>
+  	</Row>
+	
+  </BaseGameText>
+
+</GameData>

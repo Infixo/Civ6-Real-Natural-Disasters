@@ -1,0 +1,10 @@
+Event	ID	Name			Wwise Object Path	Notes
+	119883175	Disaster_Event_Bell			\Default Work Unit\Disaster_Event_Bell	
+	125141579	Disaster_Event_Siren			\Default Work Unit\Disaster_Event_Siren	
+	3343253468	Disaster_Event_Shot			\Default Work Unit\Disaster_Event_Shot	
+
+In Memory Audio	ID	Name	Audio source file		Wwise Object Path	Notes	Data Size
+	128447474	siren nuclear alarm	C:\Users\Grzegorz\Documents\My Games\Sid Meier's Civilization VI\Modding\5_Disasters\RNDSounds\.cache\Windows\SFX\siren nuclear alarm_9E69E797.wem		\Actor-Mixer Hierarchy\Default Work Unit\siren nuclear alarm		253504
+	870153236	howitzer 105mm short	C:\Users\Grzegorz\Documents\My Games\Sid Meier's Civilization VI\Modding\5_Disasters\RNDSounds\.cache\Windows\SFX\howitzer 105mm short_9E69E797.wem		\Actor-Mixer Hierarchy\Default Work Unit\howitzer 105mm short		626312
+	970460794	cathedral bell once	C:\Users\Grzegorz\Documents\My Games\Sid Meier's Civilization VI\Modding\5_Disasters\RNDSounds\.cache\Windows\SFX\cathedral bell once_9E69E797.wem		\Actor-Mixer Hierarchy\Default Work Unit\cathedral bell once		477304
+

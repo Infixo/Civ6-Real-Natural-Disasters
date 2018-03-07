@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Context Hidden="1">
+					 
+	<Grid Anchor="R,T" Size="500,800" Offset="70,70" Style="DropShadow">
+		<Container Size="parent-100,parent-100" Offset="0,0" Anchor="C,C" ConsumeMouse="1">
+			<Image Size="parent,parent" Texture="Parchment_Pattern" StretchMode="Tile">
+				<Grid Size="parent,parent" Texture="BoostPopup_Frame" SliceCorner="30,30" SliceSize="20,20">
+				
+				<!-- Head Banner -->
+				<Grid Size="parent+40,80" Offset="-20,0" Texture="Controls_BannerHeaderBlue3" SliceCorner="101,0" SliceSize="65,64" TextureSliceSize="267,64">
+					<Label ID="HeaderLabel" Anchor="C,T" Offset="0,22" Color="Black" Style="FontFlair22" SmallCaps="28" SmallCapsType="EveryWord" FontStyle="Shadow"/>
+				</Grid>
+			
+				<!-- Disaster Icon -->
+				<Image ID="DisasterIcon" Texture="RNDDisasters80" Anchor="L,T" Offset="20,60" Size="80,80" />
+
+				<!-- General Info -->
+				<Label ID="DisasterGeneralInfo" Size="parent-125,60" Anchor="L,T" Offset="105,70" Color="Black" Style="FontNormal16" FontStyle="Shadow" Align="left" WrapWidth="parent-120"/>
+
+				<!-- Disaster Damage Info -->
+				<Label String="DEVASTATION REPORT" Size="parent,20" Anchor="C,T" Offset="0,145" Color="Red" Style="FontNormal16" FontStyle="Shadow" Align="center"/>
+				<Box Size="parent-40,parent-245" Anchor="C,B" Offset="0,75" Color="0,0,0,100">
+					<ScrollPanel ID="DisasterDamageScroll" Size="parent,parent" Offset="0,0" Vertical="1">
+						<ScrollBar Anchor="R,C" Offset="0,0" AnchorSide="I,I" Style="ScrollVerticalBarAlt" />
+						<Label ID="DisasterDamageDesc" Anchor="L,T" Offset="5,5" Color="White" Style="FontNormal14" FontStyle="Shadow" EffectColor="Black" WrapWidth="parent-15"/>
+					</ScrollPanel>
+				</Box>
+			
+				<!-- Continue Button -->
+				<GridButton ID="ContinueButton" Size="260,45" Anchor="C,B" Offset="0,15" String="LOC_HUD_CLOSE" Style="MainButton"/>
+			
+				</Grid>
+				
+			</Image>
+		</Container>
+	</Grid>
+	
+</Context>

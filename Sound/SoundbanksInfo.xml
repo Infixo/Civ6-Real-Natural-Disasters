@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<SoundBanksInfo Platform="Windows" BasePlatform="Windows" SchemaVersion="10" SoundbankVersion="113">
+	<RootPaths>
+		<ProjectRoot>C:\Users\Grzegorz\Documents\My Games\Sid Meier's Civilization VI\Modding\5_Disasters\RNDSounds\</ProjectRoot>
+		<SourceFilesRoot>C:\Users\Grzegorz\Documents\My Games\Sid Meier's Civilization VI\Modding\5_Disasters\RNDSounds\.cache\Windows\</SourceFilesRoot>
+		<SoundBanksRoot>C:\Users\Grzegorz\Documents\My Games\Sid Meier's Civilization VI\Modding\5_Disasters\RNDSounds\GeneratedSoundBanks\Windows\</SoundBanksRoot>
+		<ExternalSourcesInputFile></ExternalSourcesInputFile>
+		<ExternalSourcesOutputRoot>C:\Users\Grzegorz\Documents\My Games\Sid Meier's Civilization VI\Modding\5_Disasters\RNDSounds\GeneratedSoundBanks\Windows\</ExternalSourcesOutputRoot>
+	</RootPaths>
+	<DialogueEvents/>
+	<StreamedFiles/>
+	<MediaFilesNotInAnyBank/>
+	<SoundBanks>
+		<SoundBank Id="3897739629" Language="SFX">
+			<ShortName>RND_Soundbank</ShortName>
+			<Path>RND_Soundbank.bnk</Path>
+			<IncludedEvents>
+				<Event Id="119883175" Name="Disaster_Event_Bell"/>
+				<Event Id="3343253468" Name="Disaster_Event_Shot"/>
+				<Event Id="125141579" Name="Disaster_Event_Siren"/>
+			</IncludedEvents>
+			<IncludedMemoryFiles>
+				<File Id="128447474" Language="SFX">
+					<ShortName>siren nuclear alarm.wav</ShortName>
+					<Path>SFX\siren nuclear alarm_9E69E797.wem</Path>
+				</File>
+				<File Id="870153236" Language="SFX">
+					<ShortName>howitzer 105mm short.wav</ShortName>
+					<Path>SFX\howitzer 105mm short_9E69E797.wem</Path>
+				</File>
+				<File Id="970460794" Language="SFX">
+					<ShortName>cathedral bell once.wav</ShortName>
+					<Path>SFX\cathedral bell once_9E69E797.wem</Path>
+				</File>
+			</IncludedMemoryFiles>
+		</SoundBank>
+	</SoundBanks>
+</SoundBanksInfo>

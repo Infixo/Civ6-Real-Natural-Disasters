@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- RealNaturalDisasters_Icons -->
+<!-- Author: Infixo -->
+<!-- DateCreated: 4/4/2017 9:30:59 PM -->
+<GameInfo>
+	<IconTextureAtlases>
+		<Row Name="ICON_ATLAS_DISASTERS" IconSize="80" IconsPerRow="4" IconsPerColumn="2" Filename="RNDDisasters80.dds" />
+	</IconTextureAtlases>
+	<IconDefinitions>
+		<Row Name="ICON_DISASTER_EARTHQUAKE" Atlas="ICON_ATLAS_DISASTERS" Index="0" />
+		<Row Name="ICON_DISASTER_FLOOD" 	 Atlas="ICON_ATLAS_DISASTERS" Index="1" />
+		<Row Name="ICON_DISASTER_METEOR" 	 Atlas="ICON_ATLAS_DISASTERS" Index="2" />
+		<Row Name="ICON_DISASTER_TORNADO" 	 Atlas="ICON_ATLAS_DISASTERS" Index="3" />
+		<Row Name="ICON_DISASTER_TSUNAMI" 	 Atlas="ICON_ATLAS_DISASTERS" Index="4" />
+		<Row Name="ICON_DISASTER_VOLCANO" 	 Atlas="ICON_ATLAS_DISASTERS" Index="5" />
+		<Row Name="ICON_DISASTER_WILDFIRE" 	 Atlas="ICON_ATLAS_DISASTERS" Index="6" />
+	</IconDefinitions>
+</GameInfo>
