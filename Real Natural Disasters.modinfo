@@ -2,8 +2,8 @@
 <Mod id="b28a5b09-b356-48f3-9ab9-b9ec2e5324c6" version="1">
   <Properties>
     <Name>Real Natural Disasters</Name>
-    <Description>Adds a new gameplay mechanics - Natural Disasters.[NEWLINE][ICON_BULLET]Earthquakes[NEWLINE][ICON_BULLET]Meteors[NEWLINE][ICON_BULLET]Tornadoes[NEWLINE][ICON_BULLET]Tsunamis[NEWLINE][ICON_BULLET]Wildfires[NEWLINE][ICON_BULLET]Volcanos[NEWLINE][ICON_BULLET]Droughts[NEWLINE]In the future - Technological Disasters:[NEWLINE][ICON_BULLET]Nuclear meltdows[NEWLINE][ICON_BULLET]Plane crashes</Description>
-    <Teaser>Adds a new gameplay mechanics - Natural Disasters.[NEWLINE][ICON_BULLET]Earthquakes[NEWLINE][ICON_BULLET]Meteors[NEWLINE][ICON_</Teaser>
+    <Description>Adds a new gameplay mechanics - Natural Disasters.[NEWLINE][ICON_BULLET]Earthquakes[NEWLINE][ICON_BULLET]Meteors[NEWLINE][ICON_BULLET]Tornadoes[NEWLINE][ICON_BULLET]Tsunamis[NEWLINE][ICON_BULLET]Wildfires[NEWLINE][ICON_BULLET]Volcanos[NEWLINE]In the future also Technological Disasters:[NEWLINE][ICON_BULLET]Nuclear meltdows[NEWLINE][ICON_BULLET]Plane crashes[NEWLINE][ICON_BULLET]Droughts</Description>
+    <Teaser>Adds Natural Disasters to the game</Teaser>
     <Authors>Infixo</Authors>
   </Properties>
   <FrontEndActions>
@@ -16,8 +16,8 @@
   </FrontEndActions>
   <InGameActions>
     <UpdateText id="RND_Text">
-      <File>ML/morelenses_text.xml</File>
       <File>Main/RealNaturalDisasters_Text.xml</File>
+      <File>ML/morelenses_text.xml</File>
     </UpdateText>
     <UpdateDatabase id="RND_Database">
       <File>Main/RealNaturalDisasters.sql</File>

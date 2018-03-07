@@ -358,7 +358,8 @@ local Effect_Record = {
 	-- plot info
 	Plot = 0,			-- what plot index
 	Magnitude = 0,		-- what magnitude was applied
-	OwnerCiv = "",		-- who owns it (civ) and takes affect, it will be "" if nobody
+	OwnerID = 0,		-- who owns it (civ), it will be -1 if nobody
+	OwnerCiv = "",		-- who owns it (civ) and takes effect, it will be "" if nobody
 	OwnerCity = "",		-- who owns it (city), "" if nobody
 	-- object info
 	Class = 0,			-- see EffectClasses
@@ -371,7 +372,7 @@ local Effect_Record = {
 	IsDestroyed = false,-- if completely destroyed
 	IsDamaged = true,	-- if not destroyed but damaged
 	Damage = 0,			-- damage value (applicabe only to Units as of now)
-	Desc = "",			-- effect shor description
+	Desc = "",			-- effect short description
 	DescLong = "",		-- effect long description (for debug?)
 	-- specific class data
 	UnitOwnerID = 0,	-- ID of player that owns the unit - need to destroy it
@@ -382,13 +383,14 @@ local Effect_Record = {
 -- constructor (1) empty record
 -- constructor (2) we have plot and magnitude
 -- constructor (3) we have an owner
-function Effect_Record:new(iPlot:number, iMagnitude:number, sOwnerCiv:string, sOwnerCity:string, sLocalOwner:string)
-	dprint("FUNCAL Effect_Record:new() (plot,magn,civ,cit,own)",iPlot,iMagnitude,sOwnerCiv,sOwnerCity,sLocalOwner);
+function Effect_Record:new(iPlot:number, iMagnitude:number, eOwnerID:number, sOwnerCiv:string, sOwnerCity:string, sLocalOwner:string)
+	dprint("FUNCAL Effect_Record:new() (plot,magn,pid,civ,cit,own)",iPlot,iMagnitude,eOwnerID,sOwnerCiv,sOwnerCity,sLocalOwner);
 	local tObject = {};
 	setmetatable(tObject, {__index = Effect_Record}); -- this should link a newly created object to table that acts as object class
 	-- plot info
 	tObject.Plot = 0;				-- what plot index
 	tObject.Magnitude = 0;			-- what magnitude was applied
+	tObject.OwnerID = -1;			-- who owns it (civ), it will be -1 if nobody
 	tObject.OwnerCiv = "";			-- who owns it (civ) and takes affect, it will be "" if nobody
 	tObject.OwnerCity = "";			-- who owns it (city), "" if nobody
 	-- object info
@@ -405,7 +407,7 @@ function Effect_Record:new(iPlot:number, iMagnitude:number, sOwnerCiv:string, sO
 	tObject.Desc = "";				-- effect shor description
 	tObject.DescLong = "";			-- effect long description (for debug?)
 	-- specific class data
-	tObject.UnitOwnerID = 0;		-- ID of player that owns the unit - need to destroy it
+	tObject.UnitOwnerID = -1;		-- ID of player that owns the unit - need to destroy it
 	tObject.UnitOwner = "";			-- if unit is on tile, it can be owned by somebody else
 	--tObject.Population = 0;			-- city's population
 	-- version (2) for plot initiation
@@ -413,7 +415,8 @@ function Effect_Record:new(iPlot:number, iMagnitude:number, sOwnerCiv:string, sO
 		tObject.Plot = iPlot;
 		tObject.Magnitude = iMagnitude;
 		-- version (3) for owned plot
-		if sOwnerCiv ~= nil and sOwnerCity ~= nil then
+		if eOwnerID ~= nil and sOwnerCiv ~= nil and sOwnerCity ~= nil then
+			tObject.OwnerID = eOwnerID;
 			tObject.OwnerCiv = sOwnerCiv;
 			tObject.OwnerCity = sOwnerCity;
 			tObject.OurOwn = (sOwnerCiv == sLocalOwner);
@@ -426,6 +429,10 @@ end
 function Effect_Record:dshoweffect()
 	dprint("FUNCAL Effect_Record:dshoweffect()");
 	for k,v in pairs(self) do dprint("  (k,v)", k, v); end
+end
+
+-- function to generate desc on-the-fly; needed to properly handle 'unmet player' condition, also should be easier to apply changes if needed
+function Effect_Record:GetDescription(eLocalPlayer:number, sLocalCiv:string)
 end
 
 -- this function will assign an object that later will be used in ApplyEffect()
@@ -490,6 +497,12 @@ function Effect_Record:DamageObject()
 	if     self.Class == EffectClasses.EFFECT_UNIT then
 	
 		-- DAMAGE UNIT
+		-- unit description is little different than others - it contains unit's owner
+		-- must add check if it's us or if we met the civ
+		local bHasMet = Players[Game.GetLocalPlayer()]:GetDiplomacy():HasMet(self.UnitOwnerID);
+		local sUnitOwner = Locale.Lookup("LOC_RNDINFO_UNKNOWN_CIV");
+		if self.OurOwn then sUnitOwner = "[COLOR_Green]"..self.UnitOwner.."[ENDCOLOR]";  -- make it green
+		elseif bHasMet then sUnitOwner = self.UnitOwner; end  -- we can show the name
 		--local iDamage:number, iMaxDamage:number = self.Object:GetDamage(), self.Object:GetMaxDamage();  -- don't need iMaxDamage?
 		local iNewDamage:number = self.Object:GetDamage() + self.Magnitude;
 		if iNewDamage < self.Object:GetMaxDamage() then  -- wounded only
@@ -497,9 +510,10 @@ function Effect_Record:DamageObject()
 			if bRealEffects then self.Object:SetDamage(iNewDamage); end
 			dprint("    ...checking result (id) (new)", self.Object:GetID(), self.Object:GetDamage());
 			self.IsDamaged = true;
-			local unitOwner:string = self.UnitOwner;
-			if self.OurOwn then unitOwner = "[COLOR_Green]"..unitOwner.."[ENDCOLOR]"; end
-			self.Desc = self.Name.." ("..unitOwner..") [ICON_Pillaged] wounded for "..self.Magnitude.." HP";
+			--local unitOwner:string = self.UnitOwner;
+			--if self.OurOwn then unitOwner = "[COLOR_Green]"..unitOwner.."[ENDCOLOR]"; end
+			--self.Desc = self.Name.." ("..sUnitOwner..") [ICON_Pillaged] wounded for "..self.Magnitude.." HP";
+			self.Desc = Locale.Lookup("LOC_RNDINFO_NAME_WOUNDED", self.Name, sUnitOwner, self.Magnitude);
 		else  -- it seems that the unit didn't survived the wounds
 		
 			-- KILL UNIT
@@ -508,8 +522,9 @@ function Effect_Record:DamageObject()
 			--if bRealEffects then UnitManager.Kill(self.Object); end
 			Players[self.UnitOwnerID]:GetUnits():Destroy(self.Object);
 			self.IsDestroyed = true;
-			self.Desc = self.Name.." ("..self.UnitOwner..") [ICON_CheckFail] died because of the wounds";
-			
+			--self.Desc = self.Name.." ("..sUnitOwner..") [ICON_CheckFail] died because of the wounds";
+			self.Desc = Locale.Lookup("LOC_RNDINFO_NAME_DIED_WOUNDS", self.Name, sUnitOwner);
+						
 		end
 		
 	elseif self.Class == EffectClasses.EFFECT_IMPROVEMENT then
@@ -535,6 +550,11 @@ function Effect_Record:DamageObject()
 	elseif self.Class == EffectClasses.EFFECT_CITY then
 	
 		-- DAMAGE City
+		-- cannot show sity's name if the owner has not been met
+		local bHasMet = Players[Game.GetLocalPlayer()]:GetDiplomacy():HasMet(self.OwnerID);
+		local sName = Locale.Lookup("LOC_RNDINFO_UNKNOWN_CITY");
+		if self.OurOwn then sName = "[COLOR_Green]"..self.Name.."[ENDCOLOR]";  -- make it green
+		elseif bHasMet then sName = self.Name; end  -- we can show the name
 		-- % function will not really work for small cites; Magnitude always shows the power - small cities gets should be wiped out [TODO]
 		-- as for now population loss will be proortional to Magnitude i.e. 1 pop for 10 points - easy
 		-- even the worst catastrophies will never kill entire city if it's big
@@ -546,9 +566,11 @@ function Effect_Record:DamageObject()
 		dprint("    ...checking result (name,pop)", self.Object:GetName(), self.Object:GetPopulation());
 		if iPopLost > 0 then
 			self.IsDamaged = true;
-			self.Desc = self.Name.." [ICON_Pillaged] lost [COLOR_Red]"..iPopLost.."[ENDCOLOR] of its population";
+			--self.Desc = sName.." [ICON_Pillaged] lost [COLOR_Red]"..iPopLost.."[ENDCOLOR] of its population";
+			self.Desc = Locale.Lookup("LOC_RNDINFO_CITY_LOST_POP", sName, iPopLost);
 		else
-			self.Desc = self.Name.." [ICON_CheckSuccess] survived with no population lost";
+			--self.Desc = sName.." [ICON_CheckSuccess] survived with no population lost";
+			self.Desc = Locale.Lookup("LOC_RNDINFO_CITY_SURVIVED", sName);
 		end
 		
 	elseif self.Class == EffectClasses.EFFECT_DISTRICT then
@@ -576,7 +598,8 @@ function Effect_Record:DamageObject()
 							self.Object:GetDamage(DefenseTypes.DISTRICT_GARRISON), self.Object:GetDamage(DefenseTypes.DISTRICT_OUTER));
 		if iTotDmg > 0 then
 			self.IsDamaged = true;
-			self.Desc = self.Name.." [ICON_Pillaged] damaged for "..iTotDmg.." HP";
+			--self.Desc = self.Name.." [ICON_Pillaged] damaged for "..iTotDmg.." HP";
+			self.Desc = Locale.Lookup("LOC_RNDINFO_NAME_DAMAGED_HP", self.Name, iTotDmg);
 		else
 			dprint("  ...the district survived!");
 			self.Desc = Locale.Lookup("LOC_RNDINFO_NAME_SURVIVED", self.Name);
@@ -616,15 +639,19 @@ function Effect_Record:DestroyObject()
 	if     self.Class == EffectClasses.EFFECT_UNIT then
 	
 		-- KILL UNIT
+		local bHasMet = Players[Game.GetLocalPlayer()]:GetDiplomacy():HasMet(self.UnitOwnerID);
+		local sUnitOwner = Locale.Lookup("LOC_RNDINFO_UNKNOWN_CIV");
+		if self.OurOwn then sUnitOwner = "[COLOR_Green]"..self.UnitOwner.."[ENDCOLOR]";  -- make it green
+		elseif bHasMet then sUnitOwner = self.UnitOwner; end  -- we can show the name
 		dprint("  ...destroying unit (player,civ,unitid,plot,state)", self.UnitOwnerID, self.UnitOwner, self.ID, self.Plot, Units.GetUnitByIndexInPlot(self.ID, self.Plot));
 		--if bRealEffects then UnitManager.Kill(self.UnitOwnerID, self.ID); end
 		--if bRealEffects then UnitManager.Kill(self.Object); end
 		Players[self.UnitOwnerID]:GetUnits():Destroy(self.Object);
 		dprint("    ...checking result (unitid,plot,state)", self.ID, self.Plot, Units.GetUnitByIndexInPlot(self.ID, self.Plot));
 		self.IsDestroyed = true;
-		local unitOwner:string = self.UnitOwner;
-		if self.OurOwn then unitOwner = "[COLOR_Green]"..unitOwner.."[ENDCOLOR]"; end
-		self.Desc = Locale.Lookup("LOC_RNDINFO_NAME_KILLED", self.Name, unitOwner); --..") [ICON_CheckFail] killed";
+		--local unitOwner:string = self.UnitOwner;
+		--if self.OurOwn then unitOwner = "[COLOR_Green]"..unitOwner.."[ENDCOLOR]"; end
+		self.Desc = Locale.Lookup("LOC_RNDINFO_NAME_KILLED", self.Name, sUnitOwner); --..") [ICON_CheckFail] killed";
 		
 	elseif self.Class == EffectClasses.EFFECT_IMPROVEMENT then
 	
@@ -803,7 +830,8 @@ end
 
 -- changes parameters according to the map size of num of disasters
 function Disaster_Object:AdjustProbability(fAdjustment:number)
-	self.BaseProbability = math.max(math.floor(self.BaseProbability * fAdjustment), 1);  -- we need at least 1/1000000 chance
+	--self.BaseProbability = math.max(math.floor(self.BaseProbability * fAdjustment), 1);  -- we need at least 1/1000000 chance
+	self.BaseProbability = math.floor(self.BaseProbability * fAdjustment);  -- we allow for 0 probabbility if someone will want to play a modpack that includes RND but doesn't want RND itself (Ananse's request)
 	self.DeltaProbability = math.floor(self.DeltaProbability * fAdjustment);
 end
 
@@ -1756,12 +1784,12 @@ function tTheDisaster:AnalyzePlotForEffects(iPlot:number, iMagnitude:number)
 	else sLocalOwner = nil; end
 	
 	-- 0 - check if there's an owner
-	local sOwnerCiv:string, sOwnerCity:string = "", "";
+	local eOwnerID, sOwnerCiv:string, sOwnerCity:string = -1, "", "";  -- will be passed to new effects
 	if pPlot:IsOwned() then
-		local eOwner = pPlot:GetOwner();
+		eOwnerID = pPlot:GetOwner();
 		local pCity = Cities.GetPlotPurchaseCity(pPlot);
-		dprint("  plot owned by (civ,city)", eOwner, pCity:GetID());
-		sOwnerCiv = PlayerConfigurations[eOwner]:GetCivilizationShortDescription();  -- LOC_CIVILIZATION_AMERICA_NAME
+		dprint("  plot owned by (civ,city)", eOwnerID, pCity:GetID());
+		sOwnerCiv = PlayerConfigurations[eOwnerID]:GetCivilizationShortDescription();  -- LOC_CIVILIZATION_AMERICA_NAME
 		sOwnerCiv = Locale.Lookup(sOwnerCiv);
 		sOwnerCity = Locale.Lookup(pCity:GetName());
 		dprint("  plot owned by (civ,city)", sOwnerCiv, sOwnerCity);
@@ -1771,7 +1799,7 @@ function tTheDisaster:AnalyzePlotForEffects(iPlot:number, iMagnitude:number)
 	if Units.AreUnitsInPlot(iPlot) then
 		for _,unit in pairs(Units.GetUnitsInPlot(iPlot)) do
 			dprint("  ...found a unit", unit:GetName());
-			tEffect = Effect_Record:new(iPlot, iMagnitude, sOwnerCiv, sOwnerCity, sLocalOwner);
+			tEffect = Effect_Record:new(iPlot, iMagnitude, eOwnerID, sOwnerCiv, sOwnerCity, sLocalOwner);
 			tEffect:AssignObject(EffectClasses.EFFECT_UNIT, unit, sLocalOwner, -1);
 			table.insert(self.Effects, tEffect);
 		end
@@ -1780,7 +1808,7 @@ function tTheDisaster:AnalyzePlotForEffects(iPlot:number, iMagnitude:number)
 	-- 2 - check for improvements
 	if pPlot:GetImprovementType() ~= -1 then
 		dprint("  ...found an improvement", pPlot:GetImprovementType());
-		tEffect = Effect_Record:new(iPlot, iMagnitude, sOwnerCiv, sOwnerCity, sLocalOwner);
+		tEffect = Effect_Record:new(iPlot, iMagnitude, eOwnerID, sOwnerCiv, sOwnerCity, sLocalOwner);
 		tEffect:AssignObject(EffectClasses.EFFECT_IMPROVEMENT, pPlot, sLocalOwner, -1);
 		table.insert(self.Effects, tEffect);
 	end
@@ -1789,7 +1817,7 @@ function tTheDisaster:AnalyzePlotForEffects(iPlot:number, iMagnitude:number)
 	--if pPlot():IsCity() then
 	if Cities.IsCityInPlot(iPlot) then
 		dprint("  ...found a city");
-		tEffect = Effect_Record:new(iPlot, iMagnitude, sOwnerCiv, sOwnerCity, sLocalOwner);
+		tEffect = Effect_Record:new(iPlot, iMagnitude, eOwnerID, sOwnerCiv, sOwnerCity, sLocalOwner);
 		tEffect:AssignObject(EffectClasses.EFFECT_CITY, Cities.GetCityInPlot(iPlot), sLocalOwner, -1);
 		table.insert(self.Effects, tEffect);
 	end
@@ -1810,7 +1838,7 @@ function tTheDisaster:AnalyzePlotForEffects(iPlot:number, iMagnitude:number)
 				-- must be careful with WONDERS - don't know if they can be Pillaged - must CHECK LATER
 				-- anyway, district will be registered only if NOT internal
 				if GameInfo.Districts[pDistrict:GetType()].InternalOnly == false then
-					tEffect = Effect_Record:new(iPlot, iMagnitude, sOwnerCiv, sOwnerCity, sLocalOwner);
+					tEffect = Effect_Record:new(iPlot, iMagnitude, eOwnerID, sOwnerCiv, sOwnerCity, sLocalOwner);
 					tEffect:AssignObject(EffectClasses.EFFECT_DISTRICT, pDistrict, sLocalOwner, -1);
 					table.insert(self.Effects, tEffect);
 				end
@@ -1821,7 +1849,7 @@ function tTheDisaster:AnalyzePlotForEffects(iPlot:number, iMagnitude:number)
 						pCityBuildings:GetBuildingLocation(building.Index) == iPlot then
 						-- found building, register it
 						dprint("  ...found a building (id,name)", building.Index, GameInfo.Buildings[building.Index]);
-						tEffect = Effect_Record:new(iPlot, iMagnitude, sOwnerCiv, sOwnerCity, sLocalOwner);
+						tEffect = Effect_Record:new(iPlot, iMagnitude, eOwnerID, sOwnerCiv, sOwnerCity, sLocalOwner);
 						tEffect:AssignObject(EffectClasses.EFFECT_BUILDING, pCity, sLocalOwner, building.Index);
 						table.insert(self.Effects, tEffect);
 					end -- found building
@@ -1914,7 +1942,7 @@ local iOrderMax = table.count(tOrderOfDisasters);	-- should be 7
 function OnTurnBegin()
 	--dprint("FUNCAL OnTurnBegin()");
 	
-	if Game.GetCurrentGameTurn() == 1 then
+	if Game.GetCurrentGameTurn() == GameConfiguration.GetStartTurn() then  -- always 1st turn is 'free', even when we start in later Eras
 		LuaEvents.RNDInfoPopup_OpenWindow();  -- show parameters
 		return;  -- so Civs won't be killed on 1st turn :)
 	end

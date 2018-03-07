@@ -158,6 +158,7 @@ function ShowTheDisaster()
 			-- check if there's an owner
 			local sOwnerCiv:string, sOwnerCity:string = "", "";
 			if pPlot:IsOwned() then
+				sLine = sLine.." "..Locale.Lookup("LOC_RNDINFO_PLOT_OWNED_BY").." ";
 				local eOwner = pPlot:GetOwner();
 				local pCity = Cities.GetPlotPurchaseCity(pPlot);
 				--dprint("  plot owned by (civ,city)", eOwner, pCity:GetID());
@@ -165,12 +166,15 @@ function ShowTheDisaster()
 				sOwnerCiv = Locale.Lookup(sOwnerCiv);
 				sOwnerCity = Locale.Lookup(pCity:GetName());
 				--dprint("  plot owned by (civ,city)", sOwnerCiv, sOwnerCity);
-				if sOwnerCiv == sLocalOwner then
-					sLine = sLine.." "..Locale.Lookup("LOC_RNDINFO_PLOT_OWNED_BY").." [COLOR_Green]"..sOwnerCiv.."[ENDCOLOR]";
+				if eOwner == eLocalPlayer then
+					sLine = sLine.."[COLOR_Green]"..sOwnerCiv.."[ENDCOLOR] ";
+					sLine = sLine.."([COLOR_Green]"..sOwnerCity.."[ENDCOLOR])";  -- the name of our cities is always different than Civ name (not a Minor)
+				elseif Players[eLocalPlayer]:GetDiplomacy():HasMet(eOwner) then
+					sLine = sLine..sOwnerCiv;
+					if sOwnerCiv ~= sOwnerCity then sLine = sLine.." ("..sOwnerCity..")"; end
 				else
-					sLine = sLine.." "..Locale.Lookup("LOC_RNDINFO_PLOT_OWNED_BY").." "..sOwnerCiv;
+					sLine = sLine..Locale.Lookup("LOC_RNDINFO_UNKNOWN_CIV");
 				end
-				if sOwnerCiv ~= sOwnerCity then sLine = sLine.." ("..sOwnerCity..")"; end
 			else
 				sLine = sLine.." "..Locale.Lookup("LOC_RNDINFO_PLOT_WITHOUT_OWNER"); -- " without owner";
 			end
@@ -205,7 +209,7 @@ end
 function OpenWindow()
 	dprint("FUNCAL OpenWindow() player", Game.GetLocalPlayer());
 	if Players[Game.GetLocalPlayer()] == nil then return; end
-	if Game.GetCurrentGameTurn() == 1 then ShowTheParameters();
+	if Game.GetCurrentGameTurn() == GameConfiguration.GetStartTurn() then ShowTheParameters();
 	else ShowTheDisaster(); end  -- main function
 	ContextPtr:SetHide(false);
 	--LuaEvents.HelloWorld_OpenHelloWorld();  -- callback to main script

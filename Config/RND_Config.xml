@@ -21,6 +21,7 @@
         <Row Domain="RNDDomainNumDis" Value="150" SortIndex="50" Name="High ~150" 	  Description="There will be ~150 natural disasters during the game" />
         <Row Domain="RNDDomainNumDis" Value="200" SortIndex="60" Name="Extreme ~200"  Description="There will be ~200 natural disasters during the game" />
         <Row Domain="RNDDomainNumDis" Value="250" SortIndex="70" Name="Insane ~250"   Description="There will be ~250 natural disasters during the game" />
+        <Row Domain="RNDDomainNumDis" Value=  "0" SortIndex="80" Name="Chicken..."    Description="There will be NO natural disasters during the game" />
 		
 		<!-- Adjust for map size -->
         <Row Domain="RNDDomainAdjust" Value= "0" SortIndex="10" Name="Do NOT adjust for map size" Description="Number of disasters will NOT be adjusted for map size" />

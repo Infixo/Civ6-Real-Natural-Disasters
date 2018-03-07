@@ -34,11 +34,32 @@
 	<Row Tag="LOC_RNDINFO_NAME_PILLAGED">
 		<Text>{1_Name} [ICON_Pillaged] pillaged</Text>
 	</Row>
+	<Row Tag="LOC_RNDINFO_NAME_DAMAGED_HP">
+		<Text>{1_Name} [ICON_Pillaged] damaged for {2_TotDmg} HP</Text>
+	</Row>
 	<Row Tag="LOC_RNDINFO_NAME_DESTROYED">
 		<Text>{1_Name} [ICON_CheckFail] destroyed</Text>
 	</Row>
 	<Row Tag="LOC_RNDINFO_NAME_KILLED">
 		<Text>{1_Name} ({2_Owner}) [ICON_CheckFail] killed</Text>
+	</Row>
+	<Row Tag="LOC_RNDINFO_NAME_WOUNDED">
+		<Text>{1_Name} ({2_Owner}) [ICON_Pillaged] wounded for {3_Magnitude} HP</Text>
+	</Row>
+	<Row Tag="LOC_RNDINFO_NAME_DIED_WOUNDS">
+		<Text>{1_Name} ({2_Owner}) [ICON_CheckFail] died because of the wounds</Text>
+	</Row>
+	<Row Tag="LOC_RNDINFO_CITY_SURVIVED">
+		<Text>{1_Name} [ICON_CheckSuccess] survived with no population lost</Text>
+	</Row>
+	<Row Tag="LOC_RNDINFO_CITY_LOST_POP">
+		<Text>{1_Name} [ICON_Pillaged] lost [COLOR_Red]{2_PopLost}[ENDCOLOR] of its population</Text>
+	</Row>
+	<Row Tag="LOC_RNDINFO_UNKNOWN_CITY">
+		<Text>Unknown City</Text>
+	</Row>
+	<Row Tag="LOC_RNDINFO_UNKNOWN_CIV">
+		<Text>Unmet Civ</Text>
 	</Row>
 	
 
