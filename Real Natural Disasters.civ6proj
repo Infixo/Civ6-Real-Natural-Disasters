@@ -1,0 +1,180 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Default" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Default</Configuration>
+    <Name>Real Natural Disasters</Name>
+    <Guid>b28a5b09-b356-48f3-9ab9-b9ec2e5324c6</Guid>
+    <ProjectGuid>30d7638b-366b-4f9a-a185-071803b7a9ec</ProjectGuid>
+    <ModVersion>2</ModVersion>
+    <Teaser>Adds Natural Disasters to the game</Teaser>
+    <Description>Adds a new gameplay mechanics - Natural Disasters.[NEWLINE][ICON_BULLET]Earthquakes[NEWLINE][ICON_BULLET]Meteors[NEWLINE][ICON_BULLET]Tornadoes[NEWLINE][ICON_BULLET]Tsunamis[NEWLINE][ICON_BULLET]Wildfires[NEWLINE][ICON_BULLET]Volcanos[NEWLINE][NEWLINE]Disasters sometimes reveal resources and often leave something unique behind. In time you will be able to build Buildings that will decrease damage from disasters or prevent some of them from happening.[NEWLINE][NEWLINE]Coming soon:[NEWLINE][ICON_BULLET]Hurricanes[NEWLINE][ICON_BULLET]Insurance for damaged and destroyed buildings[NEWLINE][ICON_BULLET]Eurekas triggered by huge disasters[NEWLINE][NEWLINE]In the future also Technological Disasters:[NEWLINE][ICON_BULLET]Nuclear meltdows[NEWLINE][ICON_BULLET]Plane crashes[NEWLINE][ICON_BULLET]Droughts</Description>
+    <Authors>Infixo</Authors>
+    <SpecialThanks>
+    </SpecialThanks>
+    <AffectsSavedGames>true</AffectsSavedGames>
+    <SupportsSinglePlayer>true</SupportsSinglePlayer>
+    <SupportsMultiplayer>true</SupportsMultiplayer>
+    <SupportsHotSeat>true</SupportsHotSeat>
+    <AssemblyName>Real Natural Disasters</AssemblyName>
+    <RootNamespace>Real Natural Disasters</RootNamespace>
+    <InGameActionData><![CDATA[<InGameActions><UpdateText id="RND_Text"><File>Main/RealNaturalDisasters_Text.xml</File><File>ML/morelenses_text.xml</File></UpdateText><UpdateDatabase id="RND_Database"><File>ML/morelenses_colors.sql</File><File>Main/RND1_Disasters.sql</File><File>Main/RND2_Resources.sql</File><File>Main/RND3_Buildings.sql</File></UpdateDatabase><ImportFiles id="RND_Imports"><File>ML/MinimapPanel.lua</File><File>ML/MinimapPanel.xml</File><File>ML/ModalLensPanel.lua</File><File>ML/ModalLensPanel.xml</File></ImportFiles><AddGameplayScripts id="RND_Utils"><File>Utils/PlotIterators.lua</File><File>Utils/Serialize.lua</File></AddGameplayScripts><AddUserInterfaces id="RND_UI"><Properties><Context>InGame</Context></Properties><File>UI/RNDInfoPopup.xml</File><File>Utils/InGameExp.xml</File></AddUserInterfaces><UpdateAudio id="RND_Audio"><File>Sound/SoundbanksInfo.xml</File><File>Sound/RND_Banks.ini</File><File>Sound/RND_Soundbank.bnk</File><File>Sound/RND_Soundbank.txt</File></UpdateAudio><UpdateIcons id="RND_Icons"><File>Icons/RealNaturalDisasters_Icons.xml</File></UpdateIcons><AddGameplayScripts id="RND_Main"><File>Main/RealNaturalDisasters.lua</File></AddGameplayScripts><ImportFiles id="RND_Imports_Icons"><File>Icons/RNDDisasters80.dds</File><File>Icons/RNDBuildings32.dds</File><File>Icons/RNDBuildings38.dds</File><File>Icons/RNDBuildings50.dds</File><File>Icons/RNDBuildings80.dds</File><File>Icons/RNDBuildings128.dds</File><File>Icons/RNDBuildings256.dds</File><File>Icons/RNDProjects30.dds</File><File>Icons/RNDProjects32.dds</File><File>Icons/RNDProjects38.dds</File><File>Icons/RNDProjects50.dds</File><File>Icons/RNDProjects70.dds</File><File>Icons/RNDProjects80.dds</File><File>Icons/RNDProjects256.dds</File><File>Icons/RNDResources32.dds</File><File>Icons/RNDResources38.dds</File><File>Icons/RNDResources50.dds</File><File>Icons/RNDResources64.dds</File><File>Icons/RNDResources256.dds</File></ImportFiles></InGameActions>]]></InGameActionData>
+    <FrontEndActionData><![CDATA[<FrontEndActions><UpdateDatabase id="RND_Config_Database"><File>Config/RND_Config.xml</File></UpdateDatabase><UpdateText id="RND_Config_Text"><File>Config/RND_Config_Text.sql</File></UpdateText></FrontEndActions>]]></FrontEndActionData>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Default' ">
+    <OutputPath>.</OutputPath>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include="Mod.Art.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="_not_used" />
+    <Folder Include="Config" />
+    <Folder Include="Icons" />
+    <Folder Include="Main" />
+    <Folder Include="ML" />
+    <Folder Include="Sound" />
+    <Folder Include="UI" />
+    <Folder Include="Utils" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="_not_used\_not_used_code_.lua">
+      <SubType>Content</SubType>
+    </None>
+    <None Include="_not_used\_not_used_SaveLoad.lua">
+      <SubType>Content</SubType>
+    </None>
+    <None Include="_not_used\_not_used_CoreEvents.lua">
+      <SubType>Content</SubType>
+    </None>
+    <Content Include="Config\RND_Config.xml">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Config\RND_Config_Text.sql">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Icons\RealNaturalDisasters_Icons.xml">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Icons\RNDBuildings128.dds">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Icons\RNDBuildings256.dds">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Icons\RNDBuildings32.dds">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Icons\RNDBuildings38.dds">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Icons\RNDBuildings50.dds">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Icons\RNDBuildings80.dds">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Icons\RNDDisasters80.dds">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Icons\RNDProjects256.dds">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Icons\RNDProjects30.dds">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Icons\RNDProjects32.dds">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Icons\RNDProjects38.dds">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Icons\RNDProjects50.dds">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Icons\RNDProjects70.dds">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Icons\RNDProjects80.dds">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Icons\RNDResources256.dds">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Icons\RNDResources32.dds">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Icons\RNDResources38.dds">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Icons\RNDResources50.dds">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Icons\RNDResources64.dds">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Main\RND3_Buildings.sql">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Main\RND2_Resources.sql">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Main\RealNaturalDisasters.lua">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Main\RND1_Disasters.sql">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Main\RealNaturalDisasters_Text.xml">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="ML\MinimapPanel.lua">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="ML\MinimapPanel.xml">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="ML\ModalLensPanel.lua">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="ML\ModalLensPanel.xml">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="ML\morelenses_colors.sql">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="ML\morelenses_text.xml">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Sound\RND_Banks.ini">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Sound\RND_Soundbank.bnk">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Sound\RND_Soundbank.txt">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Sound\SoundbanksInfo.xml">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="UI\RNDInfoPopup.lua">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="UI\RNDInfoPopup.xml">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Utils\InGameExp.lua">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Utils\InGameExp.xml">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Utils\PlotIterators.lua">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="Utils\Serialize.lua">
+      <SubType>Content</SubType>
+    </Content>
+  </ItemGroup>
+  <Import Project="$(MSBuildLocalExtensionPath)Civ6.targets" />
+</Project>
