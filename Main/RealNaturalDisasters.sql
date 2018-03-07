@@ -81,7 +81,7 @@ VALUES
 		"COLOR_DISASTER_TORNADO",   "COLOR_DISASTER_TORNADO_RISK",   "COLOR_DISASTER_TORNADO_RISK",    "Disaster_Event_Bell"),
 	("DISASTER_TSUNAMI",   "Tsunami",   "Tsunami description",   "ICON_DISASTER_TSUNAMI",    5, 100, 20, 50,  90, 20,  -5, 1,
 		"COLOR_DISASTER_TSUNAMI",   "COLOR_DISASTER_TSUNAMI_RISK",   "COLOR_DISASTER_TSUNAMI_RISK",    "Disaster_Event_Siren"),
-	("DISASTER_VOLCANO",   "Volcano",   "Volcano description",   "ICON_DISASTER_VOLCANO",    1, 155, 30, 60, 100, 20,  -5, 1,
+	("DISASTER_VOLCANO",   "Volcano",   "Volcano description",   "ICON_DISASTER_VOLCANO",    2, 155, 30, 70, 100, 20, -20, 1,
 		"COLOR_DISASTER_VOLCANO",   "COLOR_DISASTER_VOLCANO_RISK",   "COLOR_DISASTER_VOLCANO_RISK",    "Disaster_Event_Shot"),
 	("DISASTER_WILDFIRE",  "Wildfire",  "Wildfire description",  "ICON_DISASTER_WILDFIRE",   4,  90, 20, 30,  70, 20,  -5, 1,
 		"COLOR_DISASTER_WILDFIRE",  "COLOR_DISASTER_WILDFIRE_RISK",  "COLOR_DISASTER_WILDFIRE_RISK",   "Disaster_Event_Siren");

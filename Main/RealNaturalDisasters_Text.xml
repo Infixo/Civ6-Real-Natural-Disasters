@@ -28,6 +28,20 @@
 	<Row Tag="LOC_RNDINFO_PLOT_WAS_HIT">
 		<Text>was hit with {1_Magnitude} strength</Text>
 	</Row>
+	<Row Tag="LOC_RNDINFO_NAME_SURVIVED">
+		<Text>{1_Name} [ICON_CheckSuccess] survived</Text>
+	</Row>
+	<Row Tag="LOC_RNDINFO_NAME_PILLAGED">
+		<Text>{1_Name} [ICON_Pillaged] pillaged</Text>
+	</Row>
+	<Row Tag="LOC_RNDINFO_NAME_DESTROYED">
+		<Text>{1_Name} [ICON_CheckFail] destroyed</Text>
+	</Row>
+	<Row Tag="LOC_RNDINFO_NAME_KILLED">
+		<Text>{1_Name} ({2_Owner}) [ICON_CheckFail] killed</Text>
+	</Row>
+	
+
     <!-- Recent Disaster Lens -->
   	<Row Tag="LOC_HUD_DISASTER_LENS">
   		<Text>Recent Disaster</Text>
@@ -79,6 +93,25 @@
   	<Row Tag="LOC_TOOLTIP_DISASTER_RISK_WILDFIRE">
   		<Text>Wildfire</Text>
   	</Row>
+	<!-- Initial report about Disasters -->
+	<Row Tag="LOC_RNDINFO_LINE_MOD_NAME">
+		<Text>Real Natural Disasters</Text>
+	</Row>
+	<Row Tag="LOC_RNDINFO_LINE_MAP_INFO">
+		<Text>Map script is [COLOR_Green]{1_MapScript}[ENDCOLOR]. Map size is {2_Width} x {3_Height} ([COLOR_Green]{4_NumTiles}[ENDCOLOR] tiles).</Text>
+	</Row>
+	<Row Tag="LOC_RNDINFO_LINE_PARAMS">
+		<Text>You have selected the following parameters:</Text>
+	</Row>
+	<Row Tag="LOC_RNDINFO_LINE_EXPECT">
+		<Text>You may expect on average the following numbers of Disasters:</Text>
+	</Row>
+	<Row Tag="LOC_RNDINFO_LINE_DISASTER">
+		<Text>[ICON_Bullet]{1_Name}: [COLOR_Red]{2_NumDis}[ENDCOLOR]  ({3_NumStart} tiles @ {4_Prob} prob/turn)</Text>
+	</Row>
+	<Row Tag="LOC_RNDINFO_LINE_SUMMARY">
+		<Text>Total expected Disasters: [COLOR_Red]{1_TotDis}[ENDCOLOR]</Text>
+	</Row>
 	
   </BaseGameText>
 

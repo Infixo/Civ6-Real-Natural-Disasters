@@ -6,6 +6,14 @@
     <Teaser>Adds a new gameplay mechanics - Natural Disasters.[NEWLINE][ICON_BULLET]Earthquakes[NEWLINE][ICON_BULLET]Meteors[NEWLINE][ICON_</Teaser>
     <Authors>Infixo</Authors>
   </Properties>
+  <FrontEndActions>
+    <UpdateDatabase id="RND_Config_Database">
+      <File>Config/RND_Config.xml</File>
+    </UpdateDatabase>
+    <UpdateText id="RND_Config_Text">
+      <File>Config/RND_Config_Text.sql</File>
+    </UpdateText>
+  </FrontEndActions>
   <InGameActions>
     <UpdateText id="RND_Text">
       <File>ML/morelenses_text.xml</File>
@@ -49,6 +57,8 @@
     </UpdateIcons>
   </InGameActions>
   <Files>
+    <File>Config/RND_Config.xml</File>
+    <File>Config/RND_Config_Text.sql</File>
     <File>Main/RealNaturalDisasters.lua</File>
     <File>Main/RealNaturalDisasters.sql</File>
     <File>Main/RealNaturalDisasters_Text.xml</File>

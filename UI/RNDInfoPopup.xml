@@ -18,7 +18,7 @@
 				<Label ID="DisasterGeneralInfo" Size="parent-125,60" Anchor="L,T" Offset="105,70" Color="Black" Style="FontNormal16" FontStyle="Shadow" Align="left" WrapWidth="parent-120"/>
 
 				<!-- Disaster Damage Info -->
-				<Label String="DEVASTATION REPORT" Size="parent,20" Anchor="C,T" Offset="0,145" Color="Red" Style="FontNormal16" FontStyle="Shadow" Align="center"/>
+				<Label ID="DisasterReportLabel" String="DEVASTATION REPORT" Size="parent,20" Anchor="C,T" Offset="0,145" Color="Red" Style="FontNormal16" FontStyle="Shadow" Align="center"/>
 				<Box Size="parent-40,parent-245" Anchor="C,B" Offset="0,75" Color="0,0,0,100">
 					<ScrollPanel ID="DisasterDamageScroll" Size="parent,parent" Offset="0,0" Vertical="1">
 						<ScrollBar Anchor="R,C" Offset="0,0" AnchorSide="I,I" Style="ScrollVerticalBarAlt" />

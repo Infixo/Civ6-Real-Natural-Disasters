@@ -154,8 +154,10 @@ g_RESOURCE_COCOA			= GetGameInfoIndex("Resources", "RESOURCE_COCOA");
 -- KEY VARIABLES AND CONSTANTS
 -- ===========================================================================
 
--- map parameters
+-- map and game parameters
 local iMapWidth, iMapHeight, iMapSize = 0, 0, 0;
+local iGameSpeedMultiplier = 100;
+local iRNDConfigNumDis, iRNDConfigMagnitude, iRNDConfigRange = 100, 0, 0;
 
 -- adjustment factor due to map size
 -- empiric formula referencing STANDARD map size, as of now: =1.0*map_ratio^(-0.55)
@@ -364,6 +366,7 @@ local Effect_Record = {
 	ID = 0,				-- unique - could help destroy things, after that might become unusable
 	Type = "",			-- e.g. BuildingType, UnitType, etc. must reference sth in DB since GameInfo will be used here
 	Name = "",			-- name of the object
+	OurOwn = false,		-- if plot or unit belongs to local player
 	-- damage info
 	IsDestroyed = false,-- if completely destroyed
 	IsDamaged = true,	-- if not destroyed but damaged
@@ -379,8 +382,8 @@ local Effect_Record = {
 -- constructor (1) empty record
 -- constructor (2) we have plot and magnitude
 -- constructor (3) we have an owner
-function Effect_Record:new(iPlot:number, iMagnitude:number, sOwnerCiv:string, sOwnerCity:string)
-	dprint("FUNCAL Effect_Record:new() (plot,magn,civ,cit)",iPlot,iMagnitude,sOwnerCiv,sOwnerCity);
+function Effect_Record:new(iPlot:number, iMagnitude:number, sOwnerCiv:string, sOwnerCity:string, sLocalOwner:string)
+	dprint("FUNCAL Effect_Record:new() (plot,magn,civ,cit,own)",iPlot,iMagnitude,sOwnerCiv,sOwnerCity,sLocalOwner);
 	local tObject = {};
 	setmetatable(tObject, {__index = Effect_Record}); -- this should link a newly created object to table that acts as object class
 	-- plot info
@@ -394,6 +397,7 @@ function Effect_Record:new(iPlot:number, iMagnitude:number, sOwnerCiv:string, sO
 	tObject.ID = 0;					-- unique - could help destroy things, after that might become unusable
 	tObject.Type = "";				-- e.g. BuildingType, UnitType, etc. must reference sth in DB since GameInfo will be used here
 	tObject.Name = "";				-- name of the object
+	tObject.OurOwn = false;			-- if plot/unit belongs to local player
 	-- damage info
 	tObject.IsDestroyed = false;	-- if completely destroyed
 	tObject.IsDamaged = false;		-- if not destroyed but damaged
@@ -412,6 +416,7 @@ function Effect_Record:new(iPlot:number, iMagnitude:number, sOwnerCiv:string, sO
 		if sOwnerCiv ~= nil and sOwnerCity ~= nil then
 			tObject.OwnerCiv = sOwnerCiv;
 			tObject.OwnerCity = sOwnerCity;
+			tObject.OurOwn = (sOwnerCiv == sLocalOwner);
 		end
 	end
 	return tObject;
@@ -424,8 +429,8 @@ function Effect_Record:dshoweffect()
 end
 
 -- this function will assign an object that later will be used in ApplyEffect()
-function Effect_Record:AssignObject(eClass:number, pObject:table, eBuildingIndex:number)
-	dprint("FUNCAL Effect_Record:AssignObject() (class,object,bidx)", eClass, pObject, eBuildingIndex);
+function Effect_Record:AssignObject(eClass:number, pObject:table, sLocalOwner:string, eBuildingIndex:number)
+	dprint("FUNCAL Effect_Record:AssignObject() (class,object,locciv,bidx)", eClass, pObject, sLocalOwner, eBuildingIndex);
 	
 	self.Class = eClass;
 	self.Object = pObject;
@@ -437,6 +442,7 @@ function Effect_Record:AssignObject(eClass:number, pObject:table, eBuildingIndex
 		self.UnitOwnerID = pObject:GetOwner();
 		self.UnitOwner = PlayerConfigurations[self.UnitOwnerID]:GetCivilizationShortDescription();
 		self.UnitOwner = Locale.Lookup(self.UnitOwner);
+		self.OurOwn = (self.UnitOwner == sLocalOwner);
 		self.Type = GameInfo.Units[pObject:GetType()].UnitType;
 		self.Name = Locale.Lookup(pObject:GetName());
 	elseif eClass == EffectClasses.EFFECT_IMPROVEMENT then
@@ -491,7 +497,9 @@ function Effect_Record:DamageObject()
 			if bRealEffects then self.Object:SetDamage(iNewDamage); end
 			dprint("    ...checking result (id) (new)", self.Object:GetID(), self.Object:GetDamage());
 			self.IsDamaged = true;
-			self.Desc = self.Name.." ("..self.UnitOwner..") [ICON_Pillaged] wounded for "..self.Magnitude.." HP";
+			local unitOwner:string = self.UnitOwner;
+			if self.OurOwn then unitOwner = "[COLOR_Green]"..unitOwner.."[ENDCOLOR]"; end
+			self.Desc = self.Name.." ("..unitOwner..") [ICON_Pillaged] wounded for "..self.Magnitude.." HP";
 		else  -- it seems that the unit didn't survived the wounds
 		
 			-- KILL UNIT
@@ -505,20 +513,25 @@ function Effect_Record:DamageObject()
 		end
 		
 	elseif self.Class == EffectClasses.EFFECT_IMPROVEMENT then
-		-- check for Goody Huts - cannot be pillaged (nobody to repair them)
-		if GameInfo.Improvements[self.Type].RemoveOnEntry == true then 
-			dprint("  ...cannot pillage Entry-type improvements - call destroy instead");
-			self:DestroyObject();
+	
+		if (math.random(0,99) < self.Magnitude) then 
+			-- check for Goody Huts - cannot be pillaged (nobody to repair them)
+			if GameInfo.Improvements[self.Type].RemoveOnEntry == true then 
+				dprint("  ...cannot pillage Entry-type improvements - call destroy instead");
+				self:DestroyObject();
+			else
+				-- DAMAGE IMPROVEMENT
+				dprint("  ...pillaging improvement at plot (idx,state)", self.Plot, self.Object:GetImprovementType());
+				if bRealEffects then ImprovementBuilder.SetImprovementPillaged(self.Object, true); end
+				dprint("    ...verify result manually at plot (idx,state)", self.Plot, self.Object:GetImprovementType());
+				self.IsDamaged = true;
+				self.Desc = Locale.Lookup("LOC_RNDINFO_NAME_PILLAGED", self.Name);
+			end
 		else
-
-			-- DAMAGE IMPROVEMENT
-			dprint("  ...pillaging improvement at plot (idx,state)", self.Plot, self.Object:GetImprovementType());
-			if bRealEffects then ImprovementBuilder.SetImprovementPillaged(self.Object, true); end
-			dprint("    ...verify result manually at plot (idx,state)", self.Plot, self.Object:GetImprovementType());
-			self.IsDamaged = true;
-			self.Desc = self.Name.." [ICON_Pillaged] pillaged";
-			
+			dprint("  ...the improvement survived!");
+			self.Desc = Locale.Lookup("LOC_RNDINFO_NAME_SURVIVED", self.Name);
 		end
+	
 	elseif self.Class == EffectClasses.EFFECT_CITY then
 	
 		-- DAMAGE City
@@ -566,24 +579,25 @@ function Effect_Record:DamageObject()
 			self.Desc = self.Name.." [ICON_Pillaged] damaged for "..iTotDmg.." HP";
 		else
 			dprint("  ...the district survived!");
-			self.Desc = self.Name.." [ICON_CheckSuccess] survived";
+			self.Desc = Locale.Lookup("LOC_RNDINFO_NAME_SURVIVED", self.Name);
 		end
 		
 	elseif self.Class == EffectClasses.EFFECT_BUILDING then
 		-- cannot pillage ALL non-destroyed buildings, must use randomization
 		-- they will be pillaged with Magnitude probabbility
-		if (math.random(0,99) < self.Magnitude) and GameInfo.Buildings[self.Type].IsWonder == false then  -- cannot pillage Wonders
+		--if (math.random(0,99) < self.Magnitude) and GameInfo.Buildings[self.Type].IsWonder == false then  -- cannot pillage Wonders
+		if (math.random(0,99) < self.Magnitude) then  -- actually, Wonders CAN be pillaged
 
 			-- DAMAGE BUILDING
 			dprint("  ...pillaging building (city,name,state)", self.Object:GetName(), self.Name, self.Object:GetBuildings():IsPillaged(self.ID));
 			if bRealEffects then self.Object:GetBuildings():SetPillaged(self.ID, true); end
 			dprint("    ...checking result (city,name,state)", self.Object:GetName(), self.Name, self.Object:GetBuildings():IsPillaged(self.ID));
 			self.IsDamaged = true;
-			self.Desc = self.Name.." [ICON_Pillaged] pillaged";			
+			self.Desc = Locale.Lookup("LOC_RNDINFO_NAME_PILLAGED", self.Name); --.." [ICON_Pillaged] pillaged";			
 			
 		else
 			dprint("  ...the building survived!");
-			self.Desc = self.Name.." [ICON_CheckSuccess] survived";
+			self.Desc = Locale.Lookup("LOC_RNDINFO_NAME_SURVIVED", self.Name); --.." [ICON_CheckSuccess] survived";
 		end
 	else
 		print("ERROR: Effect_Record:DamageObject() unknown object class", self.Class);
@@ -608,7 +622,9 @@ function Effect_Record:DestroyObject()
 		Players[self.UnitOwnerID]:GetUnits():Destroy(self.Object);
 		dprint("    ...checking result (unitid,plot,state)", self.ID, self.Plot, Units.GetUnitByIndexInPlot(self.ID, self.Plot));
 		self.IsDestroyed = true;
-		self.Desc = self.Name.." ("..self.UnitOwner..") [ICON_CheckFail] killed";
+		local unitOwner:string = self.UnitOwner;
+		if self.OurOwn then unitOwner = "[COLOR_Green]"..unitOwner.."[ENDCOLOR]"; end
+		self.Desc = Locale.Lookup("LOC_RNDINFO_NAME_KILLED", self.Name, unitOwner); --..") [ICON_CheckFail] killed";
 		
 	elseif self.Class == EffectClasses.EFFECT_IMPROVEMENT then
 	
@@ -617,7 +633,7 @@ function Effect_Record:DestroyObject()
 		if bRealEffects then ImprovementBuilder.SetImprovementType(self.Object, -1); end
 		dprint("    ...checking result at plot (idx,state)", self.Plot, self.Object:GetImprovementType());
 		self.IsDestroyed = true;
-		self.Desc = self.Name.." [ICON_CheckFail] destroyed";
+		self.Desc = Locale.Lookup("LOC_RNDINFO_NAME_DESTROYED", self.Name); --.." [ICON_CheckFail] destroyed";
 		
 	elseif self.Class == EffectClasses.EFFECT_CITY then
 		dprint("  ...cannot destroy city - calling damage instead");
@@ -638,7 +654,7 @@ function Effect_Record:DestroyObject()
 			if bRealEffects then self.Object:GetBuildings():RemoveBuilding(self.ID); end  -- this function has a DELAY - don't know why - but it's removing
 			dprint("    ...checking result (city,name,state)", self.Object:GetName(), self.Name, self.Object:GetBuildings():HasBuilding(self.ID));
 			self.IsDestroyed = true;			
-			self.Desc = self.Name.." [ICON_CheckFail] destroyed";
+			self.Desc = Locale.Lookup("LOC_RNDINFO_NAME_DESTROYED", self.Name); --.." [ICON_CheckFail] destroyed";
 			
 		end
 	else
@@ -761,34 +777,34 @@ function Disaster_Object:InitializeDisaster()
 	end
 	-- loaded from DB
 	self.Type = tDisaster.DisasterType;
-	self.Name = tDisaster.Name;							-- later change to LOC_
-	self.Description = tDisaster.Description;			-- later change to LOC_
-	self.Icon = tDisaster.Icon;							-- graphical sign of the disaster; [TODO - ICON_ATLAS_CIVILIZATIONS]
-	self.Range = tDisaster.Range;						-- determines the area of the disaster - meaning varies for each type
-	self.BaseProbability = tDisaster.BaseProbability;	-- probability of an event for a tile that can spawn it per one turn * 1000000
-	self.DeltaProbability = tDisaster.DeltaProbability;	-- range min/max
-	self.BaseMagnitude = tDisaster.BaseMagnitude;		-- magnitude of a devastation applied for a tile that started the event
-	self.MagnitudeMax = tDisaster.MagnitudeMax;			-- max magnitude; final Magnitude should be rounded up to 5 to look nicely
-	self.MagnitudeMin = tDisaster.MagnitudeMin;			-- if gets less than that it's either bumped or stopped; even the slightest event should cause at least some damage, so default is to bump
-	self.MagnitudeChange = tDisaster.MagnitudeChange;	-- magnitude change for each tile far away from starting tile
-	self.MaxTurns = tDisaster.MaxTurns;					-- how many turns lasts (NOT USED)
-	self.ColorNow = tDisaster.ColorNow;					-- color for the current event
-	self.ColorRisk = tDisaster.ColorRisk;				-- color for a risk area; will get them later using UI.GetColorValue()
-	self.ColorHistoric = tDisaster.ColorHistoric;		-- color for a historic event (NOT USED)
-	self.Sound = tDisaster.Sound;						-- sound for the event
+	self.Name = tDisaster.Name;								-- later change to LOC_
+	self.Description = tDisaster.Description;				-- later change to LOC_
+	self.Icon = tDisaster.Icon;								-- graphical sign of the disaster; [TODO - ICON_ATLAS_CIVILIZATIONS]
+	self.Range = math.max(tDisaster.Range+iRNDConfigRange, 1);  -- determines the area of the disaster - meaning varies for each type; should be at least 1
+	self.BaseProbability  = tDisaster.BaseProbability;		-- probability of an event for a tile that can spawn it per one turn * 1000000
+	self.DeltaProbability = tDisaster.DeltaProbability;		-- range min/max
+	self.BaseMagnitude = math.max(tDisaster.BaseMagnitude+iRNDConfigMagnitude, 20); -- magnitude of a devastation applied for a tile that started the event; should be at least 20
+	self.MagnitudeMax  = math.max(tDisaster.MagnitudeMax +iRNDConfigMagnitude, 20);	-- max magnitude; final Magnitude should be rounded up to 5 to look nicely
+	self.MagnitudeMin  = tDisaster.MagnitudeMin;			-- if gets less than that it's either bumped or stopped; even the slightest event should cause at least some damage, so default is to bump
+	self.MagnitudeChange = tDisaster.MagnitudeChange;		-- magnitude change for each tile far away from starting tile
+	self.MaxTurns = tDisaster.MaxTurns;						-- how many turns lasts (NOT USED)
+	self.ColorNow = tDisaster.ColorNow;						-- color for the current event
+	self.ColorRisk = tDisaster.ColorRisk;					-- color for a risk area; will get them later using UI.GetColorValue()
+	self.ColorHistoric = tDisaster.ColorHistoric;			-- color for a historic event (NOT USED)
+	self.Sound = tDisaster.Sound;							-- sound for the event
 	-- operational data - SOME WILL BE LOADED IF SAVE FILES WILL BE IMPLEMENTED
-	self.StartPlots = {};								-- Indices of possible starting plots
-	self.NumStartPlots = 0;								-- Num of possible starting plots
-	self.StartingPlot = -1;								-- Index of the starting plot for a new event
-	self.StartingMagnitude = -1;						-- Event's power
-	self.HistoricEvents = {};							-- FOR FUTURE - list of old events
-	self.HistoricStartingPlots = {};					-- a list of indices of starting plots from old events
+	self.StartPlots = {};									-- Indices of possible starting plots
+	self.NumStartPlots = 0;									-- Num of possible starting plots
+	self.StartingPlot = -1;									-- Index of the starting plot for a new event
+	self.StartingMagnitude = -1;							-- Event's power
+	self.HistoricEvents = {};								-- FOR FUTURE - list of old events
+	self.HistoricStartingPlots = {};						-- a list of indices of starting plots from old events
 end
 
--- changes parameters according to the map size
-function Disaster_Object:AdjustForMapSize()
-	self.BaseProbability = math.floor(self.BaseProbability * fMapProbAdj);
-	self.DeltaProbability = math.floor(self.DeltaProbability * fMapProbAdj);
+-- changes parameters according to the map size of num of disasters
+function Disaster_Object:AdjustProbability(fAdjustment:number)
+	self.BaseProbability = math.max(math.floor(self.BaseProbability * fAdjustment), 1);  -- we need at least 1/1000000 chance
+	self.DeltaProbability = math.floor(self.DeltaProbability * fAdjustment);
 end
 
 function Disaster_Object:CheckIfHappened(bReallyCheck:boolean)
@@ -1733,6 +1749,12 @@ function tTheDisaster:AnalyzePlotForEffects(iPlot:number, iMagnitude:number)
 	local tEffect:table = {};  -- will store new effects
 	local iEffCnt = table.count(self.Effects);
 	
+	-- check for our own units and plots
+	local sLocalOwner:string;
+	local eLocalPlayer = Game.GetLocalPlayer();
+	if eLocalPlayer ~= -1 then sLocalOwner = Locale.Lookup(PlayerConfigurations[eLocalPlayer]:GetCivilizationShortDescription());
+	else sLocalOwner = nil; end
+	
 	-- 0 - check if there's an owner
 	local sOwnerCiv:string, sOwnerCity:string = "", "";
 	if pPlot:IsOwned() then
@@ -1749,8 +1771,8 @@ function tTheDisaster:AnalyzePlotForEffects(iPlot:number, iMagnitude:number)
 	if Units.AreUnitsInPlot(iPlot) then
 		for _,unit in pairs(Units.GetUnitsInPlot(iPlot)) do
 			dprint("  ...found a unit", unit:GetName());
-			tEffect = Effect_Record:new(iPlot, iMagnitude, sOwnerCiv, sOwnerCity);
-			tEffect:AssignObject(EffectClasses.EFFECT_UNIT, unit, -1);
+			tEffect = Effect_Record:new(iPlot, iMagnitude, sOwnerCiv, sOwnerCity, sLocalOwner);
+			tEffect:AssignObject(EffectClasses.EFFECT_UNIT, unit, sLocalOwner, -1);
 			table.insert(self.Effects, tEffect);
 		end
 	end
@@ -1758,8 +1780,8 @@ function tTheDisaster:AnalyzePlotForEffects(iPlot:number, iMagnitude:number)
 	-- 2 - check for improvements
 	if pPlot:GetImprovementType() ~= -1 then
 		dprint("  ...found an improvement", pPlot:GetImprovementType());
-		tEffect = Effect_Record:new(iPlot, iMagnitude, sOwnerCiv, sOwnerCity);
-		tEffect:AssignObject(EffectClasses.EFFECT_IMPROVEMENT, pPlot, -1);
+		tEffect = Effect_Record:new(iPlot, iMagnitude, sOwnerCiv, sOwnerCity, sLocalOwner);
+		tEffect:AssignObject(EffectClasses.EFFECT_IMPROVEMENT, pPlot, sLocalOwner, -1);
 		table.insert(self.Effects, tEffect);
 	end
 	
@@ -1767,8 +1789,8 @@ function tTheDisaster:AnalyzePlotForEffects(iPlot:number, iMagnitude:number)
 	--if pPlot():IsCity() then
 	if Cities.IsCityInPlot(iPlot) then
 		dprint("  ...found a city");
-		tEffect = Effect_Record:new(iPlot, iMagnitude, sOwnerCiv, sOwnerCity);
-		tEffect:AssignObject(EffectClasses.EFFECT_CITY, Cities.GetCityInPlot(iPlot), -1);
+		tEffect = Effect_Record:new(iPlot, iMagnitude, sOwnerCiv, sOwnerCity, sLocalOwner);
+		tEffect:AssignObject(EffectClasses.EFFECT_CITY, Cities.GetCityInPlot(iPlot), sLocalOwner, -1);
 		table.insert(self.Effects, tEffect);
 	end
 	
@@ -1788,8 +1810,8 @@ function tTheDisaster:AnalyzePlotForEffects(iPlot:number, iMagnitude:number)
 				-- must be careful with WONDERS - don't know if they can be Pillaged - must CHECK LATER
 				-- anyway, district will be registered only if NOT internal
 				if GameInfo.Districts[pDistrict:GetType()].InternalOnly == false then
-					tEffect = Effect_Record:new(iPlot, iMagnitude, sOwnerCiv, sOwnerCity);
-					tEffect:AssignObject(EffectClasses.EFFECT_DISTRICT, pDistrict, -1);
+					tEffect = Effect_Record:new(iPlot, iMagnitude, sOwnerCiv, sOwnerCity, sLocalOwner);
+					tEffect:AssignObject(EffectClasses.EFFECT_DISTRICT, pDistrict, sLocalOwner, -1);
 					table.insert(self.Effects, tEffect);
 				end
 				-- 5 - check for buildings
@@ -1799,8 +1821,8 @@ function tTheDisaster:AnalyzePlotForEffects(iPlot:number, iMagnitude:number)
 						pCityBuildings:GetBuildingLocation(building.Index) == iPlot then
 						-- found building, register it
 						dprint("  ...found a building (id,name)", building.Index, GameInfo.Buildings[building.Index]);
-						tEffect = Effect_Record:new(iPlot, iMagnitude, sOwnerCiv, sOwnerCity);
-						tEffect:AssignObject(EffectClasses.EFFECT_BUILDING, pCity, building.Index);
+						tEffect = Effect_Record:new(iPlot, iMagnitude, sOwnerCiv, sOwnerCity, sLocalOwner);
+						tEffect:AssignObject(EffectClasses.EFFECT_BUILDING, pCity, sLocalOwner, building.Index);
 						table.insert(self.Effects, tEffect);
 					end -- found building
 				end -- buildings loop
@@ -1892,7 +1914,10 @@ local iOrderMax = table.count(tOrderOfDisasters);	-- should be 7
 function OnTurnBegin()
 	--dprint("FUNCAL OnTurnBegin()");
 	
-	if Game.GetCurrentGameTurn() < 2 then return; end  -- so Civs won't be killed on 1st turn :)
+	if Game.GetCurrentGameTurn() == 1 then
+		LuaEvents.RNDInfoPopup_OpenWindow();  -- show parameters
+		return;  -- so Civs won't be killed on 1st turn :)
+	end
 	
 	-- first let's go through all of them and check if any triggers
 	local iCheck = 0;  -- will be later used to update iOrderCounter
@@ -2087,23 +2112,37 @@ end
 function OnLoadScreenClose()
 	dprint("FUNSTA OnLoadScreenClose");
 	
-	-- retrieve map parameters (constant during the game)
+	-- retrieve map and game speed parameters (constant during the game)
 	iMapWidth, iMapHeight = Map.GetGridSize();
 	iMapSize = iMapWidth * iMapHeight;
 	fMapProbAdj = 1.0 * math.pow(iMapSize/4536, -0.55);  -- empiric formula referencing STANDARD map size, as of now: =1.0*map_ratio^(-0.55)
-	dprint("Map parameters (w,h,size,adj) are", iMapWidth, iMapHeight, iMapSize, fMapProbAdj);
+	iGameSpeedMultiplier = GameInfo.GameSpeeds[GameConfiguration.GetGameSpeedType()].CostMultiplier;
+	dprint("Map parameters (w,h,size,adj,speed) are", iMapWidth, iMapHeight, iMapSize, fMapProbAdj, iGameSpeedMultiplier);
+	
+	-- retrieve custom parameters
+	local function RetrieveParameter(sParName:string, iDefault:number)
+		local par = GameConfiguration.GetValue(sParName);
+		if par == nil then par = iDefault; else par = tonumber(par); end
+		dprint("Retrieving (par,def,out)", sParName, iDefault, par);
+		return par;
+	end
+	iRNDConfigNumDis    = RetrieveParameter("RNDConfigNumDis", 100);
+	iRNDConfigMagnitude = RetrieveParameter("RNDConfigMagnitude", 0);
+	iRNDConfigRange     = RetrieveParameter("RNDConfigRange", 0);
 
-	-- load Disaster parameters from Database and adjust parameters for map size
+	-- check if we should adjust parameters for map size
+	if RetrieveParameter("RNDConfigAdjMapSize", 1) == 1 then --fMapProbAdj = 1.0; end  -- no, we can simply set it to 1.0
+		iRNDConfigNumDis = math.floor(fMapProbAdj * iRNDConfigNumDis * iMapSize/4536);
+	end
+
+	-- load Disaster parameters from Database and adjust parameters for Range and Magnitude
 	for _, disaster in pairs(tDisasterTypes) do
 		dprint("Loading parameters for", disaster.Type);
 		disaster:InitializeDisaster();
-		dprint("Adjusting parameters for", disaster.Type);
-		dprint("  ...originals (bProb,dProb)", disaster.BaseProbability, disaster.DeltaProbability);
-		disaster:AdjustForMapSize();
 		-- debug: check if definitions are ok
 		for k,v in pairs(disaster) do dprint("  (k,v)", k, v); end
 	end
-	
+
 	-- iterate through all plots and understand what's on them
 	for ix = 0, iMapWidth-1, 1 do
 		for iy = 0, iMapHeight-1, 1 do
@@ -2118,8 +2157,35 @@ function OnLoadScreenClose()
 	end
 
 	-- debug: probability calculations data
-	dprint("Number of starting plots for each disaster type");
-	for _,dis in pairs(tDisasterTypes) do dprint("  (dis,num)", dis.Name, dis.NumStartPlots); end
+	--dprint("Number of starting plots for each disaster type");
+	--for _,dis in pairs(tDisasterTypes) do dprint("  (dis,num)", dis.Name, dis.NumStartPlots); end
+
+	-- now let's check the total number of events and adjust probability accordingly
+	local iTotEvents = 0;  -- x1000 to avoid rounding errors
+	for _, disaster in pairs(tDisasterTypes) do
+		local numEvents = math.floor(disaster.BaseProbability * disaster.NumStartPlots * 500 / 1000);
+		dprint("Estimated number of events for (dis,num,plots,prob,adj)", disaster.Type, numEvents/1000, disaster.NumStartPlots, disaster.BaseProbability, fMapProbAdj);
+		iTotEvents = iTotEvents + numEvents;
+	end
+	local fNumDisAdj:number = 1.0 * iRNDConfigNumDis * 1000 / iTotEvents;
+	dprint("Total number of events (par,num,adj)", iRNDConfigNumDis, iTotEvents, fNumDisAdj);
+	
+	-- adjust parameters for game speed, calculate final adjustment and adjust disasters probabilities
+	local fProbAdj:number = fNumDisAdj * (100.0/iGameSpeedMultiplier);
+	for _, disaster in pairs(tDisasterTypes) do
+		dprint("Adjusting original parameters for (dis,base,delta,adj)", disaster.Type, disaster.BaseProbability, disaster.DeltaProbability, fProbAdj);
+		disaster:AdjustProbability(fProbAdj);
+		dprint("  ...adjusted params are (base,delta)", disaster.BaseProbability, disaster.DeltaProbability);
+	end
+
+	-- final check
+	iTotEvents = 0; -- x1000
+	for _, disaster in pairs(tDisasterTypes) do
+		local numEvents = math.floor(disaster.BaseProbability * disaster.NumStartPlots * 500 * (iGameSpeedMultiplier/100) / 1000);
+		dprint("Adjusted estimated number of events for (dis,num)", disaster.Type, numEvents/1000);
+		iTotEvents = iTotEvents + numEvents;
+	end
+	dprint("Total adjusted number of events (par,num)", iRNDConfigNumDis, math.floor(iTotEvents/1000));
 	
 	-- debug - display all maps
 	--ddisplaymap(Disaster_Earthquake.StartPlots, "EE");

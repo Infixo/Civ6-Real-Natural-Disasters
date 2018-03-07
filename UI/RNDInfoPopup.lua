@@ -30,21 +30,79 @@ end
 -- CONTENT FUNCTIONS
 -- ===========================================================================
 
+function ShowTheParameters()
+	dprint("FUNCAL ShowTheParameters()");
+	
+	Controls.HeaderLabel:SetText(Locale.Lookup("LOC_RNDINFO_LINE_MOD_NAME"));
+	Controls.DisasterReportLabel:SetHide(true);
+	
+	local tOutputStrings:table = {};
+	local sLine:string = "";
+	
+	-- map data
+	MapConfiguration.GetScript()
+	local iMapWidth:number, iMapHeight:number = Map.GetGridSize();
+	local iMapSize:number = iMapWidth * iMapHeight;
+	sLine = Locale.Lookup("LOC_RNDINFO_LINE_MAP_INFO", MapConfiguration.GetScript(), iMapWidth, iMapHeight, iMapSize);
+	table.insert(tOutputStrings, sLine);
+	
+	-- parameters
+	table.insert(tOutputStrings, Locale.Lookup("LOC_RNDINFO_LINE_PARAMS"));
+	-- retrieve and show custom parameters
+	local function RetrieveParameter(sParName:string, iDefault:number)
+		local par = GameConfiguration.GetValue(sParName);
+		if par == nil then par = iDefault; else par = tonumber(par); end
+		--dprint("Retrieving (par,def,out)", sParName, iDefault, par);
+		sLine = "[ICON_Bullet]"..sParName.." = "..par;
+		table.insert(tOutputStrings, sLine);
+	end
+	RetrieveParameter("RNDConfigNumDis", 100);
+	RetrieveParameter("RNDConfigAdjMapSize", 1);
+	RetrieveParameter("RNDConfigMagnitude", 0);
+	RetrieveParameter("RNDConfigRange", 0);
+
+	-- number of events
+	table.insert(tOutputStrings, Locale.Lookup("LOC_RNDINFO_LINE_EXPECT"));
+	local iGameSpeedMultiplier = GameInfo.GameSpeeds[GameConfiguration.GetGameSpeedType()].CostMultiplier;
+	local iTotEvents:number = 0; -- x1000
+	for _, disaster in pairs(RND.tDisasterTypes) do
+		local numEvents = math.floor(disaster.BaseProbability * disaster.NumStartPlots * 500 * (iGameSpeedMultiplier/100) / 1000);
+		sLine = Locale.Lookup("LOC_RNDINFO_LINE_DISASTER", disaster.Name, math.floor(0.5+numEvents/1000), disaster.NumStartPlots, disaster.BaseProbability);
+		table.insert(tOutputStrings, sLine);
+		iTotEvents = iTotEvents + numEvents;
+	end
+	sLine = Locale.Lookup("LOC_RNDINFO_LINE_SUMMARY", math.floor(0.5+iTotEvents/1000));
+	table.insert(tOutputStrings, sLine);
+	
+	-- show the loooong string
+	Controls.DisasterDamageDesc:SetText(table.concat(tOutputStrings, "[NEWLINE]"));
+	Controls.DisasterDamageScroll:CalculateSize();
+
+end
+
+
 local iShownTurn:number = 0;
 local iShownStartingPlot:number = 0;
 
 function ShowTheDisaster()
-	dprint("FUNCAL ShowTheDisaster()");
+	--dprint("FUNCAL ShowTheDisaster()");
 	local tTheDisaster = RND.tTheDisaster;
 	local tDisaster = tTheDisaster.DisasterType;
 	
 	-- check if maybe we're already showing the right one
 	if tTheDisaster.Turn == iShownTurn and tTheDisaster.StartingPlot == iShownStartingPlot then return; end
+
+	-- check for our own units and plots
+	local sLocalOwner:string;
+	local eLocalPlayer = Game.GetLocalPlayer();
+	if eLocalPlayer ~= -1 then sLocalOwner = Locale.Lookup(PlayerConfigurations[eLocalPlayer]:GetCivilizationShortDescription());
+	else sLocalOwner = nil; end
 	
 	-- Update header text and Icon
 	local sHeaderLabel = tDisaster.Name; -- Locale.ToUpper( Locale.Lookup( "" ));
 	--dprint("  sHeaderLabel", sHeaderLabel);
 	Controls.HeaderLabel:SetText(sHeaderLabel);
+	Controls.DisasterReportLabel:SetHide(false);
 
 	-- Update Icon  test: will use ICON_ATLAS_CIVILIZATIONS, CivSymbols80.dds
 	dprint("  icon", tDisaster.Icon, IconManager:FindIconAtlas(tDisaster.Icon,80))
@@ -107,7 +165,11 @@ function ShowTheDisaster()
 				sOwnerCiv = Locale.Lookup(sOwnerCiv);
 				sOwnerCity = Locale.Lookup(pCity:GetName());
 				--dprint("  plot owned by (civ,city)", sOwnerCiv, sOwnerCity);
-				sLine = sLine.." "..Locale.Lookup("LOC_RNDINFO_PLOT_OWNED_BY").." "..sOwnerCiv;
+				if sOwnerCiv == sLocalOwner then
+					sLine = sLine.." "..Locale.Lookup("LOC_RNDINFO_PLOT_OWNED_BY").." [COLOR_Green]"..sOwnerCiv.."[ENDCOLOR]";
+				else
+					sLine = sLine.." "..Locale.Lookup("LOC_RNDINFO_PLOT_OWNED_BY").." "..sOwnerCiv;
+				end
 				if sOwnerCiv ~= sOwnerCity then sLine = sLine.." ("..sOwnerCity..")"; end
 			else
 				sLine = sLine.." "..Locale.Lookup("LOC_RNDINFO_PLOT_WITHOUT_OWNER"); -- " without owner";
@@ -143,10 +205,11 @@ end
 function OpenWindow()
 	dprint("FUNCAL OpenWindow() player", Game.GetLocalPlayer());
 	if Players[Game.GetLocalPlayer()] == nil then return; end
-	ShowTheDisaster();  -- main function
+	if Game.GetCurrentGameTurn() == 1 then ShowTheParameters();
+	else ShowTheDisaster(); end  -- main function
 	ContextPtr:SetHide(false);
 	--LuaEvents.HelloWorld_OpenHelloWorld();  -- callback to main script
-	UI.PlaySound("UI_Screen_Open");
+	--UI.PlaySound("UI_Screen_Open");
 end
 
 -- ===========================================================================
