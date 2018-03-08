@@ -8,21 +8,6 @@ print("Loading ModLens_RND.lua from Real Natural Disasters");
 local RND = ExposedMembers.RND;
 
 
--- debug output routine
-function dprint(sStr,p1,p2,p3,p4,p5,p6)
-	if true then return; end
-	local sOutStr = sStr;
-	if p1 ~= nil then sOutStr = sOutStr.." [1] "..tostring(p1); end
-	if p2 ~= nil then sOutStr = sOutStr.." [2] "..tostring(p2); end
-	if p3 ~= nil then sOutStr = sOutStr.." [3] "..tostring(p3); end
-	if p4 ~= nil then sOutStr = sOutStr.." [4] "..tostring(p4); end
-	if p5 ~= nil then sOutStr = sOutStr.." [5] "..tostring(p5); end
-	if p6 ~= nil then sOutStr = sOutStr.." [6] "..tostring(p6); end
-	print(sOutStr);
-end
-
-
-
 -- ===========================================================================
 -- Disaster Lens
 -- ===========================================================================
@@ -100,11 +85,11 @@ function SetTheDisasterHexes()
 		UILens.SetLayerHexesArea(LensLayers.MOVEMENT_ZONE_OF_CONTROL, ePlayer, {RND.tTheDisaster.StartingPlot}); 
 	end
 	-- show all historic disasters
-	UILens.ClearLayerHexes(LensLayers.ATTACK_RANGE);
+	--UILens.ClearLayerHexes(LensLayers.ATTACK_RANGE);
 	for _, disaster in pairs(RND.tDisasterTypes) do
 		local tRevealedPlots = GetOnlyRevealedTiles(disaster.HistoricStartingPlots, ePlayer);
 		UILens.SetLayerHexesColoredArea(LensLayers.HEX_COLORING_APPEAL_LEVEL, ePlayer, tRevealedPlots, UI.GetColorValue( GameInfo.RNDDisasters[disaster.Type].ColorNow ));
-		UILens.SetLayerHexesArea(LensLayers.ATTACK_RANGE, ePlayer, tRevealedPlots);
+		--UILens.SetLayerHexesArea(LensLayers.ATTACK_RANGE, ePlayer, tRevealedPlots);
 	end
 end
 
@@ -146,6 +131,7 @@ local LensEntryDisasterEvent = {
     Initialize = nil,
     --GetColorPlotTable = nil, 
 	NonStandardFunction = SetDisasterEventHexes,
+	SortOrder = 20
 }
 local LensEntryDisasterRiskET = {
     LensButtonText    = "LOC_HUD_DISASTER_ET_LENS",
@@ -153,6 +139,7 @@ local LensEntryDisasterRiskET = {
     Initialize = nil,
     --GetColorPlotTable = nil,
 	NonStandardFunction = SetDisasterETHexes,
+	SortOrder = 21
 }
 local LensEntryDisasterRiskFT = {
     LensButtonText    = "LOC_HUD_DISASTER_FT_LENS",
@@ -160,6 +147,7 @@ local LensEntryDisasterRiskFT = {
     Initialize = nil,
     --GetColorPlotTable = nil,
 	NonStandardFunction = SetDisasterFTHexes,
+	SortOrder = 22
 }
 local LensEntryDisasterRiskVW = {
     LensButtonText    = "LOC_HUD_DISASTER_VW_LENS",
@@ -167,6 +155,7 @@ local LensEntryDisasterRiskVW = {
     Initialize = nil,
     --GetColorPlotTable = nil,
 	NonStandardFunction = SetDisasterVWHexes,
+	SortOrder = 23
 }
 
 -- minimappanel.lua
