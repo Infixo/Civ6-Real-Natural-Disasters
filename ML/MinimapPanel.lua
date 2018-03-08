@@ -1,3 +1,4 @@
+print("Loading MinimapPanel.lua from Real Natural Disasters (modified More Lenses)");
 -- ===========================================================================
 --  MINIMAP PANEL
 -- ===========================================================================
@@ -959,9 +960,12 @@ function SetModLens()
             g_ModLenses[m_CurrentModdedLensOn] ~= nil then
         print("Highlighting " .. m_CurrentModdedLensOn .. " hexes")
         local getPlotColorFn = g_ModLenses[m_CurrentModdedLensOn].GetColorPlotTable
+        local funNonStandard = g_ModLenses[m_CurrentModdedLensOn].NonStandardFunction
         if getPlotColorFn ~= nil then
             SetModLensHexes(getPlotColorFn())
-        else
+        elseif funNonStandard ~= nil then
+			funNonStandard()
+		else
             print("ERROR: No Plot Color Function")
         end
     else

@@ -33,30 +33,107 @@ local LENS_DISASTER_RISK_FT = "ML_DISASTER_RISK_FT"; -- Flood, Tsunami
 local LENS_DISASTER_RISK_VW = "ML_DISASTER_RISK_VW"; -- Volcano, Wildfire
 
 
-
 -- ===========================================================================
--- Exported functions
--- ===========================================================================
+-- Functions to actually show hexes (exported functions)
 
-local function OnGetColorPlotTable()
-    local mapWidth, mapHeight = Map.GetGridSize();
-    local localPlayer   :number = Game.GetLocalPlayer();
-    local localPlayerVis:table = PlayersVisibility[localPlayer];
-
-    local BarbarianColor = UI.GetColorValue("COLOR_BARBARIAN_BARB_LENS");
-    local colorPlot:table = {};
-    colorPlot[BarbarianColor] = {}
-
-    for i = 0, (mapWidth * mapHeight) - 1, 1 do
-        local pPlot:table = Map.GetPlotByIndex(i);
-        if localPlayerVis:IsRevealed(pPlot:GetX(), pPlot:GetY()) and plotHasBarbCamp(pPlot) then
-            table.insert(colorPlot[BarbarianColor], i);
-        end
-    end
-
-    return colorPlot
+-- helper - returns a subset of plots Indices that are revealed to the player
+function GetOnlyRevealedTiles(pPlots:table, ePlayer:number)
+	local tRevealed:table = {};
+	local pPlayerVisibility = PlayersVisibility[ePlayer];
+	for _,idx in pairs(pPlots) do
+		if pPlayerVisibility:IsRevealed(idx) then table.insert(tRevealed, idx); end
+	end
+	return tRevealed;
 end
 
+-- helper
+function SetDisasterAnyHexes(pDisaster:table, bShowAttackRange:boolean)
+	--dprint("Showing hexes for (dis) with (col)", pDisaster.Name, pDisaster.ColorRisk);
+	local ePlayer = Game.GetLocalPlayer();
+	local tStartPlotsWithPrevention:table = pDisaster:GetStartPlotsWithPrevention();
+	if #tStartPlotsWithPrevention > 0 then
+		--dprint("...showing (n) hexes", #tStartPlotsWithPrevention);
+		local tOnlyRevealedTiles:table = GetOnlyRevealedTiles(tStartPlotsWithPrevention, ePlayer);
+		local sColorRisk:string = GameInfo.RNDDisasters[pDisaster.Type].ColorRisk;  -- we can get rid of Color data in Disaster objects
+		UILens.SetLayerHexesColoredArea(
+			LensLayers.HEX_COLORING_APPEAL_LEVEL,
+			ePlayer,
+			tOnlyRevealedTiles,
+			UI.GetColorValue(sColorRisk));
+		if bShowAttackRange then
+			UILens.ClearLayerHexes(LensLayers.ATTACK_RANGE);
+			UILens.SetLayerHexesArea(LensLayers.ATTACK_RANGE, ePlayer, tOnlyRevealedTiles);
+		end
+	--else
+		--dprint("...nothing to show");
+	end
+	if table.count(pDisaster.HistoricStartingPlots) > 0 then
+		--dprint("...showing (n) historic start hexes", table.count(pDisaster.HistoricStartingPlots));
+		--UILens.ClearLayerHexes(LensLayers.ATTACK_RANGE);
+		--UILens.SetLayerHexesArea(LensLayers.ATTACK_RANGE, ePlayer, GetOnlyRevealedTiles(pDisaster.HistoricStartingPlots, ePlayer));
+		--UILens.ClearLayerHexes(LensLayers.HEX_COLORING_GREAT_PEOPLE);
+		UILens.SetLayerHexesArea(LensLayers.HEX_COLORING_GREAT_PEOPLE, ePlayer, GetOnlyRevealedTiles(pDisaster.HistoricStartingPlots, ePlayer));
+	--else
+		--dprint("...nothing to show for historic hexes");
+	end
+end
+
+function SetTheDisasterHexes()
+	--dprint("FUNCAL SetTheDisasterHexes()");
+	--if not RND.tTheDisaster.IsActive then return; end
+	local ePlayer = Game.GetLocalPlayer();
+	-- show all plots with white borders
+	if table.count(RND.tTheDisaster.Plots) > 0 then
+		--dprint("...showing (n) active disaster hexes", table.count(RND.tTheDisaster.Plots));
+		--local eColorNow = UI.GetColorValue(RND.tTheDisaster.DisasterType.ColorNow);
+		local tRevealedPlots = GetOnlyRevealedTiles(RND.tTheDisaster.Plots, ePlayer);
+		UILens.SetLayerHexesColoredArea(LensLayers.HEX_COLORING_APPEAL_LEVEL, ePlayer, tRevealedPlots,
+											UI.GetColorValue( GameInfo.RNDDisasters[ RND.tTheDisaster.DisasterType.Type ].ColorNow ));
+		UILens.ClearLayerHexes(LensLayers.HEX_COLORING_GREAT_PEOPLE);
+		UILens.SetLayerHexesArea(LensLayers.HEX_COLORING_GREAT_PEOPLE, ePlayer, tRevealedPlots);
+	--else
+		--dprint("...nothing to show");
+	end
+	-- check if we can show StartingPlot with special distinction
+	if PlayersVisibility[ePlayer]:IsRevealed(RND.tTheDisaster.StartingPlot) then
+		UILens.ClearLayerHexes(LensLayers.MOVEMENT_ZONE_OF_CONTROL);
+		UILens.SetLayerHexesArea(LensLayers.MOVEMENT_ZONE_OF_CONTROL, ePlayer, {RND.tTheDisaster.StartingPlot}); 
+	end
+	-- show all historic disasters
+	UILens.ClearLayerHexes(LensLayers.ATTACK_RANGE);
+	for _, disaster in pairs(RND.tDisasterTypes) do
+		local tRevealedPlots = GetOnlyRevealedTiles(disaster.HistoricStartingPlots, ePlayer);
+		UILens.SetLayerHexesColoredArea(LensLayers.HEX_COLORING_APPEAL_LEVEL, ePlayer, tRevealedPlots, UI.GetColorValue( GameInfo.RNDDisasters[disaster.Type].ColorNow ));
+		UILens.SetLayerHexesArea(LensLayers.ATTACK_RANGE, ePlayer, tRevealedPlots);
+	end
+end
+
+function SetDisasterEventHexes()
+	--dprint("FUNCAL SetDisasterETHexes()");
+	SetTheDisasterHexes();
+	LuaEvents.RNDInfoPopup_OpenWindow();	
+end
+
+function SetDisasterETHexes()
+	--dprint("FUNCAL SetDisasterETHexes()");
+	UILens.ClearLayerHexes(LensLayers.HEX_COLORING_GREAT_PEOPLE);  -- historic
+	SetDisasterAnyHexes(RND.tDisasterTypes.Disaster_Earthquake, true);
+	SetDisasterAnyHexes(RND.tDisasterTypes.Disaster_Tornado, false);
+end
+
+function SetDisasterFTHexes()
+	---dprint("FUNCAL SetDisasterFTHexes()");
+	UILens.ClearLayerHexes(LensLayers.HEX_COLORING_GREAT_PEOPLE);  -- historic
+	SetDisasterAnyHexes(RND.tDisasterTypes.Disaster_Flood, true);
+	SetDisasterAnyHexes(RND.tDisasterTypes.Disaster_Tsunami, false);
+end
+
+function SetDisasterVWHexes()
+	--dprint("FUNCAL SetDisasterVWHexes()");
+	UILens.ClearLayerHexes(LensLayers.HEX_COLORING_GREAT_PEOPLE);  -- historic
+	SetDisasterAnyHexes(RND.tDisasterTypes.Disaster_Volcano, false);
+	SetDisasterAnyHexes(RND.tDisasterTypes.Disaster_Wildfire, true);
+end
 
 
 -- ===========================================================================
@@ -65,27 +142,31 @@ end
 
 local LensEntryDisasterEvent = {
     LensButtonText    = "LOC_HUD_DISASTER_LENS",
-    LensButtonTooltip = "LOC_HUD_DISASTER_LENS_TOOLTIP", -- long tooltip
+    LensButtonTooltip = "LOC_HUD_DISASTER_LENS_TOOLTIP",
     Initialize = nil,
-    GetColorPlotTable = OnGetColorPlotTable
+    --GetColorPlotTable = nil, 
+	NonStandardFunction = SetDisasterEventHexes,
 }
 local LensEntryDisasterRiskET = {
     LensButtonText    = "LOC_HUD_DISASTER_ET_LENS",
     LensButtonTooltip = "LOC_HUD_DISASTER_ET_LENS_TOOLTIP",
     Initialize = nil,
-    GetColorPlotTable = OnGetColorPlotTable
+    --GetColorPlotTable = nil,
+	NonStandardFunction = SetDisasterETHexes,
 }
 local LensEntryDisasterRiskFT = {
     LensButtonText    = "LOC_HUD_DISASTER_FT_LENS",
     LensButtonTooltip = "LOC_HUD_DISASTER_FT_LENS_TOOLTIP",
     Initialize = nil,
-    GetColorPlotTable = OnGetColorPlotTable
+    --GetColorPlotTable = nil,
+	NonStandardFunction = SetDisasterFTHexes,
 }
 local LensEntryDisasterRiskVW = {
     LensButtonText    = "LOC_HUD_DISASTER_VW_LENS",
     LensButtonTooltip = "LOC_HUD_DISASTER_VW_LENS_TOOLTIP",
     Initialize = nil,
-    GetColorPlotTable = OnGetColorPlotTable
+    --GetColorPlotTable = nil,
+	NonStandardFunction = SetDisasterVWHexes,
 }
 
 -- minimappanel.lua
