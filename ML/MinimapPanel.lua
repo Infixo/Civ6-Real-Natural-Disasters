@@ -10,6 +10,9 @@ include( "InstanceManager" );
 
 g_ModLenses = {} -- Populated by ModLens_*.lua scripts
 include( "ModLens_", true )
+include( "modlens_", true ) -- special treatment for CQUI because capital letter are bad... for reasons
+
+print("Registered lenses in g_ModLenses", table.count(g_ModLenses));
 
 local m_LensButtonIM:table = InstanceManager:new("LensButtonInstance", "LensButton", Controls.LensToggleStack)
 local m_CurrentModdedLensOn:string = nil
@@ -982,7 +985,7 @@ function SetModLens()
             print("ERROR: No Plot Color Function")
         end
     else
-        print("ERROR: Given lens has no entry")
+        print("ERROR: Given lens has no entry", m_CurrentModdedLensOn, m_CurrentModdedLensOn and g_ModLenses[m_CurrentModdedLensOn] or "NIL")
     end
 end
 
