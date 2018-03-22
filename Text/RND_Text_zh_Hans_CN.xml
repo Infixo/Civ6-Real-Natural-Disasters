@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Real Natural Disasters - Text -->
+<!-- Author: Infixo -->
+<!-- 2018-03-16: Translated by Sknaht -->
+
+<GameData>
+
+<LocalizedText>
+
+	<!-- Disasters -->
+	
+  	<Replace Tag="LOC_DISASTER_EARTHQUAKE_NAME"  Language="zh_Hans_CN">
+  		<Text>地震</Text>
+  	</Replace>
+  	<Replace Tag="LOC_DISASTER_EARTHQUAKE_DESCRIPTION" Language="zh_Hans_CN">
+  		<Text>地震</Text>
+  	</Replace>
+  	<Replace Tag="LOC_DISASTER_FLOOD_NAME" Language="zh_Hans_CN">
+  		<Text>洪水</Text>
+  	</Replace>
+  	<Replace Tag="LOC_DISASTER_FLOOD_DESCRIPTION" Language="zh_Hans_CN">
+  		<Text>洪水</Text>
+  	</Replace>
+  	<Replace Tag="LOC_DISASTER_METEOR_NAME" Language="zh_Hans_CN">
+  		<Text>陨石</Text>
+  	</Replace>
+  	<Replace Tag="LOC_DISASTER_METEOR_DESCRIPTION" Language="zh_Hans_CN">
+  		<Text>陨石</Text>
+  	</Replace>
+  	<Replace Tag="LOC_DISASTER_TORNADO_NAME" Language="zh_Hans_CN">
+  		<Text>龙卷风</Text>
+  	</Replace>
+  	<Replace Tag="LOC_DISASTER_TORNADO_DESCRIPTION" Language="zh_Hans_CN">
+  		<Text>龙卷风</Text>
+  	</Replace>
+  	<Replace Tag="LOC_DISASTER_TSUNAMI_NAME" Language="zh_Hans_CN">
+  		<Text>海啸</Text>
+  	</Replace>
+  	<Replace Tag="LOC_DISASTER_TSUNAMI_DESCRIPTION" Language="zh_Hans_CN">
+  		<Text>海啸</Text>
+  	</Replace>
+  	<Replace Tag="LOC_DISASTER_VOLCANO_NAME" Language="zh_Hans_CN">
+  		<Text>火山喷发</Text>
+  	</Replace>
+  	<Replace Tag="LOC_DISASTER_VOLCANO_DESCRIPTION" Language="zh_Hans_CN">
+  		<Text>火山喷发</Text>
+  	</Replace>
+  	<Replace Tag="LOC_DISASTER_WILDFIRE_NAME" Language="zh_Hans_CN">
+  		<Text>野火</Text>
+  	</Replace>
+  	<Replace Tag="LOC_DISASTER_WILDFIRE_DESCRIPTION" Language="zh_Hans_CN">
+  		<Text>野火</Text>
+  	</Replace>
+
+  
+	<!-- Reports -->
+	
+	<Replace Tag="LOC_RNDINFO_GENERAL_INFO" Language="zh_Hans_CN">
+		<Text>在[ICON_Turn]{1_DisasterYear}，[COLOR_Red]{3_Magnitude}[ENDCOLOR]级的[COLOR_Red]{2_DisasterName}[ENDCOLOR]在坐标({4_CoorX},{5_CoorY})毁坏了附近的[COLOR_Red]{6_Size}[ENDCOLOR]地格。</Text>
+	</Replace>
+	<Replace Tag="LOC_RNDINFO_SUMMARY_NO_DAMAGE" Language="zh_Hans_CN">
+		<Text>[ICON_CheckSuccess]幸运的是{1_DisasterName}[COLOR_Green]没有[ENDCOLOR]造成重大破坏。</Text>
+	</Replace>
+	<Replace Tag="LOC_RNDINFO_PLOT_WATER_AT" Language="zh_Hans_CN">
+		<Text>位于({1_CoorX},{2_CoorY})的海岸，</Text>
+	</Replace>
+	<Replace Tag="LOC_RNDINFO_PLOT_LAND_AT" Language="zh_Hans_CN">
+		<Text>位于({1_CoorX},{2_CoorY})的土地，</Text>
+	</Replace>
+	<Replace Tag="LOC_RNDINFO_PLOT_OWNED_BY" Language="zh_Hans_CN">
+		<Text>拥有者为</Text>
+	</Replace>
+	<Replace Tag="LOC_RNDINFO_PLOT_WITHOUT_OWNER" Language="zh_Hans_CN">
+		<Text>无归属</Text>
+	</Replace>
+	<Replace Tag="LOC_RNDINFO_PLOT_WAS_HIT" Language="zh_Hans_CN">
+		<Text>遭到了强度为{1_Magnitude}的袭击。</Text>
+	</Replace>
+	<Replace Tag="LOC_RNDINFO_NAME_SURVIVED" Language="zh_Hans_CN">
+		<Text>{1_Name}[ICON_CheckSuccess]幸存</Text>
+	</Replace>
+	<Replace Tag="LOC_RNDINFO_NAME_PILLAGED" Language="zh_Hans_CN">
+		<Text>{1_Name}[ICON_Pillaged]被劫掠</Text>
+	</Replace>
+	<Replace Tag="LOC_RNDINFO_NAME_DAMAGED_HP" Language="zh_Hans_CN">
+		<Text>{1_Name}[ICON_Pillaged]失去{2_TotDmg} HP</Text>
+	</Replace>
+	<Replace Tag="LOC_RNDINFO_NAME_DESTROYED" Language="zh_Hans_CN">
+		<Text>{1_Name}[ICON_CheckFail]被摧毁</Text>
+	</Replace>
+	<Replace Tag="LOC_RNDINFO_NAME_KILLED" Language="zh_Hans_CN">
+		<Text>{1_Name}({2_Owner})[ICON_CheckFail]死亡</Text>
+	</Replace>
+	<Replace Tag="LOC_RNDINFO_NAME_WOUNDED" Language="zh_Hans_CN">
+		<Text>{1_Name}({2_Owner})[ICON_Pillaged]失去{3_Magnitude} HP</Text>
+	</Replace>
+	<Replace Tag="LOC_RNDINFO_NAME_DIED_WOUNDS" Language="zh_Hans_CN">
+		<Text>{1_Name}({2_Owner})[ICON_CheckFail]受伤导致死亡</Text>
+	</Replace>
+	<Replace Tag="LOC_RNDINFO_CITY_SURVIVED" Language="zh_Hans_CN">
+		<Text>{1_Name}[ICON_CheckSuccess]没有人口损失</Text>
+	</Replace>
+	<Replace Tag="LOC_RNDINFO_CITY_LOST_POP" Language="zh_Hans_CN">
+		<Text>{1_Name}[ICON_Pillaged]失去[COLOR_Red]{2_PopLost}[ENDCOLOR]人口</Text>
+	</Replace>
+	<Replace Tag="LOC_RNDINFO_UNKNOWN_CITY" Language="zh_Hans_CN">
+		<Text>未知城市</Text>
+	</Replace>
+	<Replace Tag="LOC_RNDINFO_UNKNOWN_CIV" Language="zh_Hans_CN">
+		<Text>未知文明</Text>
+	</Replace>
+	<Replace Tag="LOC_RNDINFO_RESOURCE_PERMANENT" Language="zh_Hans_CN">
+		<Text>新资源[COLOR_LightBlue]{1_Resource}[ENDCOLOR]</Text>
+	</Replace>
+	<Replace Tag="LOC_RNDINFO_RESOURCE_TEMPORARY" Language="zh_Hans_CN">
+		<Text>持续[COLOR_LightBlue]{2_Turns}[ENDCOLOR]回合的新资源[COLOR_LightBlue]{1_Resource}[ENDCOLOR]</Text>
+	</Replace>
+	
+
+    <!-- Recent Disaster Lens -->
+	
+  	<Replace Tag="LOC_HUD_DISASTER_LENS" Language="zh_Hans_CN">
+  		<Text>最近灾难</Text>
+  	</Replace>
+  	<Replace Tag="LOC_HUD_DISASTER_LENS_TOOLTIP" Language="zh_Hans_CN">
+  		<Text>展示最近灾难的位置和类型</Text>
+  	</Replace>
+	
+    <!-- Disaster Risk Lens -->
+	
+  	<Replace Tag="LOC_HUD_DISASTER_ET_LENS" Language="zh_Hans_CN">
+  		<Text>地震 龙卷风</Text>
+  	</Replace>
+  	<Replace Tag="LOC_HUD_DISASTER_FT_LENS" Language="zh_Hans_CN">
+  		<Text>洪水 海啸</Text>
+  	</Replace>
+  	<Replace Tag="LOC_HUD_DISASTER_VW_LENS" Language="zh_Hans_CN">
+  		<Text>火山喷发 野火</Text>
+  	</Replace>
+  	<Replace Tag="LOC_HUD_DISASTER_ET_LENS_TOOLTIP" Language="zh_Hans_CN">
+  		<Text>地震龙和卷风风险区域</Text>
+  	</Replace>
+  	<Replace Tag="LOC_HUD_DISASTER_FT_LENS_TOOLTIP" Language="zh_Hans_CN">
+  		<Text>洪水和海啸风险区域</Text>
+  	</Replace>
+  	<Replace Tag="LOC_HUD_DISASTER_VW_LENS_TOOLTIP" Language="zh_Hans_CN">
+  		<Text>火山喷发和野火风险区域</Text>
+  	</Replace>
+	
+    <!-- Disaster Types -->
+	
+  	<Replace Tag="LOC_TOOLTIP_DISASTER_EVENT" Language="zh_Hans_CN">
+  		<Text>当前事件</Text>
+  	</Replace>
+  	<Replace Tag="LOC_TOOLTIP_DISASTER_RISK_EARTHQUAKE" Language="zh_Hans_CN">
+  		<Text>地震</Text>
+  	</Replace>
+  	<Replace Tag="LOC_TOOLTIP_DISASTER_RISK_FLOOD" Language="zh_Hans_CN">
+  		<Text>洪水</Text>
+  	</Replace>
+  	<Replace Tag="LOC_TOOLTIP_DISASTER_RISK_METEOR" Language="zh_Hans_CN">
+  		<Text>陨石</Text>
+  	</Replace>
+  	<Replace Tag="LOC_TOOLTIP_DISASTER_RISK_TORNADO" Language="zh_Hans_CN">
+  		<Text>龙卷风</Text>
+  	</Replace>
+  	<Replace Tag="LOC_TOOLTIP_DISASTER_RISK_TSUNAMI" Language="zh_Hans_CN">
+  		<Text>海啸</Text>
+  	</Replace>
+  	<Replace Tag="LOC_TOOLTIP_DISASTER_RISK_VOLCANO" Language="zh_Hans_CN">
+  		<Text>火山喷发</Text>
+  	</Replace>
+  	<Replace Tag="LOC_TOOLTIP_DISASTER_RISK_WILDFIRE" Language="zh_Hans_CN">
+  		<Text>野火</Text>
+  	</Replace>
+	
+	<!-- Initial report about Disasters -->
+	
+	<Replace Tag="LOC_RNDINFO_LINE_MOD_NAME" Language="zh_Hans_CN">
+		<Text>自然灾害模组</Text>
+	</Replace>
+	<Replace Tag="LOC_RNDINFO_LINE_MAP_INFO" Language="zh_Hans_CN">
+		<Text>地图脚本是[COLOR_Green]{1_MapScript}[ENDCOLOR]。地图大小是{2_Width} x {3_Height} ([COLOR_Green]{4_NumTiles}[ENDCOLOR]格)。</Text>
+	</Replace>
+	<Replace Tag="LOC_RNDINFO_LINE_PARAMS" Language="zh_Hans_CN">
+		<Text>已选择的变量：</Text>
+	</Replace>
+	<Replace Tag="LOC_RNDINFO_LINE_EXPECT" Language="zh_Hans_CN">
+		<Text>期望平均发生的灾难次数：</Text>
+	</Replace>
+	<Replace Tag="LOC_RNDINFO_LINE_DISASTER" Language="zh_Hans_CN">
+		<Text>[ICON_Bullet]{1_Name}: [COLOR_Red]{2_NumDis}[ENDCOLOR] (共{3_NumStart}格@{4_Prob}%概率/回合)</Text>
+	</Replace>
+	<Replace Tag="LOC_RNDINFO_LINE_SUMMARY" Language="zh_Hans_CN">
+		<Text>总灾难数: [COLOR_Red]{1_TotDis}[ENDCOLOR]</Text>
+	</Replace>
+	
+	<!-- Resources -->
+	
+	<Replace Tag="LOC_RESOURCE_DISASTER_SMALL_NAME" Language="zh_Hans_CN">
+		<Text>小型灾难遗址</Text>
+	</Replace>
+	<Replace Tag="LOC_RESOURCE_DISASTER_LARGE_NAME" Language="zh_Hans_CN">
+		<Text>大型灾难遗址</Text>
+	</Replace>
+	<Replace Tag="LOC_RESOURCE_EPICENTRUM_NAME" Language="zh_Hans_CN">
+		<Text>地震震中</Text>
+	</Replace>
+	<Replace Tag="LOC_RESOURCE_FLOODED_LAND_NAME" Language="zh_Hans_CN">
+		<Text>泛滥土地</Text>
+	</Replace>
+	<Replace Tag="LOC_RESOURCE_METEOR_CRATER_NAME" Language="zh_Hans_CN">
+		<Text>陨石坑</Text>
+	</Replace>
+	<Replace Tag="LOC_RESOURCE_METEOR_SHARDS_NAME" Language="zh_Hans_CN">
+		<Text>陨石碎片</Text>
+	</Replace>
+	<Replace Tag="LOC_RESOURCE_VOLCANO_CRATER_NAME" Language="zh_Hans_CN">
+		<Text>活火山口</Text>
+	</Replace>
+	<Replace Tag="LOC_RESOURCE_VOLCANIC_ASH_NAME" Language="zh_Hans_CN">
+		<Text>火山灰</Text>
+	</Replace>
+	<Replace Tag="LOC_RESOURCE_BURNED_GROUND_NAME" Language="zh_Hans_CN">
+		<Text>焦土</Text>
+	</Replace>
+	<Replace Tag="LOC_RESOURCE_BURNED_WATER_NAME" Language="zh_Hans_CN">
+		<Text>熟土</Text>
+	</Replace>
+	
+	<!-- Buildings -->
+	
+	<Replace Tag="LOC_BUILDING_EARLY_WARNING_NAME" Language="zh_Hans_CN">
+		<Text>灾难研究中心</Text>
+	</Replace>
+	<Replace Tag="LOC_BUILDING_EARLY_WARNING_DESCRIPTION" Language="zh_Hans_CN">
+		<Text>灾难研究中心</Text>
+	</Replace>
+	<Replace Tag="LOC_BUILDING_FIRE_STATION_NAME" Language="zh_Hans_CN">
+		<Text>消防中心</Text>
+	</Replace>
+	<Replace Tag="LOC_BUILDING_FIRE_STATION_DESCRIPTION" Language="zh_Hans_CN">
+		<Text>消防中心</Text>
+	</Replace>
+	<Replace Tag="LOC_BUILDING_EMERGENCY_SHELTER_NAME" Language="zh_Hans_CN">
+		<Text>应急避难所</Text>
+	</Replace>
+	<Replace Tag="LOC_BUILDING_EMERGENCY_SHELTER_DESCRIPTION" Language="zh_Hans_CN">
+		<Text>应急避难所</Text>
+	</Replace>
+	<Replace Tag="LOC_BUILDING_BREAKWATERS_NAME" Language="zh_Hans_CN">
+		<Text>防波堤</Text>
+	</Replace>
+	<Replace Tag="LOC_BUILDING_BREAKWATERS_DESCRIPTION" Language="zh_Hans_CN">
+		<Text>防波堤</Text>
+	</Replace>
+	<Replace Tag="LOC_BUILDING_RIVER_DAM_NAME" Language="zh_Hans_CN">
+		<Text>拦河大坝</Text>
+	</Replace>
+	<Replace Tag="LOC_BUILDING_RIVER_DAM_DESCRIPTION" Language="zh_Hans_CN">
+		<Text>拦河大坝</Text>
+	</Replace>
+	<Replace Tag="LOC_BUILDING_INSURANCE_COMPANY_NAME" Language="zh_Hans_CN">
+		<Text>保险公司</Text>
+	</Replace>
+	<Replace Tag="LOC_BUILDING_INSURANCE_COMPANY_DESCRIPTION" Language="zh_Hans_CN">
+		<Text>保险公司</Text>
+	</Replace>
+	<Replace Tag="LOC_PROJECT_DISASTER_RESISTANCE_NAME" Language="zh_Hans_CN">
+		<Text>灾难抵抗组织</Text>
+	</Replace>
+	<Replace Tag="LOC_PROJECT_DISASTER_RESISTANCE_SHORT_NAME" Language="zh_Hans_CN">
+		<Text>抗灾项目</Text>
+	</Replace>
+	<Replace Tag="LOC_PROJECT_DISASTER_RESISTANCE_DESCRIPTION" Language="zh_Hans_CN">
+		<Text>进行灾难抵抗组织</Text>
+	</Replace>
+	
+	
+</LocalizedText>
+
+</GameData>

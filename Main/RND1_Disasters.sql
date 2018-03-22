@@ -8,8 +8,8 @@
 
 -- just to make versioning easier
 INSERT INTO GlobalParameters (Name, Value) VALUES ('RND_VERSION_MAJOR', '2');
-INSERT INTO GlobalParameters (Name, Value) VALUES ('RND_VERSION_MINOR', '1');
-INSERT INTO GlobalParameters (Name, Value) VALUES ('RND_VERSION_PATCH', '2');
+INSERT INTO GlobalParameters (Name, Value) VALUES ('RND_VERSION_MINOR', '2');
+INSERT INTO GlobalParameters (Name, Value) VALUES ('RND_VERSION_PATCH', '0');
 
 INSERT INTO Colors (Type,Red,Green,Blue,Alpha)
 VALUES

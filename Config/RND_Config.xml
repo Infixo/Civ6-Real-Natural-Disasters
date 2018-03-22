@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Real Natural Disasters Config -->
 <!-- Author: Infixo -->
-<!-- Apr 5th, 2017: Created -->
+<!-- 2017-04-05: Created -->
+<!-- 2018-03-16: Sknaht converted all texts into LOCs -->
+
 <GameData>
 	
 	<Parameters>
@@ -14,32 +16,32 @@
     <DomainValues>
 	
 		<!-- Number of natural disasters in a game -->
-        <Row Domain="RNDDomainNumDis" Value= "25" SortIndex="10" Name="Minimal ~25"   Description="There will be ~25 natural disasters during the game" />
-        <Row Domain="RNDDomainNumDis" Value= "50" SortIndex="20" Name="Low ~50"       Description="There will be ~50 natural disasters during the game" />
-        <Row Domain="RNDDomainNumDis" Value= "75" SortIndex="30" Name="Medium ~75"    Description="There will be ~75 natural disasters during the game" />
-        <Row Domain="RNDDomainNumDis" Value="100" SortIndex="40" Name="Standard ~100" Description="There will be ~100 natural disasters during the game (default)" />
-        <Row Domain="RNDDomainNumDis" Value="150" SortIndex="50" Name="High ~150" 	  Description="There will be ~150 natural disasters during the game" />
-        <Row Domain="RNDDomainNumDis" Value="200" SortIndex="60" Name="Extreme ~200"  Description="There will be ~200 natural disasters during the game" />
-        <Row Domain="RNDDomainNumDis" Value="250" SortIndex="70" Name="Insane ~250"   Description="There will be ~250 natural disasters during the game" />
-        <Row Domain="RNDDomainNumDis" Value=  "0" SortIndex="80" Name="Chicken..."    Description="There will be NO natural disasters during the game" />
+        <Row Domain="RNDDomainNumDis" Value= "25" SortIndex="10" Name="LOC_RND_CONFIG_NUMDIS_MINI_NAME"     Description="LOC_RND_CONFIG_NUMDIS_MINI_DESC" />
+        <Row Domain="RNDDomainNumDis" Value= "50" SortIndex="20" Name="LOC_RND_CONFIG_NUMDIS_LOW_NAME"      Description="LOC_RND_CONFIG_NUMDIS_LOW_DESC" />
+        <Row Domain="RNDDomainNumDis" Value= "75" SortIndex="30" Name="LOC_RND_CONFIG_NUMDIS_MEDIUM_NAME"   Description="LOC_RND_CONFIG_NUMDIS_MEDIUM_DESC" />
+        <Row Domain="RNDDomainNumDis" Value="100" SortIndex="40" Name="LOC_RND_CONFIG_NUMDIS_STANDARD_NAME" Description="LOC_RND_CONFIG_NUMDIS_STANDARD_DESC" />
+        <Row Domain="RNDDomainNumDis" Value="150" SortIndex="50" Name="LOC_RND_CONFIG_NUMDIS_HIGH_NAME" 	Description="LOC_RND_CONFIG_NUMDIS_HIGH_DESC" />
+        <Row Domain="RNDDomainNumDis" Value="200" SortIndex="60" Name="LOC_RND_CONFIG_NUMDIS_EXTREME_NAME"  Description="LOC_RND_CONFIG_NUMDIS_EXTREME_DESC" />
+        <Row Domain="RNDDomainNumDis" Value="250" SortIndex="70" Name="LOC_RND_CONFIG_NUMDIS_INSANE_NAME"   Description="LOC_RND_CONFIG_NUMDIS_INSANE_DESC" />
+        <Row Domain="RNDDomainNumDis" Value=  "0" SortIndex="80" Name="LOC_RND_CONFIG_NUMDIS_CHICKEN_NAME"  Description="LOC_RND_CONFIG_NUMDIS_CHICKEN_DESC" />
 		
 		<!-- Adjust for map size -->
-        <Row Domain="RNDDomainAdjust" Value= "0" SortIndex="10" Name="Do NOT adjust for map size" Description="Number of disasters will NOT be adjusted for map size" />
-        <Row Domain="RNDDomainAdjust" Value= "1" SortIndex="20" Name="Adjust for map size"        Description="Number of disasters will be adjusted for map size (default)" />
+        <Row Domain="RNDDomainAdjust" Value= "0" SortIndex="10" Name="LOC_RND_CONFIG_ADJMAPSIZE_NO_NAME"  Description="LOC_RND_CONFIG_ADJMAPSIZE_NO_DESC" />
+        <Row Domain="RNDDomainAdjust" Value= "1" SortIndex="20" Name="LOC_RND_CONFIG_ADJMAPSIZE_YES_NAME" Description="LOC_RND_CONFIG_ADJMAPSIZE_YES_DESC" />
 
 		<!-- Disasters strength -->
-		<Row Domain="RNDDomainMagnitude" Value="-20" SortIndex="10" Name="Very weak (-20)" 	 Description="Very weak: Magnitude decreased by -20 for each disaster" />
-        <Row Domain="RNDDomainMagnitude" Value="-10" SortIndex="20" Name="Weaker (-10)" 	 Description="Weaker: Magnitude decreased by -10 for each disaster" />
-        <Row Domain="RNDDomainMagnitude" Value=  "0" SortIndex="30" Name="Standard"          Description="Standard: No change in Magnitude (default)" />
-        <Row Domain="RNDDomainMagnitude" Value= "10" SortIndex="40" Name="Stronger (+10)"    Description="Stronger: Magnitude increased by +10 for each disaster" />
-        <Row Domain="RNDDomainMagnitude" Value= "20" SortIndex="50" Name="Very strong (+20)" Description="Very strong: Magnitude increased by +20 for each disaster" />
+		<Row Domain="RNDDomainMagnitude" Value="-20" SortIndex="10" Name="LOC_RND_CONFIG_MAGNITUDE_VERY_WEAK_NAME" 	 Description="LOC_RND_CONFIG_MAGNITUDE_VERY_WEAK_DESC" />
+        <Row Domain="RNDDomainMagnitude" Value="-10" SortIndex="20" Name="LOC_RND_CONFIG_MAGNITUDE_WEAKER_NAME" 	 Description="LOC_RND_CONFIG_MAGNITUDE_WEAKER_DESC" />
+        <Row Domain="RNDDomainMagnitude" Value=  "0" SortIndex="30" Name="LOC_RND_CONFIG_MAGNITUDE_STANDARD_NAME"    Description="LOC_RND_CONFIG_MAGNITUDE_STANDARD_DESC" />
+        <Row Domain="RNDDomainMagnitude" Value= "10" SortIndex="40" Name="LOC_RND_CONFIG_MAGNITUDE_STRONGER_NAME"    Description="LOC_RND_CONFIG_MAGNITUDE_STRONGER_DESC" />
+        <Row Domain="RNDDomainMagnitude" Value= "20" SortIndex="50" Name="LOC_RND_CONFIG_MAGNITUDE_VERY_STRONG_NAME" Description="LOC_RND_CONFIG_MAGNITUDE_VERY_STRONG_DESC" />
 
 		<!-- Disasters range -->
-        <Row Domain="RNDDomainRange" Value="-1" SortIndex="10" Name="Smaller (-1)"    Description="Smaller: -1 tile, good for Duel and Tiny maps" />
-        <Row Domain="RNDDomainRange" Value= "0" SortIndex="20" Name="Standard" 	      Description="Standard: no change in range, good for Small, Standard and Large maps (default)" />
-        <Row Domain="RNDDomainRange" Value= "1" SortIndex="30" Name="Larger (+1)"     Description="Larger: +1 tile, good for Huge and Enormous maps" />
-        <Row Domain="RNDDomainRange" Value= "2" SortIndex="40" Name="Very large (+2)" Description="Very large: +2 tiles, good for Giant maps" />
-        <Row Domain="RNDDomainRange" Value= "3" SortIndex="50" Name="Extreme (+3)" 	  Description="Extreme: +3 tiles, good for Ludicrous maps" />
+        <Row Domain="RNDDomainRange" Value="-1" SortIndex="10" Name="LOC_RND_CONFIG_RANGE_SMALL_NAME"      Description="LOC_RND_CONFIG_RANGE_SMALL_DESC" />
+        <Row Domain="RNDDomainRange" Value= "0" SortIndex="20" Name="LOC_RND_CONFIG_RANGE_STANDARD_NAME"   Description="LOC_RND_CONFIG_RANGE_STANDARD_DESC" />
+        <Row Domain="RNDDomainRange" Value= "1" SortIndex="30" Name="LOC_RND_CONFIG_RANGE_LARGE_NAME"      Description="LOC_RND_CONFIG_RANGE_LARGE_DESC" />
+        <Row Domain="RNDDomainRange" Value= "2" SortIndex="40" Name="LOC_RND_CONFIG_RANGE_VERY_LARGE_NAME" Description="LOC_RND_CONFIG_RANGE_VERY_LARGE_DESC" />
+        <Row Domain="RNDDomainRange" Value= "3" SortIndex="50" Name="LOC_RND_CONFIG_RANGE_EXTREME_NAME"    Description="LOC_RND_CONFIG_RANGE_EXTREME_DESC" />
 
     </DomainValues>
 	
