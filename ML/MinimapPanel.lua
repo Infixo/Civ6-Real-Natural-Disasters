@@ -1,4 +1,4 @@
-print("Loading MinimapPanel.lua from Real Natural Disasters (modified More Lenses)");
+print("Loading MinimapPanel.lua from Real Natural Disasters version "..GlobalParameters.RND_VERSION_MAJOR.."."..GlobalParameters.RND_VERSION_MINOR.."."..GlobalParameters.RND_VERSION_PATCH);
 -- ===========================================================================
 --  MINIMAP PANEL
 -- ===========================================================================
@@ -1203,3 +1203,5 @@ function Initialize()
     InitializeModLens()
 end
 Initialize();
+
+print("OK loaded MinimapPanel.lua from Real Natural Disasters");

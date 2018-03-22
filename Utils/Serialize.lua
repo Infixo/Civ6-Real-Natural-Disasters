@@ -1,4 +1,4 @@
-print("Loading Serialize.lua from Real Natural Disasters");
+print("Loading Serialize.lua from Real Natural Disasters version "..GlobalParameters.RND_VERSION_MAJOR.."."..GlobalParameters.RND_VERSION_MINOR.."."..GlobalParameters.RND_VERSION_PATCH);
 --===========================================================================
 -- Identity-preserving table serialization by Metalua
 -- https://github.com/fab13n/metalua
@@ -171,7 +171,8 @@ function deserialize (x)
 	return loadstring(x)()
 end
 
-
+-- 2018-03-22 This part is no-longer needed as Firaxis seemed to fix "include" statement
+--[[
 function Initialize()
 
 	-- exposing functions and variables
@@ -181,5 +182,5 @@ function Initialize()
 	
 end
 Initialize();
-
-print("Finished loading Serialize.lua from Real Natural Disasters");
+--]]
+print("OK loaded Serialize.lua from Real Natural Disasters");

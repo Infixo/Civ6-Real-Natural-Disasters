@@ -5,6 +5,12 @@
 -- March 31, 2017 - Added separated colors for active events
 -- April  1, 2017 - Disaster parameters added
 --------------------------------------------------------------
+
+-- just to make versioning easier
+INSERT INTO GlobalParameters (Name, Value) VALUES ('RND_VERSION_MAJOR', '2');
+INSERT INTO GlobalParameters (Name, Value) VALUES ('RND_VERSION_MINOR', '1');
+INSERT INTO GlobalParameters (Name, Value) VALUES ('RND_VERSION_PATCH', '2');
+
 INSERT INTO Colors (Type,Red,Green,Blue,Alpha)
 VALUES
 	('COLOR_DISASTER_EARTHQUAKE', 		1.0, 0.0, 0.0, 0.9),

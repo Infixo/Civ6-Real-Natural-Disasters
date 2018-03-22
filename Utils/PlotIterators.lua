@@ -1,4 +1,4 @@
-print("Loading PlotIterators.lua from Real Natural Disasters");
+print("Loading PlotIterators.lua from Real Natural Disasters version "..GlobalParameters.RND_VERSION_MAJOR.."."..GlobalParameters.RND_VERSION_MINOR.."."..GlobalParameters.RND_VERSION_PATCH);
 -- Code provided by whoward69
 
 -- Plot iterator functions
@@ -223,8 +223,9 @@ end
 
 ----------------------------------------------
 -- Initialize functions for other contexts
+-- 2018-03-22 This part is no-longer needed as Firaxis seemed to fix "include" statement
 ----------------------------------------------
-
+--[[
 function Initialize()
 
 	-- exposing functions and variables
@@ -235,5 +236,5 @@ function Initialize()
 
 end
 Initialize();
-
-print("Finished loading PlotIterators.lua from Real Natural Disasters");
+--]]
+print("OK loaded PlotIterators.lua from Real Natural Disasters");

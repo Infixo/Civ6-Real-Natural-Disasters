@@ -1,4 +1,4 @@
-print("Loading RealNaturalDisasters.lua from Real Natural Disasters");
+print("Loading RealNaturalDisasters.lua from Real Natural Disasters version "..GlobalParameters.RND_VERSION_MAJOR.."."..GlobalParameters.RND_VERSION_MINOR.."."..GlobalParameters.RND_VERSION_PATCH);
 -- ===========================================================================
 -- Real Natural Disasters
 -- Author: Infixo
@@ -6,6 +6,8 @@ print("Loading RealNaturalDisasters.lua from Real Natural Disasters");
 -- Version 2: April 21st - April 28th, 207
 -- ===========================================================================
 
+include("PlotIterators");
+include("Serialize");
 
 local RND = ExposedMembers.RND;
 
@@ -27,7 +29,7 @@ function dprint(sStr,p1,p2,p3,p4,p5,p6)
 	if p4 ~= nil then sOutStr = sOutStr.." [4] "..tostring(p4); end
 	if p5 ~= nil then sOutStr = sOutStr.." [5] "..tostring(p5); end
 	if p6 ~= nil then sOutStr = sOutStr.." [6] "..tostring(p6); end
-	print(sOutStr);
+	print(Game.GetCurrentGameTurn(), sOutStr);
 end
 
 -- debug routine - print contents of a table of plot indices
@@ -597,7 +599,7 @@ function Disaster_Prevention:IsBuildingWithinRange(iPlot:number, iRange:number, 
 	--dprint("FUNCAL Disaster_Prevention:IsBuildingWithinRange() (class,plot,range,buld,active)", self._ClassName, iPlot, iRange, eBuilding, bCheckActive);
 	-- check separately for the plot itself
 	if IsPlotIndexHasBuilding(iPlot, eBuilding, bCheckActive) then return true; end
-	for plot in RND.PlotAreaSweepIterator(Map.GetPlotByIndex(iPlot), iRange) do
+	for plot in PlotAreaSweepIterator(Map.GetPlotByIndex(iPlot), iRange) do -- RND.
 		if IsPlotIndexHasBuilding(plot:GetIndex(), eBuilding, bCheckActive) then
 			--dprint("   ...found at (x,y)", plot:GetX(), plot:GetY());
 			return true;
@@ -1121,7 +1123,8 @@ function Effect_Resource:CanPlaceResourceEffect(iPlot:number, tResEff:table)
 	--dprint("  ...plot data (x,y,res,city,water,river)",pPlot:GetX(),pPlot:GetY(),pPlot:GetResourceType(),pPlot:IsCity(),pPlot:IsWater(),pPlot:IsRiver());
 	-- first check standard tables
 	local eResource:number = GameInfo.Resources[tResEff.ResourceType].Index;
-	if not ResourceBuilder.CanHaveResource(pPlot, eResource) then
+	local funCanHaveResource = ( ResourceBuilder.OldCanHaveResource and ResourceBuilder.OldCanHaveResource or ResourceBuilder.CanHaveResource ); -- special compatibility fix for YnAMP
+	if not funCanHaveResource(pPlot, eResource) then
 		--dprint("  ...can't place: terrain/feature/city/resource problem (plot,terrain,feature)", iPlot, pPlot:GetTerrainType(), pPlot:GetFeatureType());
 		return false;
 	end
@@ -1523,7 +1526,7 @@ function Disaster_Object:EventGenerate(pDisaster:table)  -- need a poiner becaus
 	local pStartingPlot = Map.GetPlotByIndex(self.StartingPlot);
 	for distance = 1, self.Range, 1 do  -- go through all rings
 		local iMagnitude = math.max(self.StartingMagnitude + self.MagnitudeChange * distance, self.MagnitudeMin);  -- we assume that MagnitudeChange is negative
-		for plot in RND.PlotRingIterator(pStartingPlot, distance) do  -- we don't need starting sector nor anticlockwise - just the ring
+		for plot in PlotRingIterator(pStartingPlot, distance) do  -- we don't need starting sector nor anticlockwise - just the ring
 			--dprint("  ...(ring): adding plot (idx,x,y,magn)", distance, plot:GetIndex(), plot:GetX(), plot:GetY(), iMagnitude);
 			table.insert(pDisaster.Plots, plot:GetIndex());
 			table.insert(pDisaster.Magnitudes, iMagnitude);
@@ -1987,7 +1990,7 @@ function Disaster_Tsunami:GetDistanceToNearestLand(pStartingPlot:table)
 	if not pStartingPlot:IsWater() then return 0; end
 	-- iterate through Rings
 	for distance = 1, math.max(iMapWidth, iMapHeight), 1 do  -- precaution so there won't be any infinite loop in case of some stupid maps
-		for plot in RND.PlotRingIterator(pStartingPlot, distance) do  -- we don't need starting sector nor anticlockwise - just the ring
+		for plot in PlotRingIterator(pStartingPlot, distance) do  -- we don't need starting sector nor anticlockwise - just the ring
 			if IsInTable(self.LandTiles, plot:GetIndex()) then return distance; end  -- finish everything as soon as a tile in LandTiles is found
 		end
 	end
@@ -2584,6 +2587,7 @@ end
 
 function tTheDisaster:InitFromLoadCopy(tCopyDisaster:table)
 	dprint("FUNCAL tTheDisaster:InitFromLoadCopy()");
+	if tCopyDisaster == nil or table.count(tCopyDisaster) == 0 then print("WARNING: tTheDisaster:InitFromLoadCopy no data provided, resetting current disaster"); return; end
 	--dshowrectable(tCopyDisaster);
 	self.IsActive 			= tCopyDisaster.IsActive;
 	self.Turn 				= tCopyDisaster.Turn;
@@ -2858,7 +2862,7 @@ function SaveAllData()
 	local function SaveDataInSlot(sSlotName:string, data)
 		dprint("FUNCAL SaveDataInSlot() (slot,type)", sSlotName, type(data));
 		--dshowrectable(data);
-		local sData = RND.serialize(data);
+		local sData = serialize(data); -- RND.serialize(data);
 		--dprint("---->>", sData);
 		RND.GameConfiguration.SetValue(sSlotName, sData);
 		local sCheck:string = RND.GameConfiguration.GetValue(sSlotName);
@@ -2889,6 +2893,7 @@ function OnLoadComplete()
 		dprint("FUNCAL LoadDataFromSlot() (slot)", sSlotName);
 		local sData:string = GameConfiguration.GetValue(sSlotName);
 		dprint("<--", sData);
+		if sData == nil then print("WARNING: LoadDataFromSlot no data in slot", sSlotName); return {}; end
 		local tTable = loadstring(sData)();
 		--dshowrectable(tTable);
 		return tTable;
@@ -2897,7 +2902,7 @@ function OnLoadComplete()
 	dprint("--- LOADING ---");
 	local tData:table = LoadDataFromSlot("RND_Data");
 	dprint("  ...data set (name,ver,turn)", tData._Name, tData._Version, tData._Turn);
-	iOrderCounter = tData.iOrderCounter;
+	iOrderCounter = ( tData.iOrderCounter and tData.iOrderCounter or 1 ); -- failproof for corrupted saves
 	tHistoricStartingPlots = LoadDataFromSlot("RND_HistoricStartingPlots");
 	tTemporaryResources = LoadDataFromSlot("RND_TemporaryResources");
 	AttachClassToObjectsInTable(tTemporaryResources);
@@ -3294,4 +3299,4 @@ function Initialize()
 end
 Initialize();
 
-print("Finished loading RealNaturalDisasters.lua from Real Natural Disasters");
+print("OK loaded RealNaturalDisasters.lua from Real Natural Disasters");

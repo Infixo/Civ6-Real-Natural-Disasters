@@ -1,4 +1,4 @@
-print("Loading ModLens_RND.lua from Real Natural Disasters");
+print("Loading ModLens_RND.lua from Real Natural Disasters version "..GlobalParameters.RND_VERSION_MAJOR.."."..GlobalParameters.RND_VERSION_MINOR.."."..GlobalParameters.RND_VERSION_PATCH);
 -- ===========================================================================
 -- Real Natural Disasters
 -- Author: Infixo

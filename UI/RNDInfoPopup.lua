@@ -1,4 +1,4 @@
-print("Loading RNDInfoPopup.lua from Real Natural Disasters");
+print("Loading RNDInfoPopup.lua from Real Natural Disasters version "..GlobalParameters.RND_VERSION_MAJOR.."."..GlobalParameters.RND_VERSION_MINOR.."."..GlobalParameters.RND_VERSION_PATCH);
 -- ===========================================================================
 -- Real Natural Disasters
 -- Author: Infixo
@@ -295,4 +295,4 @@ function Initialize()
 end
 Initialize();	
 
-print("Finished loading RNDInfoPopup.lua from Real Natural Disasters");
+print("OK loaded RNDInfoPopup.lua from Real Natural Disasters");

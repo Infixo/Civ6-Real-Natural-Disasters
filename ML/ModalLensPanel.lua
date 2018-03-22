@@ -1,4 +1,4 @@
-print("Loading ModalLensPanel.lua from Real Natural Disasters");
+print("Loading ModalLensPanel.lua from Real Natural Disasters version "..GlobalParameters.RND_VERSION_MAJOR.."."..GlobalParameters.RND_VERSION_MINOR.."."..GlobalParameters.RND_VERSION_PATCH);
 -- Provides info about currently active Modal Lens
 
 include( "InstanceManager" );
