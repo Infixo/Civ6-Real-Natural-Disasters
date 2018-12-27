@@ -191,7 +191,7 @@ local fMapProbAdj = 0.0;
 -- resources
 local iTilesPerStandardResource:number = 20;
 local fResourceProbabilityAdj:number = 0.7;  -- standard resources will be spawned with probabbility = Magnitude * fResourceProbabilityAdj
-local fResourcePermanentAdj:number = 0.7;  -- specific resources will be spawned as permanent with probability = Magnitude * fResourcePermanentAdj
+local fResourcePermanentAdj:number = 0.5;  -- specific resources will be spawned as permanent with probability = Magnitude * fResourcePermanentAdj (Version 2.3.0 adjusted down a bit)
 local fResourceTemporaryAdj:number = 1.2;  -- specific resources will be spawned as temporary with probability = Magnitude * fResourceTemporaryAdj
 local iTemporaryResourceTurns:number = 6;
 local iTemporaryResourceTurnsLong:number = 10;
@@ -923,8 +923,8 @@ function Effect_Record:DamageObject()
 	elseif self.Class == EffectClasses.EFFECT_BUILDING then
 		-- cannot pillage ALL non-destroyed buildings, must use randomization
 		-- they will be pillaged with Magnitude probabbility
-		--if (math.random(0,99) < self.Magnitude) and GameInfo.Buildings[self.Type].IsWonder == false then  -- cannot pillage Wonders
-		if math.random(0,99) < (self.Magnitude+self.Prevention) then  -- actually, Wonders CAN be pillaged
+		if (math.random(0,99) < (self.Magnitude+self.Prevention)) and GameInfo.Buildings[self.Type].IsWonder == false and self.Type ~= "BUILDING_PALACE" then  -- cannot pillage Wonders and Palace in Version 2.3.0
+		--if math.random(0,99) < (self.Magnitude+self.Prevention) then  -- actually, Wonders CAN be pillaged
 
 			-- DAMAGE BUILDING
 			dprint("  ...pillaging building (city,name,state)", self.Object:GetName(), self.Name, self.Object:GetBuildings():IsPillaged(self.ID));
@@ -2705,7 +2705,7 @@ function Effect_Resource:PlaceNewResources()
 	local function GetDisasterSiteFromMagnitude(iMagnitude:number)
 		-- the only chance to get PERMA SITE is when it is registered and roll is successful
 		if tPossibleResources[ResourceClasses.SITE_PERMA] and iMagnitude >= 70 then
-			if math.random(0,99) < iMagnitude then return ResourceClasses.SITE_PERMA; end;
+			if math.random(0,99) < iMagnitude - 20 then return ResourceClasses.SITE_PERMA; end; -- Version 2.3.0 tweak, a bit less chance
 			return ResourceClasses.SITE_LARGE;  -- large, temp
 		end
 		-- temp site, roll for size

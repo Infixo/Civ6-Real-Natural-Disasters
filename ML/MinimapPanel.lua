@@ -398,7 +398,7 @@ end
 
 -- ===========================================================================
 function OnLensLayerOn( layerNum:number )
-	-- clear any non-standard layers
+	-- InfixoRND clear any non-standard layers
 	UILens.ClearLayerHexes(LensLayers.ATTACK_RANGE); -- border
 	UILens.ClearLayerHexes(LensLayers.HEX_COLORING_GREAT_PEOPLE); -- historical
 	UILens.ClearLayerHexes(LensLayers.MOVEMENT_ZONE_OF_CONTROL); -- starting plot
@@ -432,7 +432,7 @@ end
 
 -- ===========================================================================
 function OnLensLayerOff( layerNum:number )
-	-- clear any non-standard layers
+	-- InfixoRND clear any non-standard layers
 	UILens.ClearLayerHexes(LensLayers.ATTACK_RANGE); -- border
 	UILens.ClearLayerHexes(LensLayers.HEX_COLORING_GREAT_PEOPLE); -- historical
 	UILens.ClearLayerHexes(LensLayers.MOVEMENT_ZONE_OF_CONTROL); -- starting plot
@@ -843,7 +843,7 @@ function OnInterfaceModeChanged(eOldMode:number, eNewMode:number)
                 SetActiveModdedLens("NONE")
             end
 
-			-- clear any non-standard layers
+			-- InfixoRND clear any non-standard layers
 			UILens.ClearLayerHexes(LensLayers.ATTACK_RANGE); -- border
 			UILens.ClearLayerHexes(LensLayers.HEX_COLORING_GREAT_PEOPLE); -- historical
 			UILens.ClearLayerHexes(LensLayers.MOVEMENT_ZONE_OF_CONTROL); -- starting plot
@@ -1071,13 +1071,13 @@ end
 
 function InitializeModLens()
     print("Initializing " .. table.count(g_ModLenses) .. " lenses")
-	-- sort here
+	-- InfixoRND sort here
 	local sortedModLenses:table = {}
     for lensName, modLens in pairs(g_ModLenses) do
 		table.insert(sortedModLenses, { SortOrder = modLens.SortOrder, Name = lensName, Lens = modLens } )
 	end
 	table.sort(sortedModLenses, function(a,b) return (a.SortOrder and a.SortOrder or 999) < (b.SortOrder and b.SortOrder or 999) end)
-    -- initilize sorted
+    -- InfixoRND initilize sorted
     for _,modLens in ipairs(sortedModLenses) do
         InitLens(modLens.Name, modLens.Lens)
     end

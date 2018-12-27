@@ -92,7 +92,7 @@ function ShowTheDisaster()
 	local tDisaster = tTheDisaster.DisasterType;
 	
 	-- check if maybe we're already showing the right one
-	if tTheDisaster.Turn == iShownTurn and tTheDisaster.StartingPlot == iShownStartingPlot and #tTheDisaster.Effects == iShownEffects then return; end
+	--if tTheDisaster.Turn == iShownTurn and tTheDisaster.StartingPlot == iShownStartingPlot and #tTheDisaster.Effects == iShownEffects then return; end
 
 	-- check for our own units and plots
 	local sLocalOwner:string;
@@ -198,7 +198,10 @@ function ShowTheDisaster()
 	end
 	
 	-- sounds are not so loud any more, but also they will be played only if disaster is actually visible
-    if tTheDisaster:IsDisasterVisible() then UI.PlaySound(tDisaster.Sound);	end
+    if tTheDisaster:IsDisasterVisible() then
+		UI.PlaySound(tDisaster.Sound);
+		ContextPtr:SetHide(false); -- Version 2.3.0
+	end
 	
 	iShownTurn = tTheDisaster.Turn;
 	iShownStartingPlot = tTheDisaster.StartingPlot;
@@ -213,9 +216,13 @@ end
 function OpenWindow()
 	dprint("FUNCAL OpenWindow() player", Game.GetLocalPlayer());
 	if Players[Game.GetLocalPlayer()] == nil then return; end
-	if Game.GetCurrentGameTurn() == GameConfiguration.GetStartTurn() then ShowTheParameters();
-	else ShowTheDisaster();	end  -- main function
-	ContextPtr:SetHide(false);
+	if Game.GetCurrentGameTurn() == GameConfiguration.GetStartTurn() then
+		ShowTheParameters();
+		ContextPtr:SetHide(false); -- params are always visible
+	else
+		ShowTheDisaster();
+	end  -- main function
+	--ContextPtr:SetHide(false); -- Version 2.3.0
 	--UI.PlaySound("UI_Screen_Open");
 end
 

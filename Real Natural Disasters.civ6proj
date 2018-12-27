@@ -7,13 +7,13 @@
     <ProjectGuid>30d7638b-366b-4f9a-a185-071803b7a9ec</ProjectGuid>
     <ModVersion>2</ModVersion>
     <Teaser>Adds Natural Disasters to the game</Teaser>
-    <Description>Adds a new gameplay mechanics - Natural Disasters.[NEWLINE][ICON_BULLET]Earthquakes[NEWLINE][ICON_BULLET]Meteors[NEWLINE][ICON_BULLET]Tornadoes[NEWLINE][ICON_BULLET]Tsunamis[NEWLINE][ICON_BULLET]Wildfires[NEWLINE][ICON_BULLET]Volcanos[NEWLINE][NEWLINE]Disasters sometimes reveal resources and often leave something unique behind. In time you will be able to build Buildings that will decrease damage from disasters or prevent some of them from happening.[NEWLINE][NEWLINE]Version 2.2.0</Description>
+    <Description>Adds a new gameplay mechanics - Natural Disasters.[NEWLINE][ICON_BULLET]Earthquakes[NEWLINE][ICON_BULLET]Meteors[NEWLINE][ICON_BULLET]Tornadoes[NEWLINE][ICON_BULLET]Tsunamis[NEWLINE][ICON_BULLET]Wildfires[NEWLINE][ICON_BULLET]Volcanos[NEWLINE][NEWLINE]Disasters sometimes reveal resources and often leave something unique behind. In time you will be able to build Buildings that will decrease damage from disasters or prevent some of them from happening.[NEWLINE][NEWLINE]Version 2.3.0.</Description>
     <Authors>Infixo</Authors>
     <SpecialThanks>
     </SpecialThanks>
     <AffectsSavedGames>true</AffectsSavedGames>
     <SupportsSinglePlayer>true</SupportsSinglePlayer>
-    <SupportsMultiplayer>true</SupportsMultiplayer>
+    <SupportsMultiplayer>false</SupportsMultiplayer>
     <SupportsHotSeat>true</SupportsHotSeat>
     <AssemblyName>Real Natural Disasters</AssemblyName>
     <RootNamespace>Real Natural Disasters</RootNamespace>
