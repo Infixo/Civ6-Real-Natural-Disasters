@@ -1,0 +1,384 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Real Natural Disasters - Text	-->
+<!-- Author: Infixo 				-->
+<!-- Created: March 28th, 2017 		-->
+<!-- Version 2: April 20th, 2017 	-->
+
+<!-- Translation for Brazilian Portuguese by Rac98 (2018-04-08) -->
+
+<GameData>
+
+	<LocalizedText>
+
+	<!-- Disasters -->
+	
+  	<Replace Tag="LOC_DISASTER_EARTHQUAKE_NAME" Language="pt_BR">
+  		<Text>Terremoto</Text>
+		<Gender>masculine</Gender>
+		<Plurality>1</Plurality>
+  	</Replace>
+  	<Replace Tag="LOC_DISASTER_EARTHQUAKE_DESCRIPTION" Language="pt_BR">
+  		<Text>Pode acontecer em colinas e montanhas que têm pelo menos uma outra colina ou montanha adjacente se tornam areas sísmicas; algumas maravilhas naturais que são consideradas como uma montanha também podem gerar Terremotos. Afeta à área em torno do ponto de partida, em um raio de 3 painéis. Pode gerar o recurso de Epicentro e revelar recursos minerais.</Text>
+  	</Replace>
+  	<Replace Tag="LOC_DISASTER_FLOOD_NAME" Language="pt_BR">
+  		<Text>Inundação</Text>
+		<Gender>feminine</Gender>
+		<Plurality>1</Plurality>
+  	</Replace>
+  	<Replace Tag="LOC_DISASTER_FLOOD_DESCRIPTION" Language="pt_BR">
+  		<Text>Pode acontecer em todos os rios e lagos. Afeta à área a partir de um segundo ponto de partida que é escolhido adjacente ao inicial e, a partir deles, a água flui por 2 painéis para qualquer painel plano (assim, colinas e montanhas não são inundadas). Pode gerar o recurso de Alagamento e revelar Trigo, Arroz e recursos pescaveis.</Text>
+  	</Replace>
+  	<Replace Tag="LOC_DISASTER_METEOR_NAME" Language="pt_BR">
+  		<Text>Meteoro</Text>
+		<Gender>masculine</Gender>
+		<Plurality>1</Plurality>
+  	</Replace>
+  	<Replace Tag="LOC_DISASTER_METEOR_DESCRIPTION" Language="pt_BR">
+  		<Text>Pode acontecer em qualquer painel de terra e costa (excluíndo painéis de oceano). Afeta à área a partir de 2 painéis ao redor do ponto de impacto. Pode gerar os recursos de Cratera e Meteorito e revelar recursos minerais.</Text>
+  	</Replace>
+  	<Replace Tag="LOC_DISASTER_TORNADO_NAME" Language="pt_BR">
+  		<Text>Tornado</Text>
+		<Gender>masculine</Gender>
+		<Plurality>1</Plurality>
+  	</Replace>
+  	<Replace Tag="LOC_DISASTER_TORNADO_DESCRIPTION" Language="pt_BR">
+  		<Text>Pode acontecer em planícies que têm pelo menos 2 outras planícies adjacentes, e são limitados a latitudes de 20 à 60 graus em ambos os hemisférios do mapa, também eles não começam em painéis terrestres costeiros. Afeta à área até 5 painéis do ponto de partida, movendo-se em linha reta. Uma colina ou montanha pode mudar sua direção e não pode entrar na água.</Text>
+  	</Replace>
+  	<Replace Tag="LOC_DISASTER_TSUNAMI_NAME" Language="pt_BR">
+  		<Text>Tsunami</Text>
+		<Gender>masculine</Gender>
+		<Plurality>1</Plurality>
+  	</Replace>
+  	<Replace Tag="LOC_DISASTER_TSUNAMI_DESCRIPTION" Language="pt_BR">
+  		<Text>Pode acontecer em áreas do oceano 3 painéis longe da terra; o Tsunami sempre vai para a terra. Afeta à área a partir de uma onda bidirecional gerada a partir do ponto de inicio que vai para a terra; a onda avança para 5 painéis, podendo atingir em média de 2 à 3 painéis em terra. Pode revelar recursos de Trigo, Arroz e recursos pescaveis.</Text>
+		
+  	</Replace>
+  	<Replace Tag="LOC_DISASTER_VOLCANO_NAME" Language="pt_BR">
+  		<Text>Vulcão</Text>
+		<Gender>masculine</Gender>
+		<Plurality>1</Plurality>
+  	</Replace>
+  	<Replace Tag="LOC_DISASTER_VOLCANO_DESCRIPTION" Language="pt_BR">
+  		<Text>Pode acontecer aparecer apenas dentro de áreas sísmicas (afetadas por Terremotos). Afeta à área em torno de 2 painéis ao redor da montanha do Vulcão. Pode gerar o recurso de Caldeira e Cinzas e revelar recursos minerais.</Text>
+  	</Replace>
+  	<Replace Tag="LOC_DISASTER_WILDFIRE_NAME" Language="pt_BR">
+  		<Text>Incêndio</Text>
+		<Gender>masculine</Gender>
+		<Plurality>1</Plurality>
+  	</Replace>
+  	<Replace Tag="LOC_DISASTER_WILDFIRE_DESCRIPTION" Language="pt_BR">
+  		<Text>Pode acontecer em painéis inflamáveis que tenham pelo menos outro painel inflamável adjacente. As características que tornam uma painel inflamável são: florestas, pradarias e alguns recursos (por exemplo, tabaco, seda, trigo, etc.). Florestas tropicais não são inflamáveis, e responde a remoção de floresta ou florestas tropicais e reflorestamento. Afeta à área de todas os painéis inflamáveis em uma direção específica até 4 painéis longe do ponto de partida. Pode gerar o recurso de Queimada (ela pode ser ou não Fértil) e revelar recursos agrícolas e pecuários.</Text>
+  	</Replace>
+
+  
+	<!-- Reports -->
+	
+	<Replace Tag="LOC_RNDINFO_GENERAL_INFO" Language="pt_BR">
+		<Text>No ano [ICON_Turn] {1_DisasterYear}, {2_DisasterName:gender feminine?uma [COLOR_Red]{2_DisasterName}[ENDCOLOR];masculine?um [COLOR_Red]{2_DisasterName}[ENDCOLOR];other?um [COLOR_Red]{2_DisasterName}[ENDCOLOR];} de magnitude [COLOR_Red]{3_Magnitude}[ENDCOLOR] que começou nas coordenadas ({4_CoorX},{5_CoorY}) devastou [COLOR_Red]{6_Size}[ENDCOLOR] painéis.</Text>
+	</Replace>
+	<Replace Tag="LOC_RNDINFO_SUMMARY_NO_DAMAGE" Language="pt_BR">
+		<Text>[ICON_CheckSuccess] Felizmente {2_DisasterName:gender feminine?a ;masculine?o;other?o ;} {2_DisasterName} [COLOR_Green]NÃO[ENDCOLOR] causou nenhum dano significativo na área.</Text>
+	</Replace>
+	<Replace Tag="LOC_RNDINFO_PLOT_WATER_AT" Language="pt_BR">
+		<Text>As águas nas coordenadas ({1_CoorX},{2_CoorY})</Text>
+	</Replace>
+	<Replace Tag="LOC_RNDINFO_PLOT_LAND_AT" Language="pt_BR">
+		<Text>As terras nas coordenadas ({1_CoorX},{2_CoorY})</Text>
+	</Replace>
+	<Replace Tag="LOC_RNDINFO_PLOT_OWNED_BY" Language="pt_BR">
+		<Text>que pertencem à(os)</Text>
+	</Replace>
+	<Replace Tag="LOC_RNDINFO_PLOT_WITHOUT_OWNER" Language="pt_BR">
+		<Text>sem dono</Text>
+	</Replace>
+	<Replace Tag="LOC_RNDINFO_PLOT_WAS_HIT" Language="pt_BR">
+		<Text>foram atingidas com uma magnitude de {1_Magnitude} de força</Text>
+	</Replace>
+	<Replace Tag="LOC_RNDINFO_NAME_SURVIVED" Language="pt_BR">
+		<Text>{1_Name} [ICON_CheckSuccess] sobreviveu  [COLOR_Green]/{2_Prev}[ENDCOLOR]</Text>
+	</Replace>
+	<Replace Tag="LOC_RNDINFO_NAME_PILLAGED" Language="pt_BR">
+		<Text>{1_Name} [ICON_Pillaged] sofreu danos [COLOR_Green]/{2_Prev}[ENDCOLOR]</Text>
+	</Replace>
+	<Replace Tag="LOC_RNDINFO_NAME_DAMAGED_HP" Language="pt_BR">
+		<Text>{1_Name} [ICON_Pillaged] sofreu danos, -{2_TotDmg} PS  [COLOR_Green]/{3_Prev}[ENDCOLOR]</Text>
+	</Replace>
+	<Replace Tag="LOC_RNDINFO_NAME_DESTROYED" Language="pt_BR">
+		<Text>{1_Name} [ICON_CheckFail] não sobreviveu  [COLOR_Green]/{2_Prev}[ENDCOLOR]</Text>
+	</Replace>
+	<Replace Tag="LOC_RNDINFO_NAME_KILLED" Language="pt_BR">
+		<Text>{1_Name} ({2_Owner}) [ICON_CheckFail] não sobreviveu  [COLOR_Green]/{3_Prev}[ENDCOLOR]</Text>
+	</Replace>
+	<Replace Tag="LOC_RNDINFO_NAME_WOUNDED" Language="pt_BR">
+		<Text>{1_Name} ({2_Owner}) [ICON_Pillaged] sofreu feridas, -{3_Magnitude} PS  [COLOR_Green]/{4_Prev}[ENDCOLOR]</Text>
+	</Replace>
+	<Replace Tag="LOC_RNDINFO_NAME_DIED_WOUNDS" Language="pt_BR">
+		<Text>{1_Name} ({2_Owner}) [ICON_CheckFail] não sobreviveu por causa das feridas  [COLOR_Green]/{3_Prev}[ENDCOLOR]</Text>
+	</Replace>
+	<Replace Tag="LOC_RNDINFO_CITY_SURVIVED" Language="pt_BR">
+		<Text>{1_Name} [ICON_CheckSuccess] sobreviveu sem perda de população  [COLOR_Green]/{2_Prev}[ENDCOLOR]</Text>
+	</Replace>
+	<Replace Tag="LOC_RNDINFO_CITY_LOST_POP" Language="pt_BR">
+		<Text>{1_Name} [ICON_Pillaged] perdeu [COLOR_Red]{2_PopLost}[ENDCOLOR] cidadãos de sua população  [COLOR_Green]/{3_Prev}[ENDCOLOR]</Text>
+	</Replace>
+	<Replace Tag="LOC_RNDINFO_UNKNOWN_CITY" Language="pt_BR">
+		<Text>Cidade desconhecida</Text>
+	</Replace>
+	<Replace Tag="LOC_RNDINFO_UNKNOWN_CIV" Language="pt_BR">
+		<Text>Civilização desconhecida</Text>
+	</Replace>
+	<Replace Tag="LOC_RNDINFO_RESOURCE_PERMANENT" Language="pt_BR">
+		<Text>Um novo recurso de [COLOR_LightBlue]{1_Resource}[ENDCOLOR] apareceu</Text>
+	</Replace>
+	<Replace Tag="LOC_RNDINFO_RESOURCE_TEMPORARY" Language="pt_BR">
+		<Text>Um novo recurso de [COLOR_LightBlue]{1_Resource}[ENDCOLOR] está disponivel por [COLOR_LightBlue]{2_Turns}[ENDCOLOR] turnos</Text>
+	</Replace>
+	
+
+    <!-- Recent Disaster Lens -->
+	
+  	<Replace Tag="LOC_HUD_DISASTER_LENS" Language="pt_BR">
+  		<Text>Últimos Desastres</Text>
+  	</Replace>
+  	<Replace Tag="LOC_HUD_DISASTER_LENS_TOOLTIP" Language="pt_BR">
+  		<Text>Mostra uma área e o tipo dos desastres recentes</Text>
+  	</Replace>
+	
+    <!-- Disaster Risk Lens -->
+	
+  	<Replace Tag="LOC_HUD_DISASTER_ET_LENS" Language="pt_BR">
+  		<Text>Ventos e Sismos</Text>
+  	</Replace>
+  	<Replace Tag="LOC_HUD_DISASTER_FT_LENS" Language="pt_BR">
+  		<Text>Enchentes</Text>
+  	</Replace>
+  	<Replace Tag="LOC_HUD_DISASTER_VW_LENS" Language="pt_BR">
+  		<Text>Vulcanismo e Fogo</Text>
+  	</Replace>
+  	<Replace Tag="LOC_HUD_DISASTER_ET_LENS_TOOLTIP" Language="pt_BR">
+  		<Text>Áreas de risco de Terremotos e Tornados</Text>
+  	</Replace>
+  	<Replace Tag="LOC_HUD_DISASTER_FT_LENS_TOOLTIP" Language="pt_BR">
+  		<Text>Áreas de risco de Inundações e Tsunamis</Text>
+  	</Replace>
+  	<Replace Tag="LOC_HUD_DISASTER_VW_LENS_TOOLTIP" Language="pt_BR">
+  		<Text>Áreas de risco de Vulcões e Incêndios</Text>
+  	</Replace>
+	
+    <!-- Disaster Types -->
+	
+  	<Replace Tag="LOC_TOOLTIP_DISASTER_EVENT" Language="pt_BR">
+  		<Text>Evento atual</Text>
+  	</Replace>
+  	<Replace Tag="LOC_TOOLTIP_DISASTER_RISK_EARTHQUAKE" Language="pt_BR">
+  		<Text>Terremoto</Text>
+  	</Replace>
+  	<Replace Tag="LOC_TOOLTIP_DISASTER_RISK_FLOOD" Language="pt_BR">
+  		<Text>Inundação</Text>
+  	</Replace>
+  	<Replace Tag="LOC_TOOLTIP_DISASTER_RISK_METEOR" Language="pt_BR">
+  		<Text>Meteoro</Text>
+  	</Replace>
+  	<Replace Tag="LOC_TOOLTIP_DISASTER_RISK_TORNADO" Language="pt_BR">
+  		<Text>Tornado</Text>
+  	</Replace>
+  	<Replace Tag="LOC_TOOLTIP_DISASTER_RISK_TSUNAMI" Language="pt_BR">
+  		<Text>Tsunami</Text>
+  	</Replace>
+  	<Replace Tag="LOC_TOOLTIP_DISASTER_RISK_VOLCANO" Language="pt_BR">
+  		<Text>Vulcão</Text>
+  	</Replace>
+  	<Replace Tag="LOC_TOOLTIP_DISASTER_RISK_WILDFIRE" Language="pt_BR">
+  		<Text>Incêndio</Text>
+  	</Replace>
+	
+	<!-- Initial report about Disasters -->
+	
+	<Replace Tag="LOC_RNDINFO_LINE_MOD_NAME" Language="pt_BR">
+		<Text>Real Natural Disasters</Text>
+	</Replace>
+	<Replace Tag="LOC_RNDINFO_LINE_MAP_INFO" Language="pt_BR">
+		<Text>O script do mapa é o [COLOR_Green]{1_MapScript}[ENDCOLOR]. O tamanho do mapa é {2_Width}x{3_Height}, ([COLOR_Green]{4_NumTiles}[ENDCOLOR] painéis).</Text>
+	</Replace>
+	<Replace Tag="LOC_RNDINFO_LINE_PARAMS" Language="pt_BR">
+		<Text>Você selecionou os seguintes parâmetros:</Text>
+	</Replace>
+	<Replace Tag="LOC_RNDINFO_LINE_EXPECT" Language="pt_BR">
+		<Text>Você pode esperar, em média, os seguintes números de Desastres:</Text>
+	</Replace>
+	<Replace Tag="LOC_RNDINFO_LINE_DISASTER" Language="pt_BR">
+		<Text>[ICON_Bullet]{1_Name}: [COLOR_Red]{2_NumDis}[ENDCOLOR]  ({3_NumStart} painéis @ prob. de {4_Prob} por turno)</Text>
+	</Replace>
+	<Replace Tag="LOC_RNDINFO_LINE_SUMMARY" Language="pt_BR">
+		<Text>Total de Desastres esperados: [COLOR_Red]{1_TotDis}[ENDCOLOR]</Text>
+	</Replace>
+	
+	<!-- Resources -->
+	
+	<Replace Tag="LOC_RESOURCE_DISASTER_SMALL_NAME" Language="pt_BR">
+		<Text>Local de um Desastre</Text>
+		<Gender>masculine</Gender>
+		<Plurality>1</Plurality>
+	</Replace>
+	<Row Tag="LOC_PEDIA_RESOURCES_PAGE_RESOURCE_DISASTER_SMALL_CHAPTER_HISTORY_PARA_1" Language="pt_BR">
+		<Text>Desastre (do grego, "má estrela") é um evento de causa natural e ou tecnológica que afeta a normalidade do funcionamento social e, por extensão, provoca danos e prejuízos à sociedade, afetando a economia, ecossistemas, estrutura básica e desenvolvimento humano. Os estudos e pesquisas sobre desastres compreendem uma área interdisciplinar, a sinistrologia. Os locais onde esses eventos ocorreram se tornam grandes fontes de estudos cientificos além ficarem marcados na cultura do povo atingido, as vezes se tornando memoriais destas tragédias.</Text>
+	</Row>
+	<Replace Tag="LOC_RESOURCE_DISASTER_LARGE_NAME" Language="pt_BR">
+		<Text>Local de uma Catastrofe</Text>
+		<Gender>masculine</Gender>
+		<Plurality>1</Plurality>
+	</Replace>
+	<Row Tag="LOC_PEDIA_RESOURCES_PAGE_RESOURCE_DISASTER_LARGE_CHAPTER_HISTORY_PARA_1" Language="pt_BR">
+		<Text>Do latim catastrŏphe (o qual, por sua vez, deriva de um vocábulo grego que significa “ruína” ou “abalo”), o termo catástrofe diz respeito a um evento fatídico que altera a ordem regular das coisas. O conceito de catástrofe está associado ao de desastre, e nesse sentido um desastre catastrófico se trata de um evento descomunal, causador de extinções em massa e de quedas de civilizacões antes consideradas como inabaláveis.</Text>
+	</Row>
+	<Replace Tag="LOC_RESOURCE_EPICENTRUM_NAME" Language="pt_BR">
+		<Text>Epicentro</Text>
+		<Gender>masculine</Gender>
+		<Plurality>1</Plurality>
+	</Replace>
+	<Row Tag="LOC_PEDIA_RESOURCES_PAGE_RESOURCE_EPICENTRUM_CHAPTER_HISTORY_PARA_1" Language="pt_BR">
+		<Text>O epicentro (do grego antigo "epikentros"), "situado no centro" de um terremoto é o ponto da superfície da Terra que está exatamente acima do foco ou hipocentro do terremoto. Na maioria dos terremotos, o epicentro é o ponto em que ocorre o maior dano, mas a duração da ruptura da falta na subsuperfície pode, de fato, ser longa, e os danos podem se espalhar na superfície em toda a zona de ruptura.</Text>
+	</Row>
+	<Replace Tag="LOC_RESOURCE_FLOODED_LAND_NAME" Language="pt_BR">
+		<Text>Alagamento</Text>
+		<Gender>masculine</Gender>
+		<Plurality>1</Plurality>
+	</Replace>
+	<Row Tag="LOC_PEDIA_RESOURCES_PAGE_RESOURCE_FLOODED_LAND_CHAPTER_HISTORY_PARA_1" Language="pt_BR">
+		<Text>Um alagamento, sinonimo de inundação, pode ser o resultado da concentração da água de chuva em excesso que não pode ser absorvida por solo já saturado e outras por formas de escoamento, por exemplo, em áreas impermeabilizadas urbanas, onde o fluxo de água segue rapidamente para as baixadas e rios, superando a capacidade de escoamento, causando transbordamentos das margens. Cheias e enchentes também podem ser provocadas por rompimento de barragens e represas, ou ainda pela abertura ou extravasamento de represas em períodos de fortes chuvas. As regiões em constante alagamento geralmente várzeas férteis. Os solos de suas várzeas são inicialmente muito férteis das inundações de água branca, mas depois de dois ou três anos de cultivo a fertilidade do solo declina.</Text>
+	</Row>
+	<Replace Tag="LOC_RESOURCE_METEOR_CRATER_NAME" Language="pt_BR">
+		<Text>Cratera</Text>
+		<Gender>feminine</Gender>
+		<Plurality>1</Plurality>
+	</Replace>
+	<Row Tag="LOC_PEDIA_RESOURCES_PAGE_RESOURCE_METEOR_CRATER_CHAPTER_HISTORY_PARA_1" Language="pt_BR">
+		<Text>Uma cratera de impacto é uma depressão aproximadamente circular na superfície de um planeta, lua ou outro corpo sólido no Sistema Solar ou em outro lugar, formado pelo impacto da hipervelocidade de um corpo menor. Em contraste com as crateras vulcânicas, que resultam da explosão ou do colapso interno, as crateras de impacto normalmente têm arestas e pisos que são mais baixos em altitude do que o terreno ao redor. Embora a cratera do meteoro seja talvez o exemplo mais conhecido de uma pequena cratera de impacto na Terra, as crateras de impacto variam de depressões pequenas, simples e em forma de tigela a bacias de impacto grandes, complexas e com vários anéis.</Text>
+	</Row>
+	<Replace Tag="LOC_RESOURCE_METEOR_SHARDS_NAME" Language="pt_BR">
+		<Text>Meteorito</Text>
+		<Gender>masculine</Gender>
+		<Plurality>1</Plurality>
+	</Replace>
+	<Row Tag="LOC_PEDIA_RESOURCES_PAGE_RESOURCE_METEOR_SHARDS_CHAPTER_HISTORY_PARA_1" Language="pt_BR">
+		<Text>Um meteorito é a denominação dada quando um meteoro, formado por fragmentos de asteroides ou cometas ou ainda restos de planetas desintegrados, que podem variar de tamanho desde simples poeira a corpos celestes com quilômetros de diâmetro, alcança a superfície da Terra, podendo ser um aerólito (rochoso), siderito (metálico) ou siderólito (metálico-rochoso). Ao contrário dos meteoros (popularmente chamados de estrelas cadentes), os meteoritos que atingem a superfície da Terra não são consumidos completamente, apesar da temperatura elevada que atingem devido ao atrito com a atmosfera. As quedas de meteoritos podem ter sido a fonte de culto. O culto no Templo de Ártemis em Éfeso, uma das Sete Maravilhas do Mundo Antigo, possivelmente se originou com a observação e recuperação de um meteorito que os contemporâneos entenderam ter caído sobre a terra de Júpiter, a principal divindade romana. Há relatos de que uma pedra sagrada foi consagrada no templo que pode ter sido um meteorito. A Pedra Negra colocada na parede da Caaba tem sido frequentemente considerada um meteorito, mas a pequena evidência disponível para isso é inconclusiva. Embora o uso do metal encontrado em meteoritos também seja registrado em mitos de muitos países e culturas onde a fonte celestial era frequentemente reconhecida, a documentação científica só começou nos últimos séculos.</Text>
+	</Row>
+	<Replace Tag="LOC_RESOURCE_VOLCANO_CRATER_NAME" Language="pt_BR">
+		<Text>Caldeira</Text>
+		<Gender>feminine</Gender>
+		<Plurality>1</Plurality>
+	</Replace>
+	<Row Tag="LOC_PEDIA_RESOURCES_PAGE_RESOURCE_VOLCANO_CRATER_CHAPTER_HISTORY_PARA_1" Language="pt_BR">
+		<Text>Caldeira é a designação dada em geomorfologia e vulcanologia às estruturas de colapso que se formam na zona central dos maciços vulcânicos em resultado dos efeitos combinados do peso do edifício vulcânico e da perda de pressão litostática no interior da câmara magmática subjacente. Com a perda de magma por erupção, da libertação de gases e de outros materiais voláteis para a atmosfera e do arrefecimento, a pressão no interior da câmara magmática decresce, o que provoca o aparecimento de fracturas circulares em torno da base do edifício vulcânico. Essa fracturação em combinação com o peso das camadas superiores provoca o colapso do tecto da câmara magmática, o que causa o seu desabamento. Os bordos e suas margens topográficas são frequentemente pontilhados por vulcões marginais ou diques anelares. É frequente as caldeiras serem preenchidas por água das chuvas ou do degelo, formando lagos ou lagoas.</Text>
+	</Row>
+	<Replace Tag="LOC_RESOURCE_VOLCANIC_ASH_NAME" Language="pt_BR">
+		<Text>Cinzas</Text>
+		<Gender>feminine</Gender>
+		<Plurality>2</Plurality>
+	</Replace>
+	<Row Tag="LOC_PEDIA_RESOURCES_PAGE_RESOURCE_VOLCANIC_ASH_CHAPTER_HISTORY_PARA_1" Language="pt_BR">
+		<Text>A cinza vulcânica consiste em fragmentos de rocha pulverizada, minerais e vidro vulcânico, e é formada durante erupções vulcânicas explosivas quando os gases dissolvidos no magma se expandem e escapam violentamente para a atmosfera. A força do gás de escape quebra o magma e o impulsiona para a atmosfera, onde se solidifica em fragmentos de rocha e vidro vulcânicos. As cinzas também são produzidas quando o magma entra em contato com a água durante as erupções de origem inflamatória, fazendo com que a água se apresente explosivamente a vapor, levando à destruição de magma. Uma vez no ar, as cinzas são transportadas pelo vento até milhares de quilômetros de distância. Devido à sua ampla dispersão, as cinzas podem ter vários impactos na sociedade, incluindo saúde humana e animal, interrupção da aviação, interrupção de infraestrutura crítica (por exemplo, sistemas de fornecimento de energia elétrica, telecomunicações, redes de água e esgoto, transporte), indústrias primárias (por exemplo, agricultura), edifícios e estruturas.</Text>
+	</Row>
+	<Replace Tag="LOC_RESOURCE_BURNED_GROUND_NAME" Language="pt_BR">
+		<Text>Queimada</Text>
+		<Gender>feminine</Gender>
+		<Plurality>1</Plurality>
+	</Replace>
+	<Row Tag="LOC_PEDIA_RESOURCES_PAGE_RESOURCE_BURNED_GROUND_CHAPTER_HISTORY_PARA_1" Language="pt_BR">
+		<Text>Queimada é a consequência de incêndios florestais e também uma prática primitiva da agricultura, destinada principalmente à limpeza do terreno para o cultivo de plantações ou formação de pastos, com uso do fogo de forma controlada que às vezes pode descontrolar-se. O efeito mais notório da queimada é a destruição do ambiente. As queimadas são uma prática muito utilizada para a formação de pastos destinados ao gado ou para o cultivo da agricultura, quando os fazendeiros desconhecem os efeitos nocivos do fogo para o solo. Em circunstâncias controladas e observados cuidados referentes a clima, tipo de solo e outros, o uso do fogo pode ser benéfico como trato cultural. Acentua que em diversos ambientes os incêndios fazem parte do ecossistema, e que os prejuízos à fauna são relativos, havendo alguns casos aumento das populações em áreas queimadas. Além do que as queimadas ajudam os produtores rurais, que depois de dois anos tem de sair dali e elaborar outra queimada.</Text>
+	</Row>
+	<Replace Tag="LOC_RESOURCE_BURNED_WATER_NAME" Language="pt_BR">
+		<Text>Queimada (Fértil)</Text>
+		<Gender>feminine</Gender>
+		<Plurality>1</Plurality>
+	</Replace>
+	<Row Tag="LOC_PEDIA_RESOURCES_PAGE_RESOURCE_BURNED_WATER_CHAPTER_HISTORY_PARA_1" Language="pt_BR">
+		<Text>Queimada é a consequência de incêndios florestais e também uma prática primitiva da agricultura, destinada principalmente à limpeza do terreno para o cultivo de plantações ou formação de pastos, com uso do fogo de forma controlada que às vezes pode descontrolar-se. O efeito mais notório da queimada é a destruição do ambiente. As queimadas são uma prática muito utilizada para a formação de pastos destinados ao gado ou para o cultivo da agricultura, quando os fazendeiros desconhecem os efeitos nocivos do fogo para o solo. Em circunstâncias controladas e observados cuidados referentes a clima, tipo de solo e outros, o uso do fogo pode ser benéfico como trato cultural. Acentua que em diversos ambientes os incêndios fazem parte do ecossistema, e que os prejuízos à fauna são relativos, havendo alguns casos aumento das populações em áreas queimadas. Além do que as queimadas ajudam os produtores rurais, que depois de dois anos tem de sair dali e elaborar outra queimada.</Text>
+	</Row>
+	
+	<!-- Buildings -->
+	
+	<Replace Tag="LOC_BUILDING_EARLY_WARNING_NAME" Language="pt_BR">
+		<Text>Centro de Pesquisa em Desastres|Centros de Pesquisa em Desastres</Text>
+		<Gender>masculine|masculine</Gender>
+		<Plurality>1|2</Plurality>
+	</Replace>
+	<Replace Tag="LOC_BUILDING_EARLY_WARNING_DESCRIPTION" Language="pt_BR">
+		<Text>Edifício que dá aviso antecipado para todos em um raio de 6 painéis. Gera -10 de Magnitude para todos os Desastres. Gera +3 [ICON_Science] ciência.</Text>
+	</Replace>
+	<Row Tag="LOC_PEDIA_BUILDINGS_PAGE_BUILDING_EARLY_WARNING_CHAPTER_HISTORY_PARA_1" Language="pt_BR">
+		<Text>A pesquisa sobre desastres lida com a realização de pesquisas de campo e pesquisas sobre a preparação de grupos, organizações e comunidades para, resposta e recuperação de desastres naturais e tecnológicos e outras crises em toda a comunidade. O objetivo por trás deste campo de pesquisa é tentar avançar e comunicar conhecimento sobre técnicas e procedimentos de mitigação e preparação, resposta e recuperação de desastres. O Disaster Research Center (DRC), foi o primeiro centro de pesquisa em ciências sociais do mundo dedicado ao estudo de desastres. Foi estabelecido na Universidade Estadual de Ohio em 1963 e transferido para a Universidade de Delaware em 1985. O Centro realiza pesquisa de campo e pesquisa sobre preparação de grupos, organizações e comunidades para, resposta e recuperação de desastres naturais e tecnológicos e outros problemas comunitários. crises. Pesquisadores da DRC realizaram estudos sistemáticos sobre uma ampla gama de tipos de desastres, incluindo furacões, inundações, terremotos, tornados, incidentes químicos perigosos e acidentes aéreos. O trabalho no campo de pesquisa em desastres tenta gerar conhecimento em ciências sociais sobre desastres e informações que podem e foram aplicadas para desenvolver políticas, programas e planejamento mais eficazes para reduzir os impactos de desastres.</Text>
+	</Row>
+	<Replace Tag="LOC_BUILDING_FIRE_STATION_NAME" Language="pt_BR">
+		<Text>Corpo de Bombeiros|Corpos de Bombeiros</Text>
+		<Gender>masculine|masculine</Gender>
+		<Plurality>1|2</Plurality>
+	</Replace>
+	<Replace Tag="LOC_BUILDING_FIRE_STATION_DESCRIPTION" Language="pt_BR">
+		<Text>Edifício que previne Incêndio dentro do raio de 2 painéis (o fogo não pode ser iniciado nesse raio, mas pode se espalhar ao mesmo) e protege toda a cidade contra todos os desastres. Gera -10 de Magnitude e +2 de [ICON_Production] produção.</Text>
+	</Replace>
+	<Row Tag="LOC_PEDIA_BUILDINGS_PAGE_BUILDING_FIRE_STATION_CHAPTER_HISTORY_PARA_1" Language="pt_BR">
+		<Text>Bombeiros são entidades da proteção civil cujos membros, são treinados para atuarem em caso de incêndios (florestais ou urbanos e industriais), para resgatar pessoas de acidentes de trânsito, desmoronamentos de edifícios, desastres naturais, salvamento em grande ângulo, alguns possuem equipamentos de matérias perigosas e fornecem serviços de emergência médica e pré-hospitalar. O serviço de combate a incêndios e serviços de resgate é conhecido em alguns países como "brigada de incêndio". Os bombeiros tornaram-se presentes desde as áreas florestais para as áreas urbanas e a bordo de navios.</Text>
+	</Row>
+	<Replace Tag="LOC_BUILDING_EMERGENCY_SHELTER_NAME" Language="pt_BR">
+		<Text>Abrigos de emergência</Text>
+		<Gender>masculine</Gender>
+		<Plurality>2</Plurality>
+	</Replace>
+	<Replace Tag="LOC_BUILDING_EMERGENCY_SHELTER_DESCRIPTION" Language="pt_BR">
+		<Text>Edifício que protege a [ICON_Citizen] população da cidade. Gera -20 de Magnitude pela probabilidade de perda do [ICON_Citizen] cidadão. Precisa ter um Centro de Pesquisa em Desastres para ser construido (precisa de um alarme de desastre para usar o abrigo).</Text>
+	</Replace>
+	<Row Tag="LOC_PEDIA_BUILDINGS_PAGE_BUILDING_EMERGENCY_SHELTER_CHAPTER_HISTORY_PARA_1" Language="pt_BR">
+		<Text>Um abrigo de emergência é um lugar para as pessoas viverem temporariamente quando não podem viver em sua residência anterior, semelhante aos abrigos para sem-teto. A principal diferença é que um abrigo de emergência é especializado em pessoas que fogem de um tipo específico de situação, como desastres naturais ou provocados pelo homem, violência doméstica ou vítimas de abuso sexual. Uma diferença menor é que as pessoas que ficam em abrigos de emergência têm maior probabilidade de permanecer o dia todo, exceto no trabalho, na escola ou em recados, enquanto os abrigos geralmente esperam que as pessoas fiquem em outro lugar durante o dia, retornando apenas para dormir ou comer. Abrigos de emergência às vezes facilitam grupos de apoio e ou fornecem refeições. O abrigo de emergência pós-desastre é frequentemente fornecido por organizações ou departamentos governamentais de gestão de emergências, em resposta a desastres naturais, como inundações ou terremotos. Eles tendem a usar tendas ou outras estruturas temporárias, ou edifícios normalmente usados para outra finalidade, como uma igreja ou escola. Estes assentamentos podem ser habitados por toda a duração do processo de reconstrução e devem ser pensados mais como assentamentos do que abrigo, e precisam ser planejados com relação à água saneamento, meios de subsistência.</Text>
+	</Row>
+	<Replace Tag="LOC_BUILDING_BREAKWATERS_NAME" Language="pt_BR">
+		<Text>Quebra-mares</Text>
+		<Gender>masculine</Gender>
+		<Plurality>2</Plurality>
+	</Replace>
+	<Replace Tag="LOC_BUILDING_BREAKWATERS_DESCRIPTION" Language="pt_BR">
+		<Text>Edifício que protege contra Tsunamis. Gera -20 de Magnitude dentro do raio de 2 painéis. Gera +1 de [ICON_Food] alimento e +1 [ICON_Production] produção para painéis adjacentes ao Porto em que foi construído.</Text>
+	</Replace>
+	<Row Tag="LOC_PEDIA_BUILDINGS_PAGE_BUILDING_BREAKWATERS_CHAPTER_HISTORY_PARA_1" Language="pt_BR">
+		<Text>Um quebra-mar ou talha-mar é uma estrutura costeira que tem por finalidade principal proteger a costa ou um porto da ação das ondas do mar. A estrutura de defesa costeira que se dispõe transversalmente em relação à costa e tem como função a retenção de sedimento de forma a impedir a erosão costeira é designada de esporão. As estruturas que tenham como função assegurar a manutenção de uma barra navegável chamam-se de molhes. Existe uma diferença fundamental em hidráulica marítima entre quebra-mar, espigão marítimo, dique e molhe. Um quebra-mar possui as duas extremidades dentro d'água, enquanto que um dique possui sempre as duas pontas na terra, e um molhe possui uma extremidade em terra e outra no mar. Apesar desta clara distinção, é muito comum entre leigos a confusão destes termos. Quebra-mares são normalmente calculados para uma determinada altura de onda com um período de retorno especificado, por especialistas em engenharia hidráulica, recorrendo a modelos físicos e ou matemáticos.</Text>
+	</Row>
+	<Replace Tag="LOC_BUILDING_RIVER_DAM_NAME" Language="pt_BR">
+		<Text>Barragem|Barragens</Text>
+		<Gender>feminine|feminine</Gender>
+		<Plurality>1|2</Plurality>
+	</Replace>
+	<Replace Tag="LOC_BUILDING_RIVER_DAM_DESCRIPTION" Language="pt_BR">
+		<Text>Edifício que previne Inundações dentro do raio de 3 painéis (a enchente não pode ser iniciada nesse raio, mas pode se espalhar ao mesmo). Deve ser construido em uma Zona Industrial adjacente a um rio e precisa ter uma Fábrica. Gera +1 [ICON_Production] produção e +1 [ICON_Food] alimento para todos os painéis com rio dentro da cidade.</Text>
+	</Replace>
+	<Row Tag="LOC_PEDIA_BUILDINGS_PAGE_BUILDING_RIVER_DAM_CHAPTER_HISTORY_PARA_1" Language="pt_BR">
+		<Text>Uma barragem, açude ou represa, é uma barreira artificial, feita em cursos de água para a retenção de grandes quantidades de água. A sua utilização é sobretudo para o abastecimento de água zonas residenciais, agrícolas, industriais, produção de energia elétrica (energia hidráulica), ou regularização de um caudal. As barragens foram, desde o início da civilização, fundamentais ao desenvolvimento da espécie humana. A sua construção visava sobretudo a combater a escassez de água no período seco de forma mais ou menos empírica. Em nível mundial, algumas das barragens mais antigas de que há conhecimento situavam-se, por exemplo, no Egipto, Médio Oriente e Índia. Na Índia, apareceram barragens de aterro de perfil homogéneo com descarregadores de cheias para evitar acidentes provocados pelo galgamento das barragens. Com a Revolução Industrial, houve a necessidade de se construir um crescente número de barragens, o que permitiu o progressivo aperfeiçoamento das técnicas de projecto e construção. Apareceram, então, as primeiras barragens de aterro modernas, assim como as barragens de betão.</Text>
+	</Row>
+	<Replace Tag="LOC_BUILDING_INSURANCE_COMPANY_NAME" Language="pt_BR">
+		<Text>Companhia de Seguro|Companhias de Seguro</Text>
+		<Gender>feminine|feminine</Gender>
+		<Plurality>1|2</Plurality>
+	</Replace>
+	<Replace Tag="LOC_BUILDING_INSURANCE_COMPANY_DESCRIPTION" Language="pt_BR">
+		<Text>Edifício que que cria um seguro pelos danos causados pelos Desastres. Precisa ter um Banco para ser construido. Custo do seguro aumenta em -1 de [ICON_Gold] ouro com o número de [ICON_District] distritos na cidade, alguns distritos especiais podem ter um custo extra (por exemplo, Aeroporto, Espaçoporto). Gera +2 de [ICON_Faith] fé.</Text>
+	</Replace>
+	<Row Tag="LOC_PEDIA_BUILDINGS_PAGE_BUILDING_INSURANCE_COMPANY_CHAPTER_HISTORY_PARA_1" Language="pt_BR">
+		<Text>O seguro nasceu da necessidade do homem em controlar o risco. Existem indícios que já na Babilônia, 23 séculos antes de cristo, caravanas de cameleiros que cruzavam o deserto mutualizavam entre si os prejuízos com morte de animais. Na China antiga e no Império Romano também havia seguros rudimentares, através de associações que visavam ressarcir membros que tivessem algum tipo de prejuízo. Com o Renascimento e a expansão marítima da época Mercantilismo a cobertura aos riscos ganhou nova importância. Tornaram-se comuns operações chamadas de Contrato de Dinheiro e Risco Marítimo que consistia num empréstimo dado a um navegador, e que previa uma cobrança maior no caso de sucesso da viagem e o perdão da dívida se a embarcação e a carga fossem perdidas. Foi em virtude dos seguros marítimos que se desenvolveu a gestão de risco na maior parte do mundo. Mas, o seguro foi criando força e conquistando credibilidade, e foi em Gênova, por volta de 1347, que o primeiro contrato de seguros foi escrito. Nele continha inúmeras cláusulas que garantiam ou isentavam os seguradores de pagarem as indenizações. As primeiras apólices são datadas de 11/07/1385 (Pisa/ Itália) e 10/07/1397 (Florença/ Itália). As apólices tornavam-se comuns no final do século XIV. No século XVII, o mercado securitário se expandiu e ganhou novos produtos de cobertura terrestre, especialmente em decorrência do Grande Incêndio de Londres de 1666, que destruiu cerca de 25% da cidade. Com a Revolução Industrial, o seguro acabou se tornando um item praticamente obrigatório em todas as áreas da atividade humana, afinal, os avanços tecnológicos, as atividades de alto risco e os novos meios de transportes podem causar prejuízos de proporções incalculáveis.</Text>
+	</Row>
+	<Replace Tag="LOC_PROJECT_DISASTER_RESISTANCE_NAME" Language="pt_BR">
+		<Text>Estruturas de Proteção contra Desastres</Text>
+		<Gender>feminine</Gender>
+		<Plurality>2</Plurality>
+	</Replace>
+	<Replace Tag="LOC_PROJECT_DISASTER_RESISTANCE_SHORT_NAME" Language="pt_BR">
+		<Text>Proteção contra Desastres|Proteções contra Desastres</Text>
+		<Gender>feminine|feminine</Gender>
+		<Plurality>1|2</Plurality>
+	</Replace>
+	<Replace Tag="LOC_PROJECT_DISASTER_RESISTANCE_DESCRIPTION" Language="pt_BR">
+		<Text>Projeto que protege e atualiza todos os edifícios e distritos da cidade. Depois de concluído, diminui a Magnitude em -10 para todos os desastres. O preço é o aumento do custo dos edifícios (ao construir um edifício, um modificador de -5 [ICON_Production] produção é aplicado à cidade).</Text>
+	</Replace>
+	
+	
+</LocalizedText>
+
+</GameData>

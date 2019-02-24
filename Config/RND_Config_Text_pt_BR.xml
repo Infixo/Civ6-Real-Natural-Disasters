@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Real Natural Disasters Config Text -->
+<!-- Author: Infixo -->
+<!-- 2017-04-05: Created -->
+<!-- 2018-03-16: Sknaht converted all texts into LOCs -->
+
+<!-- Translation for Brazilian Portuguese by Rac98 (2018-04-08) -->
+
+<GameData>
+
+	<LocalizedText>
+
+	<!-- Disasters -->
+	
+  	<Replace Tag="LOC_RND_CONFIG_NUMDIS_NAME" Language="pt_BR">
+  		<Text>Número de Desastres</Text>
+  	</Replace>
+  	<Replace Tag="LOC_RND_CONFIG_NUMDIS_DESC" Language="pt_BR">
+  		<Text>Número de Desastres em uma partida</Text>
+  	</Replace>
+  	<Replace Tag="LOC_RND_CONFIG_ADJMAPSIZE_NAME" Language="pt_BR">
+  		<Text>Ajuste ao mapa</Text>
+  	</Replace>
+  	<Replace Tag="LOC_RND_CONFIG_ADJMAPSIZE_DESC" Language="pt_BR">
+  		<Text>O número de Desastres também deve ser ajustado para o tamanho do mapa</Text>
+  	</Replace>
+  	<Replace Tag="LOC_RND_CONFIG_MAGNITUDE_NAME" Language="pt_BR">
+  		<Text>Força dos Desastres</Text>
+  	</Replace>
+  	<Replace Tag="LOC_RND_CONFIG_RANGE_NAME" Language="pt_BR">
+  		<Text>Alcance dos Desastres</Text>
+  	</Replace>
+  	<Replace Tag="LOC_RND_CONFIG_RANGE_DESC" Language="pt_BR">
+  		<Text>Alcance dos Desastres</Text>
+  	</Replace>
+		<!-- Number of natural disasters in a game -->
+  	<Replace Tag="LOC_RND_CONFIG_NUMDIS_MINI_NAME" Language="pt_BR">
+  		<Text>Mínimo: apróx. 25</Text>
+  	</Replace>
+  	<Replace Tag="LOC_RND_CONFIG_NUMDIS_MINI_DESC" Language="pt_BR">
+  		<Text>Pode haver apróx. 25 desastres naturais durante o jogo</Text>
+  	</Replace>
+  	<Replace Tag="LOC_RND_CONFIG_NUMDIS_LOW_NAME" Language="pt_BR">
+  		<Text>Baixo: apróx. 50</Text>
+	</Replace>
+	<Replace Tag="LOC_RND_CONFIG_NUMDIS_LOW_DESC" Language="pt_BR">
+  		<Text>Pode haver apróx. 50 desastres naturais durante o jogo</Text>
+  	</Replace>
+	<Replace Tag="LOC_RND_CONFIG_NUMDIS_MEDIUM_NAME" Language="pt_BR">
+  		<Text>Médio: apróx. 75</Text>
+  	</Replace>
+  	<Replace Tag="LOC_RND_CONFIG_NUMDIS_MEDIUM_DESC" Language="pt_BR">
+  		<Text>Pode haver apróx. 75 desastres naturais durante o jogo</Text>
+  	</Replace>
+  	<Replace Tag="LOC_RND_CONFIG_NUMDIS_STANDARD_NAME" Language="pt_BR">
+  		<Text>Padrão: apróx. 100</Text>
+	</Replace>
+	<Replace Tag="LOC_RND_CONFIG_NUMDIS_STANDARD_DESC" Language="pt_BR">
+  		<Text>Pode haver apróx. 100 desastres naturais durante o jogo</Text>
+  	</Replace>
+	<Replace Tag="LOC_RND_CONFIG_NUMDIS_HIGH_NAME" Language="pt_BR">
+  		<Text>Alto: apróx. 150</Text>
+	</Replace>
+	<Replace Tag="LOC_RND_CONFIG_NUMDIS_HIGH_DESC" Language="pt_BR">
+  		<Text>Pode haver apróx. 150 desastres naturais durante o jogo</Text>
+  	</Replace>
+	<Replace Tag="LOC_RND_CONFIG_NUMDIS_EXTREME_NAME" Language="pt_BR">
+  		<Text>Extremo: apróx. 200</Text>
+  	</Replace>
+  	<Replace Tag="LOC_RND_CONFIG_NUMDIS_EXTREME_DESC" Language="pt_BR">
+  		<Text>Pode haver apróx. 200 desastres naturais durante o jogo</Text>
+  	</Replace>
+  	<Replace Tag="LOC_RND_CONFIG_NUMDIS_INSANE_NAME" Language="pt_BR">
+  		<Text>Insano: apróx. 250</Text>
+	</Replace>
+	<Replace Tag="LOC_RND_CONFIG_NUMDIS_INSANE_DESC" Language="pt_BR">
+  		<Text>Pode haver apróx. 250 desastres naturais durante o jogo</Text>
+  	</Replace>
+  	<Replace Tag="LOC_RND_CONFIG_NUMDIS_CHICKEN_NAME" Language="pt_BR">
+  		<Text>Galinha...</Text>
+  	</Replace>
+  	<Replace Tag="LOC_RND_CONFIG_NUMDIS_CHICKEN_DESC" Language="pt_BR">
+  		<Text>A partida do jogo NÃO terá desastres naturais</Text>
+  	</Replace>
+		<!-- Adjust for map size -->
+  	<Replace Tag="LOC_RND_CONFIG_ADJMAPSIZE_NO_NAME" Language="pt_BR">
+  		<Text>NÃO ajuste ao tamanho do mapa</Text>
+  	</Replace>
+  	<Replace Tag="LOC_RND_CONFIG_ADJMAPSIZE_NO_DESC" Language="pt_BR">
+  		<Text>O número de desastres NÃO será ajustado para o tamanho do mapa</Text>
+  	</Replace>
+	<Replace Tag="LOC_RND_CONFIG_ADJMAPSIZE_YES_NAME" Language="pt_BR">
+  		<Text>Ajuste ao tamanho do mapa</Text>
+  	</Replace>
+  	<Replace Tag="LOC_RND_CONFIG_ADJMAPSIZE_YES_DESC" Language="pt_BR">
+  		<Text>O número de desastres será ajustado para o tamanho do mapa (padrão)</Text>
+  	</Replace>
+		<!-- Disasters strength -->
+	<Replace Tag="LOC_RND_CONFIG_MAGNITUDE_VERY_WEAK_NAME" Language="pt_BR">
+		<Text>Muito fraco (-20)</Text>
+	</Replace>
+	<Replace Tag="LOC_RND_CONFIG_MAGNITUDE_VERY_WEAK_DESC" Language="pt_BR">
+		<Text>Muito fraco: a Magnitude diminui em -20 para cada Desastre</Text>
+	</Replace>
+	<Replace Tag="LOC_RND_CONFIG_MAGNITUDE_WEAKER_NAME" Language="pt_BR">
+		<Text>Mais fraco (-10)</Text>
+	</Replace>
+	<Replace Tag="LOC_RND_CONFIG_MAGNITUDE_WEAKER_DESC" Language="pt_BR">
+		<Text>Mais fraco: a Magnitude diminui em -10 para cada Desastre</Text>
+	</Replace>
+	<Replace Tag="LOC_RND_CONFIG_MAGNITUDE_STANDARD_NAME" Language="pt_BR">
+		<Text>Normal</Text>
+	</Replace>
+	<Replace Tag="LOC_RND_CONFIG_MAGNITUDE_STANDARD_DESC" Language="pt_BR">
+		<Text>Normal: sem alteração na Magnitude (padrão)</Text>
+	</Replace>
+	<Replace Tag="LOC_RND_CONFIG_MAGNITUDE_STRONGER_NAME" Language="pt_BR">
+		<Text>Mais forte (+10)</Text>
+	</Replace>
+	<Replace Tag="LOC_RND_CONFIG_MAGNITUDE_STRONGER_DESC" Language="pt_BR">
+		<Text>Mais forte: a Magnitude aumenta em +10 para cada Desastre</Text>
+	</Replace>
+	<Replace Tag="LOC_RND_CONFIG_MAGNITUDE_VERY_STRONG_NAME" Language="pt_BR">
+		<Text>Muito forte (+20)</Text>
+	</Replace>
+	<Replace Tag="LOC_RND_CONFIG_MAGNITUDE_VERY_STRONG_DESC" Language="pt_BR">
+		<Text>Muito forte: a Magnitude aumenta em +20 para cada Desastre</Text>
+	</Replace>
+		<!-- Disasters range -->
+	<Replace Tag="LOC_RND_CONFIG_RANGE_SMALL_NAME" Language="pt_BR">
+		<Text>Menor (-1)</Text>
+	</Replace>
+	<Replace Tag="LOC_RND_CONFIG_RANGE_SMALL_DESC" Language="pt_BR">
+		<Text>Menor: -1 painéis, bom para mapas de Duelo e Minúsculos</Text>
+	</Replace>
+	<Replace Tag="LOC_RND_CONFIG_RANGE_STANDARD_NAME" Language="pt_BR">
+		<Text>Normal</Text>
+	</Replace>
+	<Replace Tag="LOC_RND_CONFIG_RANGE_STANDARD_DESC" Language="pt_BR">
+		<Text>Normal: nenhuma mudança no alcance, boa para mapas Pequenos, Padrão e Grandes (padrão)</Text>
+	</Replace>
+	<Replace Tag="LOC_RND_CONFIG_RANGE_LARGE_NAME" Language="pt_BR">
+		<Text>Maior (+1)</Text>
+	</Replace>
+	<Replace Tag="LOC_RND_CONFIG_RANGE_LARGE_DESC" Language="pt_BR">
+		<Text>Maior: +1 painéis, bom para mapas Enormes e Gigantes</Text>
+	</Replace>
+	<Replace Tag="LOC_RND_CONFIG_RANGE_VERY_LARGE_NAME" Language="pt_BR">
+		<Text>Muito grande (+2)</Text>
+	</Replace>
+	<Replace Tag="LOC_RND_CONFIG_RANGE_VERY_LARGE_DESC" Language="pt_BR">
+		<Text>Muito grande: +2 painéis, bom para mapas Colossais</Text>
+	</Replace>
+	<Replace Tag="LOC_RND_CONFIG_RANGE_EXTREME_NAME" Language="pt_BR">
+		<Text>Extremo (+3)</Text>
+	</Replace>
+	<Replace Tag="LOC_RND_CONFIG_RANGE_EXTREME_DESC" Language="pt_BR">
+		<Text>Extremo: +3 painéis, bom para mapas Lúdicos</Text>
+	</Replace>
+
+	
+</LocalizedText>
+
+</GameData>

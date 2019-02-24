@@ -2,7 +2,7 @@
 <Mod id="b28a5b09-b356-48f3-9ab9-b9ec2e5324c6" version="2">
   <Properties>
     <Name>Real Natural Disasters</Name>
-    <Description>Adds a new gameplay mechanics - Natural Disasters.[NEWLINE][ICON_BULLET]Earthquakes[NEWLINE][ICON_BULLET]Meteors[NEWLINE][ICON_BULLET]Tornadoes[NEWLINE][ICON_BULLET]Tsunamis[NEWLINE][ICON_BULLET]Wildfires[NEWLINE][ICON_BULLET]Volcanos[NEWLINE][NEWLINE]Disasters sometimes reveal resources and often leave something unique behind. In time you will be able to build Buildings that will decrease damage from disasters or prevent some of them from happening.[NEWLINE][NEWLINE]Version 2.4.0.</Description>
+    <Description>Adds a new gameplay mechanics - Natural Disasters.[NEWLINE][ICON_BULLET]Earthquakes[NEWLINE][ICON_BULLET]Meteors[NEWLINE][ICON_BULLET]Tornadoes[NEWLINE][ICON_BULLET]Tsunamis[NEWLINE][ICON_BULLET]Wildfires[NEWLINE][ICON_BULLET]Volcanos[NEWLINE][NEWLINE]Disasters sometimes reveal resources and often leave something unique behind. In time you will be able to build Buildings that will decrease damage from disasters or prevent some of them from happening.[NEWLINE][NEWLINE]Version 2.4.1.</Description>
     <Teaser>Adds Natural Disasters to the game</Teaser>
     <Authors>Infixo</Authors>
     <SupportsMultiplayer>0</SupportsMultiplayer>
@@ -18,12 +18,14 @@
     <UpdateText id="RND_Config_Text">
       <File>Config/RND_Config_Text.sql</File>
       <File>Config/RND_Config_Text_zh_Hans_CN.sql</File>
+      <File>Config/RND_Config_Text_pt_BR.xml</File>
     </UpdateText>
   </FrontEndActions>
   <InGameActions>
     <UpdateText id="RND_Text">
       <File>Text/RND_Text.xml</File>
       <File>Text/RND_Text_zh_Hans_CN.xml</File>
+      <File>Text/RND_Text_pt_BR.xml</File>
     </UpdateText>
     <UpdateDatabase id="RND_Database">
       <File>Main/RND1_Disasters.sql</File>
@@ -89,6 +91,7 @@
     <File>Config/RND_Config.xml</File>
     <File>Config/RND_Config_Text.sql</File>
     <File>Config/RND_Config_Text_zh_Hans_CN.sql</File>
+    <File>Config/RND_Config_Text_pt_BR.xml</File>
     <File>Icons/RealNaturalDisasters_Icons.xml</File>
     <File>Icons/RNDBuildings128.dds</File>
     <File>Icons/RNDBuildings256.dds</File>
@@ -120,6 +123,7 @@
     <File>Sound/SoundbanksInfo.xml</File>
     <File>Text/RND_Text.xml</File>
     <File>Text/RND_Text_zh_Hans_CN.xml</File>
+    <File>Text/RND_Text_pt_BR.xml</File>
     <File>UI/RNDInfoPopup.lua</File>
     <File>UI/RNDInfoPopup.xml</File>
     <File>Utils/InGameExp.lua</File>
