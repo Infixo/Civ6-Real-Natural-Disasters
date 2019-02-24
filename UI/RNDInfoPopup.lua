@@ -5,6 +5,7 @@ print("Loading RNDInfoPopup.lua from Real Natural Disasters version "..GlobalPar
 -- Created: March 31st - April 1st, 2017
 -- ===========================================================================
 
+if ExposedMembers.RND == nil then ExposedMembers.RND = {} end;
 local RND = ExposedMembers.RND;
 
 
@@ -281,9 +282,7 @@ end
 -- ===========================================================================
 
 function Initialize()
-	if not ExposedMembers.RND then ExposedMembers.RND = {} end;
-	RND = ExposedMembers.RND;
-	
+
 	-- initialize window
 	ContextPtr:SetHide(true);
 	--ContextPtr:SetInitHandler( OnInit );  -- for future
@@ -296,8 +295,10 @@ function Initialize()
 	--Events.LocalPlayerTurnBegin.Add( OnLocalPlayerTurnBegin );
 	Events.LocalPlayerTurnEnd.Add( OnLocalPlayerTurnEnd );  -- close window if HotSeat
 	
-	-- inter-module events
+	-- inter-module events - only works in UI context!
 	LuaEvents.RNDInfoPopup_OpenWindow.Add(OpenWindow);
+	-- Gathering Storm doesn't allow for Gameplay -> UI events, so let's try ExposedMembers
+	ExposedMembers.RND.RNDInfoPopup_OpenWindow = OpenWindow;
 
 end
 Initialize();	

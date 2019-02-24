@@ -9,6 +9,7 @@ print("Loading RealNaturalDisasters.lua from Real Natural Disasters version "..G
 include("PlotIterators");
 include("Serialize");
 
+if ExposedMembers.RND == nil then ExposedMembers.RND = {} end;
 local RND = ExposedMembers.RND;
 
 
@@ -1484,8 +1485,8 @@ function Disaster_Object:CheckIfHappened(bReallyCheck:boolean)
 	-- generic as of now, later some specific events might require specific function at Disater level
 	local iRealBase = self.BaseProbability + math.random(-self.DeltaProbability, self.DeltaProbability);  -- base is little randomized each turn different
 	local iRealProb = iRealBase * table.count(tStartPlotsWithPrevention); -- self.NumStartPlots;  -- its *1000000
-	local iRand = math.random(1000000);
-	--dprint("  ...checking (realbase,realprob,rand,out)", iRealBase, iRealProb, iRand, (iRealProb>iRand));
+	--local iRand = math.random(1000000);
+	dprint("  ...checking probability", string.format("%.1f%%", iRealProb/10000));
 	-- it DOESN'T happen only if REAL check and BAD (>) roll
 	if bReallyCheck and math.random(1000000) > iRealProb then return false; end
 	
@@ -1576,6 +1577,7 @@ function Disaster_Object:VisualizeDisaster(pDisaster:table)
 		local iX, iY = pDisaster:GetDisasterAreaCenterPlot();
 		CameraMoveToPlotXY(iX+1, iY);
 	end
+	RND.ModLens_SetTheDisasterHexes(false);
 	pDisaster:AddWorldViewText();
 end
 
@@ -2954,7 +2956,7 @@ function OnTurnBegin()
 	dprint("FUNCAL OnTurnBegin()");
 	
 	if Game.GetCurrentGameTurn() == GameConfiguration.GetStartTurn() then  -- always 1st turn is 'free', even when we start in later Eras
-		LuaEvents.RNDInfoPopup_OpenWindow();  -- show parameters
+		RND.RNDInfoPopup_OpenWindow();  -- show parameters
 		return;  -- so Civs won't be killed on 1st turn :)
 	end
 	
@@ -3093,7 +3095,7 @@ function OnLocalPlayerTurnBegin()
 	-- if there's an active disaster - show pop-up window with information
 	if tTheDisaster.IsActive then
 		--tTheDisaster.DisasterType:VisualizeDisaster(tTheDisaster);
-		LuaEvents.RNDInfoPopup_OpenWindow();
+		RND.RNDInfoPopup_OpenWindow();
 	end
 end
 
@@ -3290,8 +3292,8 @@ function Initialize()
 	Events.TurnEnd.Add( OnTurnEnd );  -- fires ONCE at end of turn
 	
 	-- exposing functions and variables
-	if not ExposedMembers.RND then ExposedMembers.RND = {} end;
-	RND = ExposedMembers.RND;
+	--if not ExposedMembers.RND then ExposedMembers.RND = {} end;
+	--RND = ExposedMembers.RND;
 	RND.tDisasterTypes = tDisasterTypes;
 	RND.tTheDisaster   = tTheDisaster;
 	

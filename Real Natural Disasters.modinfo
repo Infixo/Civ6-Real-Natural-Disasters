@@ -2,39 +2,41 @@
 <Mod id="b28a5b09-b356-48f3-9ab9-b9ec2e5324c6" version="2">
   <Properties>
     <Name>Real Natural Disasters</Name>
-    <Description>Adds a new gameplay mechanics - Natural Disasters.[NEWLINE][ICON_BULLET]Earthquakes[NEWLINE][ICON_BULLET]Meteors[NEWLINE][ICON_BULLET]Tornadoes[NEWLINE][ICON_BULLET]Tsunamis[NEWLINE][ICON_BULLET]Wildfires[NEWLINE][ICON_BULLET]Volcanos[NEWLINE][NEWLINE]Disasters sometimes reveal resources and often leave something unique behind. In time you will be able to build Buildings that will decrease damage from disasters or prevent some of them from happening.[NEWLINE][NEWLINE]Coming soon:[NEWLINE][ICON_BULLET]Hurricanes[NEWLINE][ICON_BULLET]Insurance for damaged and destroyed buildings[NEWLINE][ICON_BULLET]Eurekas triggered by huge disasters[NEWLINE][NEWLINE]In the future also Technological Disasters:[NEWLINE][ICON_BULLET]Nuclear meltdows[NEWLINE][ICON_BULLET]Plane crashes[NEWLINE][ICON_BULLET]Droughts</Description>
+    <Description>Adds a new gameplay mechanics - Natural Disasters.[NEWLINE][ICON_BULLET]Earthquakes[NEWLINE][ICON_BULLET]Meteors[NEWLINE][ICON_BULLET]Tornadoes[NEWLINE][ICON_BULLET]Tsunamis[NEWLINE][ICON_BULLET]Wildfires[NEWLINE][ICON_BULLET]Volcanos[NEWLINE][NEWLINE]Disasters sometimes reveal resources and often leave something unique behind. In time you will be able to build Buildings that will decrease damage from disasters or prevent some of them from happening.[NEWLINE][NEWLINE]Version 2.4.0.</Description>
     <Teaser>Adds Natural Disasters to the game</Teaser>
     <Authors>Infixo</Authors>
+    <SupportsMultiplayer>0</SupportsMultiplayer>
+	<CompatibleVersions>2.0</CompatibleVersions>
   </Properties>
+  <Dependencies>
+    <Mod id="35f33319-ad93-4d6b-bf27-406fac382d06" minversion="1" maxversion="999" title="More Lenses"/>
+  </Dependencies>
   <FrontEndActions>
     <UpdateDatabase id="RND_Config_Database">
       <File>Config/RND_Config.xml</File>
     </UpdateDatabase>
     <UpdateText id="RND_Config_Text">
       <File>Config/RND_Config_Text.sql</File>
+      <File>Config/RND_Config_Text_zh_Hans_CN.sql</File>
     </UpdateText>
   </FrontEndActions>
   <InGameActions>
     <UpdateText id="RND_Text">
-      <File>Main/RealNaturalDisasters_Text.xml</File>
-      <File>ML/morelenses_text.xml</File>
+      <File>Text/RND_Text.xml</File>
+      <File>Text/RND_Text_zh_Hans_CN.xml</File>
     </UpdateText>
     <UpdateDatabase id="RND_Database">
-      <File>ML/morelenses_colors.sql</File>
       <File>Main/RND1_Disasters.sql</File>
       <File>Main/RND2_Resources.sql</File>
       <File>Main/RND3_Buildings.sql</File>
     </UpdateDatabase>
-    <ImportFiles id="RND_Imports">
-      <File>ML/MinimapPanel.lua</File>
-      <File>ML/MinimapPanel.xml</File>
-      <File>ML/ModalLensPanel.lua</File>
-      <File>ML/ModalLensPanel.xml</File>
+    <ImportFiles id="RND_Imports_Lenses">
+      <Properties>
+        <LoadOrder>11</LoadOrder>
+        <Context>InGame</Context>
+      </Properties>
+      <File>ML/ModLens_RND.lua</File>
     </ImportFiles>
-    <AddGameplayScripts id="RND_Utils">
-      <File>Utils/PlotIterators.lua</File>
-      <File>Utils/Serialize.lua</File>
-    </AddGameplayScripts>
     <AddUserInterfaces id="RND_UI">
       <Properties>
         <Context>InGame</Context>
@@ -52,6 +54,9 @@
       <File>Icons/RealNaturalDisasters_Icons.xml</File>
     </UpdateIcons>
     <AddGameplayScripts id="RND_Main">
+      <Properties>
+        <LoadOrder>2</LoadOrder>
+      </Properties>
       <File>Main/RealNaturalDisasters.lua</File>
     </AddGameplayScripts>
     <ImportFiles id="RND_Imports_Icons">
@@ -75,10 +80,15 @@
       <File>Icons/RNDResources64.dds</File>
       <File>Icons/RNDResources256.dds</File>
     </ImportFiles>
+    <ImportFiles id="RND_Imports_Utils">
+      <File>Utils/PlotIterators.lua</File>
+      <File>Utils/Serialize.lua</File>
+    </ImportFiles>
   </InGameActions>
   <Files>
     <File>Config/RND_Config.xml</File>
     <File>Config/RND_Config_Text.sql</File>
+    <File>Config/RND_Config_Text_zh_Hans_CN.sql</File>
     <File>Icons/RealNaturalDisasters_Icons.xml</File>
     <File>Icons/RNDBuildings128.dds</File>
     <File>Icons/RNDBuildings256.dds</File>
@@ -100,20 +110,16 @@
     <File>Icons/RNDResources50.dds</File>
     <File>Icons/RNDResources64.dds</File>
     <File>Main/RealNaturalDisasters.lua</File>
-    <File>Main/RealNaturalDisasters_Text.xml</File>
     <File>Main/RND1_Disasters.sql</File>
     <File>Main/RND2_Resources.sql</File>
     <File>Main/RND3_Buildings.sql</File>
-    <File>ML/MinimapPanel.lua</File>
-    <File>ML/MinimapPanel.xml</File>
-    <File>ML/ModalLensPanel.lua</File>
-    <File>ML/ModalLensPanel.xml</File>
-    <File>ML/morelenses_colors.sql</File>
-    <File>ML/morelenses_text.xml</File>
+    <File>ML/ModLens_RND.lua</File>
     <File>Sound/RND_Banks.ini</File>
     <File>Sound/RND_Soundbank.bnk</File>
     <File>Sound/RND_Soundbank.txt</File>
     <File>Sound/SoundbanksInfo.xml</File>
+    <File>Text/RND_Text.xml</File>
+    <File>Text/RND_Text_zh_Hans_CN.xml</File>
     <File>UI/RNDInfoPopup.lua</File>
     <File>UI/RNDInfoPopup.xml</File>
     <File>Utils/InGameExp.lua</File>

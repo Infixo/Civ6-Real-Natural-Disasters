@@ -5,6 +5,7 @@ print("Loading ModLens_RND.lua from Real Natural Disasters version "..GlobalPara
 -- 2018-03-07: Created
 -- ===========================================================================
 
+if ExposedMembers.RND == nil then ExposedMembers.RND = {} end;
 local RND = ExposedMembers.RND;
 
 
@@ -16,6 +17,14 @@ local LENS_DISASTER_EVENT   = "ML_DISASTER_EVENT";   -- recent event
 local LENS_DISASTER_RISK_ET = "ML_DISASTER_RISK_ET"; -- Earthquake, Tornado
 local LENS_DISASTER_RISK_FT = "ML_DISASTER_RISK_FT"; -- Flood, Tsunami
 local LENS_DISASTER_RISK_VW = "ML_DISASTER_RISK_VW"; -- Volcano, Wildfire
+
+-- Gathering Storm patch change - LensLayers is no more used
+local m_HexColoringGreatPeople  : number = UILens.CreateLensLayerHash("Hex_Coloring_Great_People"); -- m_HexColoringGreatPeople
+local m_HexColoringAppeal : number = UILens.CreateLensLayerHash("Hex_Coloring_Appeal_Level"); -- m_HexColoringAppeal
+local m_AttackRange = UILens.CreateLensLayerHash("Attack_Range"); -- m_AttackRange
+local m_MovementZoneOfControl : number = UILens.CreateLensLayerHash("Movement_Zone_Of_Control"); -- m_MovementZoneOfControl
+--g_HexColoringAttack = UILens.CreateLensLayerHash("Hex_Coloring_Attack");
+--local m_MovementRange : number = UILens.CreateLensLayerHash("Movement_Range");
 
 
 -- ===========================================================================
@@ -33,37 +42,37 @@ end
 
 -- helper
 function SetDisasterAnyHexes(pDisaster:table, bShowAttackRange:boolean)
-	--dprint("Showing hexes for (dis) with (col)", pDisaster.Name, pDisaster.ColorRisk);
+	--print("Showing hexes for (dis) with (col)", pDisaster.Name, pDisaster.ColorRisk);
 	local ePlayer = Game.GetLocalPlayer();
 	local tStartPlotsWithPrevention:table = pDisaster:GetStartPlotsWithPrevention();
 	if #tStartPlotsWithPrevention > 0 then
-		--dprint("...showing (n) hexes", #tStartPlotsWithPrevention);
 		local tOnlyRevealedTiles:table = GetOnlyRevealedTiles(tStartPlotsWithPrevention, ePlayer);
 		local sColorRisk:string = GameInfo.RNDDisasters[pDisaster.Type].ColorRisk;  -- we can get rid of Color data in Disaster objects
+		--print("...showing (x/n) hexes", #tOnlyRevealedTiles, #tStartPlotsWithPrevention, "with color", sColorRisk);
 		UILens.SetLayerHexesColoredArea(
-			LensLayers.HEX_COLORING_APPEAL_LEVEL,
+			m_HexColoringAppeal,
 			ePlayer,
 			tOnlyRevealedTiles,
 			UI.GetColorValue(sColorRisk));
 		if bShowAttackRange then
-			UILens.ClearLayerHexes(LensLayers.ATTACK_RANGE);
-			UILens.SetLayerHexesArea(LensLayers.ATTACK_RANGE, ePlayer, tOnlyRevealedTiles);
+			UILens.ClearLayerHexes(m_AttackRange);
+			UILens.SetLayerHexesArea(m_AttackRange, ePlayer, tOnlyRevealedTiles);
 		end
 	--else
 		--dprint("...nothing to show");
 	end
 	if table.count(pDisaster.HistoricStartingPlots) > 0 then
 		--dprint("...showing (n) historic start hexes", table.count(pDisaster.HistoricStartingPlots));
-		--UILens.ClearLayerHexes(LensLayers.ATTACK_RANGE);
-		--UILens.SetLayerHexesArea(LensLayers.ATTACK_RANGE, ePlayer, GetOnlyRevealedTiles(pDisaster.HistoricStartingPlots, ePlayer));
-		--UILens.ClearLayerHexes(LensLayers.HEX_COLORING_GREAT_PEOPLE);
-		UILens.SetLayerHexesArea(LensLayers.HEX_COLORING_GREAT_PEOPLE, ePlayer, GetOnlyRevealedTiles(pDisaster.HistoricStartingPlots, ePlayer));
+		--UILens.ClearLayerHexes(m_AttackRange);
+		--UILens.SetLayerHexesArea(m_AttackRange, ePlayer, GetOnlyRevealedTiles(pDisaster.HistoricStartingPlots, ePlayer));
+		--UILens.ClearLayerHexes(m_HexColoringGreatPeople);
+		UILens.SetLayerHexesArea(m_HexColoringGreatPeople, ePlayer, GetOnlyRevealedTiles(pDisaster.HistoricStartingPlots, ePlayer));
 	--else
 		--dprint("...nothing to show for historic hexes");
 	end
 end
 
-function SetTheDisasterHexes()
+function SetTheDisasterHexes(bShowHistory:boolean)
 	--dprint("FUNCAL SetTheDisasterHexes()");
 	--if not RND.tTheDisaster.IsActive then return; end
 	local ePlayer = Game.GetLocalPlayer();
@@ -72,50 +81,52 @@ function SetTheDisasterHexes()
 		--dprint("...showing (n) active disaster hexes", table.count(RND.tTheDisaster.Plots));
 		--local eColorNow = UI.GetColorValue(RND.tTheDisaster.DisasterType.ColorNow);
 		local tRevealedPlots = GetOnlyRevealedTiles(RND.tTheDisaster.Plots, ePlayer);
-		UILens.SetLayerHexesColoredArea(LensLayers.HEX_COLORING_APPEAL_LEVEL, ePlayer, tRevealedPlots,
+		UILens.SetLayerHexesColoredArea(m_HexColoringAppeal, ePlayer, tRevealedPlots,
 											UI.GetColorValue( GameInfo.RNDDisasters[ RND.tTheDisaster.DisasterType.Type ].ColorNow ));
-		UILens.ClearLayerHexes(LensLayers.HEX_COLORING_GREAT_PEOPLE);
-		UILens.SetLayerHexesArea(LensLayers.HEX_COLORING_GREAT_PEOPLE, ePlayer, tRevealedPlots);
+		UILens.ClearLayerHexes(m_HexColoringGreatPeople);
+		UILens.SetLayerHexesArea(m_HexColoringGreatPeople, ePlayer, tRevealedPlots);
 	--else
 		--dprint("...nothing to show");
 	end
 	-- check if we can show StartingPlot with special distinction
 	if PlayersVisibility[ePlayer]:IsRevealed(RND.tTheDisaster.StartingPlot) then
-		UILens.ClearLayerHexes(LensLayers.MOVEMENT_ZONE_OF_CONTROL);
-		UILens.SetLayerHexesArea(LensLayers.MOVEMENT_ZONE_OF_CONTROL, ePlayer, {RND.tTheDisaster.StartingPlot}); 
+		UILens.ClearLayerHexes(m_MovementZoneOfControl);
+		UILens.SetLayerHexesArea(m_MovementZoneOfControl, ePlayer, {RND.tTheDisaster.StartingPlot}); 
 	end
+	if not bShowHistory then return; end
 	-- show all historic disasters
-	--UILens.ClearLayerHexes(LensLayers.ATTACK_RANGE);
+	--UILens.ClearLayerHexes(m_AttackRange);
 	for _, disaster in pairs(RND.tDisasterTypes) do
 		local tRevealedPlots = GetOnlyRevealedTiles(disaster.HistoricStartingPlots, ePlayer);
-		UILens.SetLayerHexesColoredArea(LensLayers.HEX_COLORING_APPEAL_LEVEL, ePlayer, tRevealedPlots, UI.GetColorValue( GameInfo.RNDDisasters[disaster.Type].ColorNow ));
-		--UILens.SetLayerHexesArea(LensLayers.ATTACK_RANGE, ePlayer, tRevealedPlots);
+		UILens.SetLayerHexesColoredArea(m_HexColoringAppeal, ePlayer, tRevealedPlots, UI.GetColorValue( GameInfo.RNDDisasters[disaster.Type].ColorNow ));
+		--UILens.SetLayerHexesArea(m_AttackRange, ePlayer, tRevealedPlots);
 	end
 end
+RND.ModLens_SetTheDisasterHexes = SetTheDisasterHexes;
 
 function SetDisasterEventHexes()
-	--dprint("FUNCAL SetDisasterETHexes()");
-	SetTheDisasterHexes();
+	--print("FUNCAL SetDisasterETHexes()");
+	SetTheDisasterHexes(true);
 	LuaEvents.RNDInfoPopup_OpenWindow();	
 end
 
 function SetDisasterETHexes()
-	--dprint("FUNCAL SetDisasterETHexes()");
-	UILens.ClearLayerHexes(LensLayers.HEX_COLORING_GREAT_PEOPLE);  -- historic
+	--print("FUNCAL SetDisasterETHexes()");
+	UILens.ClearLayerHexes(m_HexColoringGreatPeople);  -- historic
 	SetDisasterAnyHexes(RND.tDisasterTypes.Disaster_Earthquake, true);
 	SetDisasterAnyHexes(RND.tDisasterTypes.Disaster_Tornado, false);
 end
 
 function SetDisasterFTHexes()
-	---dprint("FUNCAL SetDisasterFTHexes()");
-	UILens.ClearLayerHexes(LensLayers.HEX_COLORING_GREAT_PEOPLE);  -- historic
+	--print("FUNCAL SetDisasterFTHexes()");
+	UILens.ClearLayerHexes(m_HexColoringGreatPeople);  -- historic
 	SetDisasterAnyHexes(RND.tDisasterTypes.Disaster_Flood, true);
 	SetDisasterAnyHexes(RND.tDisasterTypes.Disaster_Tsunami, false);
 end
 
 function SetDisasterVWHexes()
-	--dprint("FUNCAL SetDisasterVWHexes()");
-	UILens.ClearLayerHexes(LensLayers.HEX_COLORING_GREAT_PEOPLE);  -- historic
+	--print("FUNCAL SetDisasterVWHexes()");
+	UILens.ClearLayerHexes(m_HexColoringGreatPeople);  -- historic
 	SetDisasterAnyHexes(RND.tDisasterTypes.Disaster_Volcano, false);
 	SetDisasterAnyHexes(RND.tDisasterTypes.Disaster_Wildfire, true);
 end
