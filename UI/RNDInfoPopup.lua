@@ -289,7 +289,7 @@ function Initialize()
 	ContextPtr:SetInputHandler( OnInputHandler, true );  -- escape key
 	
 	-- control events
-	Controls.ContinueButton:RegisterCallback( eLClick, OnClose );
+	Controls.ContinueButton:RegisterCallback( Mouse.eLClick, OnClose );
 
 	-- game events
 	--Events.LocalPlayerTurnBegin.Add( OnLocalPlayerTurnBegin );

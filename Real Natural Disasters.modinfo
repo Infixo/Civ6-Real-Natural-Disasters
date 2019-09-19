@@ -2,11 +2,12 @@
 <Mod id="b28a5b09-b356-48f3-9ab9-b9ec2e5324c6" version="2">
   <Properties>
     <Name>Real Natural Disasters</Name>
-    <Description>Adds a new gameplay mechanics - Natural Disasters.[NEWLINE][ICON_BULLET]Earthquakes[NEWLINE][ICON_BULLET]Meteors[NEWLINE][ICON_BULLET]Tornadoes[NEWLINE][ICON_BULLET]Tsunamis[NEWLINE][ICON_BULLET]Wildfires[NEWLINE][ICON_BULLET]Volcanos[NEWLINE][NEWLINE]Disasters sometimes reveal resources and often leave something unique behind. In time you will be able to build Buildings that will decrease damage from disasters or prevent some of them from happening.[NEWLINE][NEWLINE]Version 2.4.1.</Description>
+    <Description>Adds a new gameplay mechanics - Natural Disasters.[NEWLINE][ICON_BULLET]Earthquakes[NEWLINE][ICON_BULLET]Meteors[NEWLINE][ICON_BULLET]Tornadoes[NEWLINE][ICON_BULLET]Tsunamis[NEWLINE][ICON_BULLET]Wildfires[NEWLINE][ICON_BULLET]Volcanos[NEWLINE][NEWLINE]Disasters sometimes reveal resources and often leave something unique behind. In time you will be able to build Buildings that will decrease damage from disasters or prevent some of them from happening.[NEWLINE][NEWLINE]Version 2.4.2.</Description>
     <Teaser>Adds Natural Disasters to the game</Teaser>
     <Authors>Infixo</Authors>
     <SupportsMultiplayer>0</SupportsMultiplayer>
-	<CompatibleVersions>2.0</CompatibleVersions>
+	<CompatibleVersions>1.2,2.0</CompatibleVersions>
+	<SubscriptionID>898631470</SubscriptionID>
   </Properties>
   <Dependencies>
     <Mod id="35f33319-ad93-4d6b-bf27-406fac382d06" minversion="1" maxversion="999" title="More Lenses"/>
